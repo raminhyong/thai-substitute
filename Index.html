@@ -1264,6 +1264,39 @@
       //   เพราะการจัดสอนแทนเป็นเหตุการณ์ที่เกิดขึ้น "ตอนนี้" ไม่ใช่ย้อนหลัง
       const currentSemester = useMemo(() => getCurrentSemester(), []);
       const [selectedSemester, setSelectedSemester] = useState(() => getCurrentSemester().key);
+
+      // เลือกว่าจะพิมพ์รายงานแบบไหน (รายเดือน หรือ รายภาคเรียน)
+      // เพราะพื้นที่พิมพ์ทั้งสองแบบอยู่ในแท็บเดียวกัน ถ้าไม่เลือกจะพิมพ์ออกมาทั้งคู่
+      const [printMode, setPrintMode] = useState("monthly");
+
+      // เปิดพิมพ์ครั้งเดียวหลัง React เรนเดอร์โหมดที่เลือกเสร็จแล้ว
+      const printReport = async (mode) => {
+        setPrintMode(mode);
+        if (document.fonts) {
+          await Promise.all([
+            document.fonts.load("400 16pt 'TH Sarabun New'"),
+            document.fonts.load("700 18pt 'TH Sarabun New'")
+          ]);
+          await document.fonts.ready;
+        }
+        // รอ 2 เฟรม ให้ React วาดโหมดใหม่ลง DOM ก่อนสั่งพิมพ์
+        await new Promise(resolve => {
+          if (typeof requestAnimationFrame === "function") {
+            requestAnimationFrame(() => requestAnimationFrame(resolve));
+          } else {
+            setTimeout(resolve, 50);
+          }
+        });
+        window.print();
+      };
+
+      // คืนค่าเริ่มต้นหลังพิมพ์เสร็จ เพื่อให้ Ctrl+P ปกติได้รายงานรายเดือนเหมือนเดิม
+      useEffect(() => {
+        const reset = () => setPrintMode("monthly");
+        window.addEventListener("afterprint", reset);
+        return () => window.removeEventListener("afterprint", reset);
+      }, []);
+
       
       // Current workspace draft of selections for each period
       const [currentSelections, setCurrentSelections] = useState({});
@@ -1537,6 +1570,31 @@
       }, [history, summaryMonth]);
 
       const monthlyTeacherTotal = Object.values(monthlyTeacherCounts).reduce((sum, count) => sum + count, 0);
+
+      // ── ข้อมูลสำหรับ "รายงานสรุปรายภาคเรียน" ──
+      // subCounts นับเฉพาะ record ที่อยู่ในภาคเรียนที่เลือกไว้แล้ว จึงใช้ได้ตรง ๆ
+      const semesterTeacherTotal = Object.values(subCounts).reduce((sum, count) => sum + count, 0);
+
+      // ช่วงวันที่ของข้อมูลจริงในภาคเรียนที่เลือก (ใช้ระบุขอบเขตในเอกสารราชการ)
+      const semesterDateRange = useMemo(() => {
+        const dates = summaryRows.map(row => String(row.date || "")).filter(Boolean).sort();
+        if (!dates.length) return null;
+        return { from: dates[0], to: dates[dates.length - 1] };
+      }, [summaryRows]);
+
+      // แจกแจงรายเดือนภายในภาคเรียนที่เลือก (เรียงตามเดือน)
+      const semesterMonthlyBreakdown = useMemo(() => {
+        const byMonth = {};
+        summaryRows.forEach(row => {
+          const month = String(row.date || "").slice(0, 7);
+          if (month) byMonth[month] = (byMonth[month] || 0) + 1;
+        });
+        return Object.entries(byMonth)
+          .sort((a, b) => a[0].localeCompare(b[0]))
+          .map(([month, count]) => ({ month, label: formatThaiMonthYear(month), count }));
+      }, [summaryRows]);
+
+      const semesterShortLabel = selectedSemesterLabel.replace("ภาคเรียนที่ ", "");
 
       // Get the schedule of the currently selected absent teacher for the selected day
       const currentAbsentSchedule = useMemo(() => {
@@ -2859,12 +2917,18 @@
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="lux-card md:col-span-3 bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900">🖨️ พิมพ์สรุปการสอนแทนประจำเดือน</h2>
-                    <p className="text-xs text-slate-500 mt-1">จัดรูปแบบตามเอกสารสรุปรายเดือนของกลุ่มสาระฯ พร้อมจำนวนคาบรายบุคคลและยอดรวม</p>
+                    <h2 className="text-lg font-bold text-slate-900">🖨️ พิมพ์รายงานสรุปภาระงานสอนแทน</h2>
+                    <p className="text-xs text-slate-500 mt-1">เลือกภาคเรียนและเดือน แล้วพิมพ์เป็นเอกสารตามรูปแบบของกลุ่มสาระฯ — หรือพิมพ์สรุปภาพรวมทั้งภาคเรียน</p>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-end gap-3 w-full sm:w-auto">
+                    <SemesterSelect
+                      options={semesterOptions}
+                      value={selectedSemester}
+                      onChange={setSelectedSemester}
+                      hint="ตัวเลือกนี้ควบคุมทั้งตาราง สถิติ และรายงานที่จะพิมพ์"
+                    />
                     <label className="block w-full sm:w-auto">
-                      <span className="block text-xs font-bold text-slate-500 mb-1.5">เลือกเดือน</span>
+                      <span className="block text-xs font-bold text-slate-500 mb-1.5">เลือกเดือน (สำหรับรายงานรายเดือน)</span>
                       <select
                         aria-label="เลือกเดือนพิมพ์ภาระงานสะสม"
                         value={summaryMonth}
@@ -2877,19 +2941,28 @@
                       </select>
                     </label>
                     <button
-                      onClick={async () => {
-                        if (document.fonts) {
-                          await Promise.all([
-                            document.fonts.load("400 16pt 'TH Sarabun New'"),
-                            document.fonts.load("700 18pt 'TH Sarabun New'")
-                          ]);
-                          await document.fonts.ready;
-                        }
-                        window.print();
-                      }}
-                      className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap"
+                      onClick={() => printReport("monthly")}
+                      disabled={monthlySummaryRows.length === 0}
+                      title={monthlySummaryRows.length === 0 ? "ยังไม่มีข้อมูลในเดือนที่เลือก" : "พิมพ์สรุปเฉพาะเดือนที่เลือก"}
+                      className={`px-4 py-2 text-white font-bold rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap ${
+                        monthlySummaryRows.length === 0
+                          ? "bg-slate-300 cursor-not-allowed"
+                          : "bg-emerald-700 hover:bg-emerald-800"
+                      }`}
                     >
                       <span>🖨️</span> พิมพ์แบบสรุปรายเดือน
+                    </button>
+                    <button
+                      onClick={() => printReport("semester")}
+                      disabled={summaryRows.length === 0}
+                      title={summaryRows.length === 0 ? "ยังไม่มีข้อมูลในภาคเรียนที่เลือก" : "พิมพ์สรุปรวมทั้งภาคเรียน"}
+                      className={`px-4 py-2 text-white font-bold rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap ${
+                        summaryRows.length === 0
+                          ? "bg-slate-300 cursor-not-allowed"
+                          : "bg-amber-600 hover:bg-amber-700"
+                      }`}
+                    >
+                      <span>📚</span> พิมพ์รายงานสรุปรายภาคเรียน
                     </button>
                   </div>
                 </div>
@@ -2904,6 +2977,10 @@
                     onChange={setSelectedSemester}
                     hint="★ = ภาคเรียนปัจจุบัน · ตัวเลขด้านล่างเป็นของภาคเรียนที่เลือก"
                   />
+
+                  <div className="text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
+                    กำลังแสดง: <span className="text-emerald-700">{selectedSemesterLabel}</span>
+                  </div>
 
                   <p className="text-xs text-slate-500 leading-relaxed">
                     ระบบจัดสรรจะคอยดูสถิติของ <span className="font-bold text-slate-700">ภาคเรียนปัจจุบัน</span> เท่านั้น
@@ -3316,7 +3393,7 @@
           )}
 
           {/* Print-only monthly workload form based on the official uploaded template */}
-          {activeTab === "analytics" && (
+          {activeTab === "analytics" && printMode === "monthly" && (
             <div id="monthly-workload-print" className="hidden print:block bg-white px-8 py-4 text-black font-sans">
               <div className="text-center mb-5">
                 <img src="assets/school-logo.jpg" alt="ตราโรงเรียนพูลเจริญวิทยาคม" className="monthly-school-logo mx-auto mb-2 object-contain" />
@@ -3349,6 +3426,95 @@
                   </tr>
                 </tbody>
               </table>
+
+              <div className="mt-10 text-sm text-center space-y-8">
+                <div>
+                  <p>ลงชื่อ..............................................................</p>
+                  <p className="mt-1">(นายรามิล ปัญญพัทธ์)</p>
+                  <p>หัวหน้ากลุ่มสาระการเรียนรู้ภาษาไทย</p>
+                </div>
+                <div>
+                  <p>ลงชื่อ..............................................................</p>
+                  <p className="mt-1">(นางสาวภัทรพร ประมาตร)</p>
+                  <p>รองผู้อำนวยการ กลุ่มบริหารวิชาการ</p>
+                </div>
+                <div>
+                  <p>ลงชื่อ..............................................................</p>
+                  <p className="mt-1">(นางสุภาพร รัตน์น้อย)</p>
+                  <p>ผู้อำนวยการโรงเรียนพูลเจริญวิทยาคม</p>
+                  <p className="mt-2">................/................/................</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Print-only SEMESTER summary — per-teacher period totals for the whole term */}
+          {activeTab === "analytics" && printMode === "semester" && (
+            <div id="semester-workload-print" className="hidden print:block bg-white px-8 py-4 text-black font-sans">
+              <div className="text-center mb-5">
+                <img src="assets/school-logo.jpg" alt="ตราโรงเรียนพูลเจริญวิทยาคม" className="monthly-school-logo mx-auto mb-2 object-contain" />
+                <h1 className="text-xl font-bold">สรุปการสอนแทน</h1>
+                <h2 className="text-lg font-bold mt-4">ภาคเรียนที่ {semesterShortLabel}</h2>
+                {semesterDateRange && (
+                  <p className="text-sm mt-1">
+                    ระหว่างวันที่ {formatThaiDateShort(semesterDateRange.from)} ถึง {formatThaiDateShort(semesterDateRange.to)}
+                  </p>
+                )}
+              </div>
+
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr>
+                    <th className="w-14 py-2 border border-black text-center">ลำดับที่</th>
+                    <th className="py-2 border border-black text-center">รายชื่อครูปฏิบัติหน้าที่สอนแทน</th>
+                    <th className="w-40 py-2 border border-black text-center">จำนวนคาบที่สอน</th>
+                    <th className="w-40 py-2 border border-black text-center">หมายเหตุ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {TEACHERS_DB.map((teacher, index) => (
+                    <tr key={teacher.id}>
+                      <td className="h-8 border border-black text-center">{index + 1}</td>
+                      <td className="h-8 px-3 border border-black">{FORMAL_TEACHER_NAMES[teacher.id] || teacher.name}</td>
+                      <td className="h-8 border border-black text-center font-bold">{subCounts[teacher.id] || 0}</td>
+                      <td className="h-8 border border-black"></td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="2" className="h-9 border border-black text-center font-bold">รวมจำนวนคาบทั้งหมด</td>
+                    <td className="h-9 border border-black text-center font-bold">{semesterTeacherTotal}</td>
+                    <td className="h-9 border border-black"></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              {semesterMonthlyBreakdown.length > 0 && (
+                <table className="w-full border-collapse text-sm mt-6">
+                  <thead>
+                    <tr>
+                      <th className="w-14 py-2 border border-black text-center">ลำดับที่</th>
+                      <th className="py-2 border border-black text-center">เดือน</th>
+                      <th className="w-40 py-2 border border-black text-center">จำนวนคาบสอนแทน</th>
+                      <th className="w-40 py-2 border border-black text-center">หมายเหตุ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {semesterMonthlyBreakdown.map((row, index) => (
+                      <tr key={row.month}>
+                        <td className="h-8 border border-black text-center">{index + 1}</td>
+                        <td className="h-8 px-3 border border-black">{row.label}</td>
+                        <td className="h-8 border border-black text-center font-bold">{row.count}</td>
+                        <td className="h-8 border border-black"></td>
+                      </tr>
+                    ))}
+                    <tr>
+                      <td colSpan="2" className="h-9 border border-black text-center font-bold">รวม</td>
+                      <td className="h-9 border border-black text-center font-bold">{semesterTeacherTotal}</td>
+                      <td className="h-9 border border-black"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
 
               <div className="mt-10 text-sm text-center space-y-8">
                 <div>
