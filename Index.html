@@ -1161,6 +1161,9 @@
       // Print Slip Modal State
       const [printRecord, setPrintRecord] = useState(null);
 
+      // TypeSafe (Jev) "ความเห็นที่สอง" — แยกตามคาบ { [period]: { loading, result, error } }
+      const [advisory, setAdvisory] = useState({});
+
       // State for Custom Safety Confirm Deletion
       const [deleteTargetId, setDeleteTargetId] = useState(null);
 
@@ -1201,6 +1204,12 @@
                 .withSuccessHandler(resolve)
                 .withFailureHandler(reject)
                 .deleteSubstitution(payload.id);
+            } else if (payload.action === "typesafeAdvisory") {
+              // TypeSafe (Jev) — "ความเห็นที่สอง" เท่านั้น ไม่แทนที่การตัดสินใจของครู
+              google.script.run
+                .withSuccessHandler(resolve)
+                .withFailureHandler(reject)
+                .apiTypeSafeAdvisory(payload.data);
             } else {
               reject(new Error("Unknown action"));
             }
@@ -1405,12 +1414,20 @@
       }, [absentTeacherId, selectedDay]);
 
       // Recommend substitutes using availability, daily load and compact schedules.
+      //
+      // กติกาหลัก (ปรับปรุง 2569): "ความเป็นธรรมเรื่องภาระต้องมาก่อนความสวยงามของตาราง"
+      //   1) ครูที่ว่างในคาบนั้นมาก่อนเสมอ
+      //   2) ในบรรดาครูที่ว่าง พิจารณาเฉพาะกลุ่มที่ "ภาระจริง" เบาสุด +1 คาบ (เพดานความเป็นธรรม)
+      //   3) ภายในกลุ่มนั้นจึงใช้คะแนน (คาบติดกัน/ภารกิจพิเศษ/สถิติสะสม) ตัดสิน
+      //   เหตุผล: เดิมโบนัส "คาบติดกัน" เท่ากับ 5 คาบสอน ทำให้เสนอครูที่งานหนักกว่าคนว่าง
+      const BAND_TOLERANCE = 1;
+
       const getRecommendationsForPeriod = (period, currentDayDraft) => {
         if (!absentTeacherId) return [];
 
         let candidates = TEACHERS_DB.filter(t => t.id !== absentTeacherId);
 
-        return candidates.map(teacher => {
+        const scored = candidates.map(teacher => {
           const daySchedule = teacher.schedule[selectedDay] || [];
           const regularPeriods = new Set(daySchedule.map(slot => slot.period));
           const draftSubPeriods = Object.entries(currentDayDraft)
@@ -1452,19 +1469,24 @@
             reasons.push("ว่างคาบนี้");
           }
 
-          score -= dailyRegularLoad * 22;
-          score -= draftSubCount * 28;
+          // ── น้ำหนักคะแนน (ปรับปรุง 2569) ────────────────────────────────────
+          // ปัญหาเดิม: "คาบติดกัน" ให้โบนัสถึง +110 เทียบเท่าคาบสอน 5 คาบ
+          //            → ครูที่งานหนักกว่าถูกเสนอแทนครูที่ว่างกว่า (ขัดหลักความเป็นธรรม)
+          // แนวทางใหม่: "ภาระ" เป็นตัวชี้ขาด · "คาบติดกัน" เป็นเพียงตัวตัดสินรอง
+          //            (เพดานความเป็นธรรมถูกบังคับใช้ที่ขั้นตอนจัดอันดับด้านล่าง)
+          score -= dailyRegularLoad * 30;
+          score -= draftSubCount * 34;
           reasons.push(`ภาระวันนี้ ${dailyTotalLoad} คาบ (ประจำ ${dailyRegularLoad} + แทน ${draftSubCount})`);
 
           if (bridgesGap) {
-            score += 110;
-            reasons.push("เชื่อมคาบว่างระหว่างคาบสอน ลดคาบเว้นคาบ");
+            score += 25;
+            reasons.push("เชื่อมคาบว่างระหว่างคาบสอน (ตัวตัดสินรอง)");
           } else if (adjacentSub.length > 0) {
-            score += 85;
-            reasons.push(`ต่อเนื่องกับคาบสอนแทน ${adjacentSub.join(", ")}`);
+            score += 22;
+            reasons.push(`ต่อเนื่องกับคาบสอนแทน ${adjacentSub.join(", ")} (ตัวตัดสินรอง)`);
           } else if (adjacentRegular.length > 0) {
-            score += 55;
-            reasons.push(`ต่อเนื่องกับคาบสอนประจำ ${adjacentRegular.join(", ")}`);
+            score += 15;
+            reasons.push(`ต่อเนื่องกับคาบสอนประจำ ${adjacentRegular.join(", ")} (ตัวตัดสินรอง)`);
           } else if (alreadyAssignedToday) {
             score -= 90;
             reasons.push("หลีกเลี่ยงการจัดสอนแทนแบบคาบเว้นคาบ");
@@ -1481,7 +1503,7 @@
           }
 
           const prevSubsCount = subCounts[teacher.id] || 0;
-          score -= (prevSubsCount * 12);
+          score -= (prevSubsCount * 20);
           if (prevSubsCount > 0) {
             reasons.push(`เคยสอนแทนสะสม ${prevSubsCount} คาบ`);
           } else {
@@ -1509,6 +1531,10 @@
             }
           }
 
+          // ภาระจริง = คาบสอนประจำ + คาบสอนแทนที่จัดให้ไปแล้วในวันนี้
+          // ใช้เป็นฐานของ "เพดานความเป็นธรรม" เพื่อไม่ให้เทงานซ้ำใส่ครูคนเดิม
+          const effectiveLoad = dailyRegularLoad + draftSubCount;
+
           return {
             ...teacher,
             isFree,
@@ -1520,18 +1546,104 @@
             dailyRegularLoad,
             draftSubCount,
             dailyTotalLoad,
+            effectiveLoad,
             adjacentRegular,
             adjacentSub,
             bridgesGap,
             maxConsecutiveAfter
           };
-        })
-          .sort((a, b) =>
-            b.score - a.score ||
-            a.dailyTotalLoad - b.dailyTotalLoad ||
-            a.prevSubsCount - b.prevSubsCount ||
-            a.name.localeCompare(b.name, "th")
-          );
+        });
+
+        // ── เพดานความเป็นธรรม (Fairness band) ──────────────────────────────
+        // หา "ภาระจริง" ที่เบาสุดในกลุ่มครูที่ว่าง แล้วให้สิทธิ์เฉพาะกลุ่มที่เบาสุด +1 คาบ
+        // เพื่อรับประกันว่าโบนัส "คาบติดกัน" จะไม่มีทางเอาชนะเรื่องภาระได้อีก
+        const freeEffectiveLoads = scored.filter(c => c.isFree).map(c => c.effectiveLoad);
+        const minFreeEffectiveLoad = freeEffectiveLoads.length ? Math.min(...freeEffectiveLoads) : null;
+
+        return scored
+          .map(c => {
+            const withinFairnessBand =
+              c.isFree && minFreeEffectiveLoad !== null &&
+              c.effectiveLoad <= minFreeEffectiveLoad + BAND_TOLERANCE;
+
+            // อธิบายให้ผู้ใช้เห็นว่าทำไมถูกจัดลำดับรอง (ความโปร่งใส — ครูต้องตรวจสอบได้)
+            let bandReasons = c.reasons;
+            if (c.isFree && !withinFairnessBand && minFreeEffectiveLoad !== null) {
+              bandReasons = c.reasons.concat([
+                `จัดลำดับรอง: ภาระจริง ${c.effectiveLoad} คาบ มากกว่าคนที่เบาสุด (${minFreeEffectiveLoad} คาบ) เกิน ${BAND_TOLERANCE} คาบ`
+              ]);
+            }
+            return { ...c, withinFairnessBand, reasons: bandReasons };
+          })
+          .sort((a, b) => {
+            // 1) ครูที่ว่างในคาบนั้นมาก่อนเสมอ
+            if (a.isFree !== b.isFree) return a.isFree ? -1 : 1;
+            // 2) เพดานความเป็นธรรม — กลุ่มที่ภาระเบากว่ามาก่อน
+            if (a.withinFairnessBand !== b.withinFairnessBand) return a.withinFairnessBand ? -1 : 1;
+            // 3) ภายในกลุ่มเดียวกันจึงใช้คะแนน และตัวตัดสินสำรองตามเดิม
+            return (
+              b.score - a.score ||
+              a.dailyTotalLoad - b.dailyTotalLoad ||
+              a.prevSubsCount - b.prevSubsCount ||
+              a.name.localeCompare(b.name, "th")
+            );
+          });
+      };
+
+      // ─── TypeSafe (Jev) — "ความเห็นที่สอง" ─────────────────────────────────
+      // หลักการ: ระบบเดิมยังเสนอหลักเสมอ · Jev ให้ความเห็นเพิ่มเติม · ครูเป็นผู้ตัดสินใจขั้นสุดท้าย
+      const requestAdvisory = async (period) => {
+        const recs = getRecommendationsForPeriod(period, currentSelections);
+        const freeRecs = recs.filter(r => r.isFree).slice(0, 8);
+
+        if (!freeRecs.length) {
+          showToast("คาบนี้ไม่มีครูว่าง จึงขอความเห็นที่สองไม่ได้", "warning");
+          return;
+        }
+
+        const absent = TEACHERS_DB.find(t => t.id === absentTeacherId);
+        const slot = currentAbsentSchedule.find(c => c.period === period);
+        const absentGrade = slot && slot.class ? String(slot.class).split("/")[0] : "";
+
+        // ส่งข้อมูลจริงของระบบให้ Jev: คาบสอนวันนั้น + สถิติสอนแทนสะสม + ภารกิจพิเศษ + เคยสอนสายชั้น
+        const candidates = freeRecs.map(r => {
+          const t = TEACHERS_DB.find(x => x.id === r.id);
+          const taughtGrade = absentGrade
+            ? Object.values((t && t.schedule) || {}).flat().some(c => String(c.class).startsWith(absentGrade))
+            : false;
+          return {
+            name: r.name,
+            periodsThatDay: r.dailyTotalLoad,
+            subStats: r.prevSubsCount,
+            isSpecialHead: !!(t && t.isSpecialHead),
+            taughtGrade
+          };
+        });
+
+        setAdvisory(prev => ({ ...prev, [period]: { loading: true } }));
+
+        try {
+          const data = await sendApiRequest({
+            action: "typesafeAdvisory",
+            data: {
+              situation: {
+                absent: absent ? absent.name : "-",
+                day: selectedDay,
+                period: period,
+                subject: slot ? slot.subject : "-",
+                className: slot ? slot.class : "-",
+                systemPick: freeRecs[0] ? freeRecs[0].name : ""
+              },
+              candidates: candidates
+            }
+          });
+          setAdvisory(prev => ({ ...prev, [period]: { loading: false, result: data } }));
+        } catch (err) {
+          setAdvisory(prev => ({
+            ...prev,
+            [period]: { loading: false, error: String(err && err.message ? err.message : err) }
+          }));
+        }
       };
 
       // Helper to calculate daily workload and consecutive periods for a teacher
@@ -2128,12 +2240,118 @@
                                               ? "bg-rose-100 text-rose-800 border border-rose-200"
                                               : r.includes("พักกลางวัน")
                                                 ? "bg-amber-100 text-amber-800 border border-amber-200"
-                                                : "bg-slate-100 text-slate-600"
+                                                : r.includes("จัดลำดับรอง")
+                                                  ? "bg-indigo-100 text-indigo-800 border border-indigo-200"
+                                                  : "bg-slate-100 text-slate-600"
                                             }`}
                                         >
                                           {r}
                                         </span>
                                       ))}
+                                    </div>
+
+                                    {/* ─── TypeSafe (Jev) — ความเห็นที่สอง ─── */}
+                                    <div className="mt-1.5">
+                                      {!advisory[slot.period]?.result && (
+                                        <button
+                                          type="button"
+                                          onClick={() => requestAdvisory(slot.period)}
+                                          disabled={!!advisory[slot.period]?.loading}
+                                          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-[11px] font-bold transition disabled:opacity-60 disabled:cursor-wait"
+                                        >
+                                          {advisory[slot.period]?.loading
+                                            ? "🧠 กำลังขอความเห็นที่สอง…"
+                                            : "🧠 ขอความเห็นที่สอง (Jev)"}
+                                        </button>
+                                      )}
+
+                                      {advisory[slot.period]?.error && (
+                                        <div className="mt-1 text-[10px] flex items-start gap-1.5 bg-rose-50 text-rose-800 border border-rose-200 p-2 rounded-md font-medium">
+                                          <span aria-hidden="true">⚠️</span>
+                                          <span className="min-w-0 leading-relaxed">
+                                            ขอความเห็นไม่สำเร็จ: {advisory[slot.period].error}
+                                          </span>
+                                        </div>
+                                      )}
+
+                                      {advisory[slot.period]?.result && (() => {
+                                        const adv = advisory[slot.period].result;
+
+                                        if (adv.status !== "success") {
+                                          return (
+                                            <div className="text-[10px] flex items-start gap-1.5 bg-slate-50 text-slate-600 border border-slate-200 p-2 rounded-md font-medium">
+                                              <span aria-hidden="true">💤</span>
+                                              <span className="min-w-0 leading-relaxed">
+                                                {adv.message || "TypeSafe ยังไม่พร้อมใช้งาน — ระบบเดิมยังทำงานตามปกติ"}
+                                              </span>
+                                            </div>
+                                          );
+                                        }
+
+                                        const agree = adv.agreement;
+                                        const conf = typeof adv.confidence === "number" ? Math.round(adv.confidence * 100) : null;
+
+                                        return (
+                                          <div className={`rounded-xl border p-2.5 space-y-2 ${agree
+                                              ? "bg-emerald-50/70 border-emerald-200"
+                                              : "bg-indigo-50/70 border-indigo-300"
+                                            }`}>
+                                            <div className="flex items-center justify-between gap-2">
+                                              <span className={`font-bold text-[11px] ${agree ? "text-emerald-800" : "text-indigo-900"}`}>
+                                                🧠 ความเห็นที่สอง (Jev) {agree ? "· ตรงกับระบบ" : "· ต่างจากระบบ"}
+                                              </span>
+                                              <button
+                                                type="button"
+                                                onClick={() => setAdvisory(prev => { const n = { ...prev }; delete n[slot.period]; return n; })}
+                                                className="text-[10px] text-slate-500 hover:text-slate-800 underline shrink-0"
+                                              >
+                                                ปิด
+                                              </button>
+                                            </div>
+
+                                            <div className="text-[11px] text-slate-800 leading-relaxed">
+                                              <span className="text-slate-500">เสนอ:</span>{" "}
+                                              <span className="font-bold">{adv.pick || "-"}</span>
+                                              {adv.pickDetail && (
+                                                <span className="text-slate-600">
+                                                  {" "}— {adv.pickDetail.periodsThatDay} คาบในวันนั้น ·
+                                                  สอนแทนสะสม {adv.pickDetail.subStats} ครั้ง
+                                                </span>
+                                              )}
+                                              {conf !== null && (
+                                                <span className="text-slate-500"> · ความเชื่อมั่น {conf}%</span>
+                                              )}
+                                            </div>
+
+                                            {!agree && adv.systemPick && (
+                                              <div className="text-[10px] text-slate-600 bg-white/70 rounded border border-slate-200 px-2 py-1">
+                                                ระบบเดิมเสนอ {adv.systemPick} — ลองเทียบตัวเลขของทั้งสองคนก่อนตัดสินใจ
+                                              </div>
+                                            )}
+
+                                            {adv.flags && adv.flags.length > 0 && (
+                                              <div className="space-y-1">
+                                                {adv.flags.map((f, i) => (
+                                                  <div
+                                                    key={i}
+                                                    className={`text-[10px] flex items-start gap-1.5 p-1.5 rounded font-medium ${f.level === "warn"
+                                                        ? "bg-amber-50 text-amber-900 border border-amber-200"
+                                                        : "bg-white text-slate-600 border border-slate-200"
+                                                      }`}
+                                                  >
+                                                    <span aria-hidden="true">{f.level === "warn" ? "⚠️" : "ℹ️"}</span>
+                                                    <span className="min-w-0 leading-relaxed">{f.text}</span>
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            )}
+
+                                            <div className="text-[9px] text-slate-500 leading-relaxed pt-0.5 border-t border-slate-200/70">
+                                              Jev เป็นเพียงความเห็นที่สอง · ผู้ตัดสินใจขั้นสุดท้ายคือหัวหน้ากลุ่มสาระการเรียนรู้
+                                            </div>
+                                          </div>
+                                        );
+                                      })()}
                                     </div>
                                     {(() => {
                                       const statusInfo = getTeacherDayStatus(selectedSubId, selectedDay, slot.period, currentSelections);

@@ -26,6 +26,12 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
   
+  // ตรวจสอบความพร้อมของ TypeSafe (Jev) — ไม่เปิดเผยคีย์
+  if (e && e.parameter && e.parameter.action === 'typesafeHealth') {
+    return ContentService.createTextOutput(JSON.stringify(getTypeSafeHealth()))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  
   // โหลดหน้าเว็บโดยรองรับทั้งชื่อไฟล์ 'Index' (พิมพ์ใหญ่) และ 'index' (พิมพ์เล็ก) ป้องกันการสับสน
   var template;
   try {
@@ -73,6 +79,8 @@ function doPost(e) {
       result = deleteSubstitution(payload.id);
     } else if (payload.action === 'getSpreadsheetUrl') {
       result = { status: "success", url: getSpreadsheetUrl() };
+    } else if (payload.action === 'typesafeAdvisory') {
+      result = apiTypeSafeAdvisory(payload.data);
     } else {
       result = { status: "error", message: "ไม่พบคำสั่ง (Unknown action)" };
     }
@@ -396,4 +404,201 @@ function getSpreadsheetUrl() {
   } catch (e) {
     return null;
   }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 8. TypeSafe (Jev) — "ความเห็นที่สอง" สำหรับการจัดครูสอนแทน
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// หลักการออกแบบ (สำคัญ — ห้ามละเมิด):
+//   • ระบบเดิมยังเป็นผู้เสนอหลักเสมอ (เร็ว ตรวจสอบได้ ไม่มีค่าใช้จ่าย)
+//   • Jev ทำหน้าที่เป็น "ความเห็นที่สอง" เท่านั้น — ไม่แทนที่ ไม่ตัดสินใจเอง
+//   • ผู้ตัดสินใจขั้นสุดท้ายคือหัวหน้ากลุ่มสาระฯ (ครูรามิล) เสมอ
+//
+// ความปลอดภัย: repo นี้เป็น PUBLIC — ห้ามใส่คีย์ในไฟล์นี้เด็ดขาด
+//   คีย์เก็บใน Script Properties เท่านั้น ดูวิธีตั้งค่าที่ setupTypeSafeKey()
+// ═══════════════════════════════════════════════════════════════════════════
+
+var TYPESAFE_ENDPOINT_ = 'https://api.typesafe.ai/v1/systemone';
+var TYPESAFE_MODEL_ = 'jev-latest';
+
+/**
+ * อ่านคีย์ TypeSafe จาก Script Properties (ไม่เก็บในโค้ด — ปลอดภัยกับ public repo)
+ * วิธีตั้งค่า: ดู setupTypeSafeKey() ด้านล่าง
+ */
+function getTypeSafeKey_() {
+  var key = PropertiesService.getScriptProperties().getProperty('TYPESAFE_API_KEY');
+  return key ? String(key).trim() : '';
+}
+
+/**
+ * วิธีตั้งค่าคีย์ (ทำครั้งเดียว)
+ * ─────────────────────────────────────────────────────────
+ * 1. เปิด Apps Script Editor → ⚙️ Project Settings (รูปเฟือง ซ้ายล่าง)
+ * 2. เลื่อนลงไปที่หัวข้อ "Script properties" → กด "Add script property"
+ * 3. Property = TYPESAFE_API_KEY   |   Value = คีย์ของคุณ (ขึ้นต้น apikey_...)
+ * 4. กด Save แล้ว Deploy Web App ใหม่ (New deployment)
+ *
+ * ⚠️ ห้ามคัดลอกคีย์มาใส่ในไฟล์ Code.gs — repo นี้เป็น Public
+ */
+function setupTypeSafeKey() {
+  var current = getTypeSafeKey_();
+  Logger.log(current
+    ? '✅ ตั้งคีย์ TypeSafe ไว้แล้ว (ความยาว ' + current.length + ' ตัวอักษร)'
+    : '❌ ยังไม่ได้ตั้งคีย์ — ไปที่ Project Settings → Script properties → เพิ่ม TYPESAFE_API_KEY');
+}
+
+/** ตรวจสอบความพร้อมของ TypeSafe โดยไม่เปิดเผยคีย์ */
+function getTypeSafeHealth() {
+  var key = getTypeSafeKey_();
+  return {
+    status: 'ok',
+    service: 'ระบบจัดครูสอนแทน — TypeSafe Advisory',
+    typesafe_ready: !!key,
+    model: TYPESAFE_MODEL_,
+    note: key ? 'พร้อมใช้งาน' : 'ยังไม่ได้ตั้งค่า TYPESAFE_API_KEY (ดู setupTypeSafeKey)'
+  };
+}
+
+/** เรียก TypeSafe System One — คืนค่า answers หรือ null หากไม่พร้อม */
+function typeSafeEvaluate_(state, questions) {
+  var key = getTypeSafeKey_();
+  if (!key) return null;
+
+  var response = UrlFetchApp.fetch(TYPESAFE_ENDPOINT_, {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { Authorization: 'Bearer ' + key },
+    payload: JSON.stringify({ state: state, questions: questions, model: TYPESAFE_MODEL_ }),
+    muteHttpExceptions: true
+  });
+
+  var code = response.getResponseCode();
+  if (code < 200 || code >= 300) {
+    Logger.log('TypeSafe error ' + code + ': ' + response.getContentText());
+    return null;
+  }
+  try {
+    return JSON.parse(response.getContentText());
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * ความเห็นที่สองสำหรับการจัดครูสอนแทน (เรียกจาก doPost: action = 'typesafeAdvisory')
+ *
+ * รับ data = {
+ *   situation: { absent, day, period, subject, className, systemPick },
+ *   candidates: [ { name, periodsThatDay, subStats, isSpecialHead, taughtGrade } ]
+ * }
+ */
+function apiTypeSafeAdvisory(data) {
+  if (!data || !data.candidates || !data.candidates.length) {
+    return { status: 'error', message: 'ไม่มีข้อมูลผู้สมัคร' };
+  }
+
+  var sit = data.situation || {};
+  var candidates = data.candidates;
+
+  // สร้างตัวเลือก (criteria) พร้อมเหตุผลเชิงตัวเลขที่ตรวจสอบได้
+  var options = {};
+  for (var i = 0; i < candidates.length; i++) {
+    var c = candidates[i];
+    options[c.name] =
+      'คาบสอนในวันนั้น ' + c.periodsThatDay + ' คาบ | ' +
+      'สอนแทนสะสมภาคเรียนนี้ ' + c.subStats + ' ครั้ง | ' +
+      'หัวหน้างานพิเศษ: ' + (c.isSpecialHead ? 'ใช่' : 'ไม่ใช่') +
+      (typeof c.taughtGrade === 'boolean' ? ' | เคยสอนสายชั้นนี้: ' + (c.taughtGrade ? 'ใช่' : 'ไม่ใช่') : '');
+  }
+
+  var state = {
+    บริบท: 'ครู' + (sit.absent || '-') + ' ลาป่วย/ลากิจกะทันหัน ต้องจัดครูสอนแทน ' +
+           'วัน' + (sit.day || '-') + ' คาบ ' + (sit.period || '-') +
+           ' วิชา ' + (sit.subject || '-') + ' ชั้น ' + (sit.className || '-'),
+    ผู้สมัครที่ว่างในคาบนั้น: candidates,
+    ครูที่ระบบเสนออัตโนมัติ: sit.systemPick || '(ไม่ระบุ)'
+  };
+
+  var instruction =
+    'เลือกครูผู้สอนแทนที่เหมาะสมที่สุด โดยให้น้ำหนักตามลำดับนี้ ' +
+    '(1) ความเป็นธรรม — ครูที่สอนแทนสะสมน้อยกว่าควรได้รับโอกาส ' +
+    '(2) ภาระในวันนั้น — ครูที่มีคาบสอนในวันนั้นน้อยกว่าดีกว่า ' +
+    '(3) หลีกเลี่ยงครูที่มีภารกิจหัวหน้างานพิเศษ และครูที่สอนสายชั้นตรงกันจะได้เปรียบเล็กน้อย';
+
+  var questions = {
+    pick: { type: 'choice', instructions: instruction, criteria: options },
+
+    system_pick_questionable: {
+      type: 'noul',
+      instructions: 'ครูที่ระบบเสนออัตโนมัติ เป็นตัวเลือกที่แย่กว่าครูคนอื่นที่ว่างอยู่หรือไม่',
+      criteria: {
+        'true': 'มีครูที่ว่างซึ่งมีทั้งคาบสอนในวันนั้นน้อยกว่าและสอนแทนสะสมน้อยกว่าอย่างชัดเจน',
+        'false': 'ครูที่ระบบเสนอเป็นตัวเลือกที่สมเหตุสมผลเทียบเท่าหรือดีกว่าคนอื่น'
+      }
+    },
+
+    overload_concern: {
+      type: 'noul',
+      instructions: 'มีครูคนใดในกลุ่มที่ถูกจัดสอนแทนสะสมมากกว่าคนอื่นในกลุ่มอย่างมีนัยสำคัญหรือไม่',
+      criteria: {
+        'true': 'มีครูที่สอนแทนสะสมมากกว่าคนอื่นในกลุ่มอย่างชัดเจน',
+        'false': 'ภาระการสอนแทนกระจายใกล้เคียงกันทั้งกลุ่ม'
+      }
+    }
+  };
+
+  var result = typeSafeEvaluate_(state, questions);
+
+  if (!result || !result.answers) {
+    return {
+      status: 'unavailable',
+      message: 'ยังไม่ได้ตั้งค่าคีย์ TypeSafe หรือเชื่อมต่อไม่สำเร็จ — ระบบเดิมยังทำงานได้ตามปกติ',
+      fallback: true
+    };
+  }
+
+  var a = result.answers;
+  var pick = (a.pick && a.pick.choice) ? a.pick.choice : '';
+  var confidence = (a.pick && typeof a.pick.confidence === 'number') ? a.pick.confidence : null;
+  var questionable = (a.system_pick_questionable && typeof a.system_pick_questionable.noul === 'number')
+    ? a.system_pick_questionable.noul : null;
+  var overload = (a.overload_concern && typeof a.overload_concern.noul === 'number')
+    ? a.overload_concern.noul : null;
+
+  // สร้างข้อความเตือนด้วย "โค้ด" จากตัวเลขที่ได้ (Jev ไม่ได้เขียนข้อความเอง)
+  var flags = [];
+  if (questionable !== null && questionable >= 0.7) {
+    flags.push({ level: 'warn', text: 'ข้อเสนอเดิมของระบบอาจต่ำกว่าตัวเลือกที่มีอยู่ (ความเชื่อมั่น ' + Math.round(questionable * 100) + '%)' });
+  }
+  if (overload !== null && overload >= 0.7) {
+    flags.push({ level: 'warn', text: 'พบความเสี่ยงเรื่องความเป็นธรรม — มีครูที่รับสอนแทนสะสมมากกว่ากลุ่มชัดเจน' });
+  }
+  if (confidence !== null && confidence < 0.6) {
+    flags.push({ level: 'info', text: 'กรณีนี้กำกวม — Jev ไม่มั่นใจ ควรใช้วิจารณญาณของคุณครูเป็นหลัก' });
+  }
+
+  var systemPick = sit.systemPick || '';
+  var agree = !!systemPick && pick === systemPick;
+
+  return {
+    status: 'success',
+    model: result.model || TYPESAFE_MODEL_,
+    pick: pick,
+    confidence: confidence,
+    agreement: agree,
+    systemPick: systemPick,
+    systemPickQuestionable: questionable,
+    overloadConcern: overload,
+    flags: flags,
+    // รายละเอียดของครูที่ Jev เสนอ เพื่อให้ตรวจสอบได้ทันที
+    pickDetail: (function () {
+      for (var j = 0; j < candidates.length; j++) {
+        if (candidates[j].name === pick) return candidates[j];
+      }
+      return null;
+    })(),
+    usage: result.usage || null,
+    note: 'Jev เป็นเพียงความเห็นที่สอง — ผู้ตัดสินใจขั้นสุดท้ายคือหัวหน้ากลุ่มสาระการเรียนรู้'
+  };
 }
