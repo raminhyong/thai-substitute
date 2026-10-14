@@ -1,0 +1,2986 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบจัดครูสอนแทน กลุ่มสาระฯ ภาษาไทย | โรงเรียนพูลเจริญวิทยาคม</title>
+  <meta name="description" content="ระบบจัดสรรและบันทึกการสอนแทน กลุ่มสาระการเรียนรู้ภาษาไทย โรงเรียนพูลเจริญวิทยาคม">
+  <meta name="application-name" content="ระบบจัดครูสอนแทน">
+  <meta name="theme-color" content="#065f46">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="จัดครูสอนแทน">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+  <link rel="shortcut icon" href="assets/favicon-48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/THSarabunNew.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/THSarabunNew-Bold.ttf" as="font" type="font/ttf" crossorigin>
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:site_name" content="ระบบจัดครูสอนแทน">
+  <meta property="og:title" content="ระบบจัดการงานสอนแทนอัจฉริยะ">
+  <meta property="og:description" content="จัดสรรและบันทึกการสอนแทนอย่างเป็นธรรม สำหรับกลุ่มสาระการเรียนรู้ภาษาไทย โรงเรียนพูลเจริญวิทยาคม">
+  <meta property="og:image" content="assets/luxe1-share.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ตราระบบจัดการงานสอนแทน โรงเรียนพูลเจริญวิทยาคม">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ระบบจัดการงานสอนแทนอัจฉริยะ">
+  <meta name="twitter:description" content="ระบบจัดสรรและบันทึกการสอนแทน กลุ่มสาระการเรียนรู้ภาษาไทย">
+  <meta name="twitter:image" content="assets/luxe1-share.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script>
+    Babel.registerPreset("react-classic", {
+      presets: [
+        [
+          Babel.availablePresets["react"], 
+          {
+            "runtime": "classic"
+          }
+        ]
+      ]
+    });
+  </script>
+
+  <style>
+    @font-face {
+      font-family: 'TH Sarabun New';
+      src: url('assets/THSarabunNew.ttf') format('truetype');
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+    }
+
+    @font-face {
+      font-family: 'TH Sarabun New';
+      src: url('assets/THSarabunNew-Bold.ttf') format('truetype');
+      font-style: normal;
+      font-weight: 700;
+      font-display: block;
+    }
+
+    @font-face {
+      font-family: 'TH Sarabun New';
+      src: url('assets/THSarabunNew-Italic.ttf') format('truetype');
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'TH Sarabun New';
+      src: url('assets/THSarabunNew-BoldItalic.ttf') format('truetype');
+      font-style: italic;
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    :root {
+      --lux-emerald-950: #022c22;
+      --lux-emerald-900: #064e3b;
+      --lux-emerald-700: #047857;
+      --lux-gold: #d4a72c;
+      --lux-gold-light: #f5d77d;
+      --lux-ivory: #fffdf7;
+      --lux-ink: #17352d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Sarabun', 'Inter', sans-serif;
+      color: var(--lux-ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(212, 167, 44, 0.16), transparent 28rem),
+        radial-gradient(circle at 92% 18%, rgba(16, 185, 129, 0.13), transparent 30rem),
+        linear-gradient(145deg, #f8faf7 0%, #f7f4eb 48%, #edf7f2 100%);
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.34;
+      background-image:
+        linear-gradient(rgba(6, 78, 59, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 78, 59, 0.035) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
+      z-index: -1;
+    }
+
+    .luxury-shell {
+      isolation: isolate;
+    }
+
+    .luxury-hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(245, 215, 125, 0.22), transparent 20rem),
+        radial-gradient(circle at 14% 100%, rgba(16, 185, 129, 0.26), transparent 25rem),
+        linear-gradient(125deg, #022c22 0%, #065f46 48%, #064e3b 100%);
+      border-bottom: 1px solid rgba(245, 215, 125, 0.7);
+      box-shadow: 0 18px 50px rgba(2, 44, 34, 0.25);
+    }
+
+    .luxury-hero::before,
+    .luxury-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+      filter: blur(1px);
+    }
+
+    .luxury-hero::before {
+      width: 320px;
+      height: 320px;
+      top: -230px;
+      left: 30%;
+      border: 1px solid rgba(245, 215, 125, 0.26);
+      box-shadow: 0 0 0 42px rgba(245, 215, 125, 0.035), 0 0 0 90px rgba(245, 215, 125, 0.025);
+    }
+
+    .luxury-hero::after {
+      width: 180px;
+      height: 180px;
+      right: 4%;
+      bottom: -130px;
+      background: rgba(245, 215, 125, 0.1);
+      box-shadow: 0 0 60px rgba(245, 215, 125, 0.16);
+    }
+
+    .luxury-logo {
+      background: linear-gradient(145deg, #ffffff, #f6edcf);
+      border: 1px solid rgba(245, 215, 125, 0.78);
+      border-radius: 28px;
+      box-shadow: 0 16px 40px rgba(1, 25, 18, 0.42), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    .luxury-title {
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.24);
+    }
+
+    .gold-text {
+      color: #f6d878;
+      background: linear-gradient(90deg, #fff2b8, #e7b94c 48%, #fff0a4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .luxury-badge,
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 0.38rem 0.72rem;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.09);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-art {
+      filter: drop-shadow(0 26px 28px rgba(0, 0, 0, 0.3));
+      animation: heroFloat 5.5s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .luxury-nav {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(1, 38, 27, 0.62);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .lux-nav-button {
+      position: relative;
+      min-height: 48px;
+      border: 1px solid transparent;
+    }
+
+    .lux-nav-button:hover {
+      border-color: rgba(245, 215, 125, 0.28);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .lux-nav-active {
+      color: #17352d !important;
+      border-color: rgba(255, 245, 196, 0.75) !important;
+      background: linear-gradient(135deg, #f7df8b, #d6a72f 72%, #f2cd63) !important;
+      box-shadow: 0 8px 22px rgba(212, 167, 44, 0.28), inset 0 1px 0 rgba(255,255,255,0.65);
+    }
+
+    .lux-card {
+      position: relative;
+      border: 1px solid rgba(212, 167, 44, 0.18) !important;
+      background: linear-gradient(150deg, rgba(255,255,255,0.97), rgba(255,253,247,0.93)) !important;
+      box-shadow: 0 20px 55px rgba(31, 65, 53, 0.10), inset 0 1px 0 white !important;
+      backdrop-filter: blur(14px);
+    }
+
+    .lux-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #f5d77d, #0f8a63, transparent 85%);
+      opacity: 0.75;
+    }
+
+    .lux-period-card {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(212,167,44,0.10), transparent 12rem),
+        linear-gradient(145deg, #ffffff, #f8fbf9) !important;
+      border: 1px solid rgba(15, 118, 87, 0.12) !important;
+      box-shadow: 0 12px 28px rgba(30, 64, 53, 0.07);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .lux-period-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(212,167,44,0.34) !important;
+      box-shadow: 0 18px 36px rgba(30,64,53,0.12);
+    }
+
+    main input,
+    main select,
+    main textarea {
+      border-color: rgba(15,118,87,0.16) !important;
+      box-shadow: inset 0 1px 2px rgba(2,44,34,0.03), 0 6px 18px rgba(30,64,53,0.04);
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+
+    main input:focus,
+    main select:focus,
+    main textarea:focus {
+      border-color: rgba(212,167,44,0.72) !important;
+      box-shadow: 0 0 0 4px rgba(212,167,44,0.13), 0 10px 25px rgba(30,64,53,0.08) !important;
+      outline: none;
+    }
+
+    .lux-primary {
+      color: white;
+      background: linear-gradient(135deg, #0f8a63, #065f46 62%, #064e3b) !important;
+      border: 1px solid rgba(245,215,125,0.45);
+      box-shadow: 0 12px 28px rgba(6,95,70,0.24), inset 0 1px 0 rgba(255,255,255,0.22) !important;
+    }
+
+    .lux-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(6,95,70,0.32), 0 0 0 4px rgba(212,167,44,0.1) !important;
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-9px) rotate(1deg); }
+    }
+
+    /* Custom scrollbar for beautiful lists */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.2s ease-out forwards;
+    }
+    .animate-slide-in {
+      animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .lux-card {
+        border-radius: 1.25rem !important;
+      }
+      .luxury-nav {
+        border-radius: 1.15rem;
+      }
+    }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+
+      .print-only {
+        display: block !important;
+      }
+
+      #monthly-workload-print {
+        font-family: 'TH Sarabun New', serif !important;
+        font-size: 16pt !important;
+        line-height: 1.15 !important;
+      }
+
+      #monthly-workload-print * {
+        font-family: 'TH Sarabun New', serif !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+      }
+
+      #monthly-workload-print h1,
+      #monthly-workload-print h2 {
+        font-size: 18pt !important;
+        line-height: 1.2 !important;
+      }
+
+      #monthly-workload-print .monthly-school-logo {
+        width: 18mm !important;
+        height: auto !important;
+        max-height: 21mm !important;
+        object-fit: contain !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 antialiased">
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react-classic">
+    const { useState, useEffect, useMemo } = React;
+
+    const FORMAL_TEACHER_NAMES = {
+      T01: "นายรามิล ปัญญพัทธ์",
+      T02: "นางวรางคณา ศรีม่วง",
+      T03: "นายอภิชา พุ่มพวง",
+      T04: "นางสาวกมลวรรณ สังข์ทอง",
+      T05: "นายสุริยา ก่อบุญ",
+      T06: "นายชินกร ศิริโยธา",
+      T07: "นางสาวชื่นฤดี หรับหลี",
+      T08: "นางสาววนิชญา เชียงน้อย",
+      T09: "นางสาวอิงอร สิทธิจินดา",
+      T10: "นายเฉลิมชาติ ภูผันผิน",
+      T11: "นายจิรวัฒน์ ศรีวโร",
+      T12: "นางสาวศุภนุช บุตรดี",
+      T13: "นางสาวนันทกาญจน์ เรืองกระจาย",
+      T14: "นางสาววรวัลภ์ นิตยระวีวาร"
+    };
+
+    // กำหนด URL ของ Google Apps Script Web App สำหรับดึงข้อมูลกรณีรันแบบ Local (ใส่ URL Web App ของคุณที่นี่)
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyiMzQ02TEhikt1opXCBQs-bL6y5DVKm0VlFBahUFZKR7uxf6K7Mg-OOYRcSMTl617hOA/exec";
+
+    // Unified 14 Teachers Official Database 1/2569 with audited names & correct schedule lists
+    const TEACHERS_DB = [
+      {
+        id: "T01",
+        name: "รามิล ปัญญพัทธ์",
+        advisor: "ม.4/2",
+        room: "155",
+        isSpecialHead: false,
+        image: "👨‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 3, subject: "ท33101", class: "ม.6/2", room: "131" },
+            { period: 4, subject: "ท33101", class: "ม.6/7", room: "141" },
+            { period: 6, subject: "ท33101", class: "ม.6/1", room: "324" },
+            { period: 7, subject: "ท33101", class: "ม.6/8", room: "142" },
+            { period: 8, subject: "ท33101", class: "ม.4/2", room: "155" }
+          ],
+          "อังคาร": [
+            { period: 1, subject: "ท33101", class: "ม.6/5", room: "134" },
+            { period: 6, subject: "ท31101", class: "ม.6/6", room: "135" },
+            { period: 8, subject: "ชุมนุม", class: "-", room: "-" },
+            { period: 9, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท33101", class: "ม.6/8", room: "142" },
+            { period: 2, subject: "ท33101", class: "ม.6/2", room: "131" },
+            { period: 6, subject: "ท33101", class: "ม.6/9", room: "143" },
+            { period: 7, subject: "ท33101", class: "ม.6/6", room: "135" },
+            { period: 8, subject: "ลูกเสือ", class: "ม.1", room: "โดม" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท33101", class: "ม.6/1", room: "324" },
+            { period: 2, subject: "ท33101", class: "ม.6/5", room: "134" },
+            { period: 3, subject: "ท33101", class: "ม.6/7", room: "141" },
+            { period: 7, subject: "ประชุมวิชาการ", class: "-", room: "-" },
+            { period: 8, subject: "ประชุมวิชาการ", class: "-", room: "-" }
+          ],
+          "ศุกร์": [
+            { period: 3, subject: "ท30217", class: "ม.6/5", room: "134" },
+            { period: 6, subject: "ท33101", class: "ม.6/9", room: "143" },
+            { period: 7, subject: "คุณธรรม", class: "ม.4/2", room: "155" },
+            { period: 8, subject: "ก31904", class: "ม.4/2", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T02",
+        name: "วรางคณา ศรีม่วง",
+        advisor: "ม.2/2",
+        room: "246",
+        isSpecialHead: true,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท33101", class: "ม.6/4", room: "133" },
+            { period: 2, subject: "ท23101", class: "ม.3/1", room: "315" },
+            { period: 3, subject: "ท23101", class: "ม.3/10", room: "445" },
+            { period: 7, subject: "ท23101", class: "ม.3/8", room: "434" },
+            { period: 8, subject: "คุณธรรม", class: "ม.2/2", room: "246" }
+          ],
+          "อังคาร": [
+            { period: 1, subject: "ท33101", class: "ม.6/3", room: "132" },
+            { period: 3, subject: "ท23101", class: "ม.3/13", room: "448" },
+            { period: 4, subject: "ท23101", class: "ม.3/10", room: "446" },
+            { period: 9, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท23101", class: "ม.3/13", room: "446" },
+            { period: 2, subject: "ท23101", class: "ม.3/1", room: "315" },
+            { period: 4, subject: "ท23101", class: "ม.3/4", room: "434" },
+            { period: 7, subject: "ลูกเสือ", class: "ม.2", room: "โดม1" },
+            { period: 8, subject: "I22201", class: "ม.2/2", room: "246" },
+            { period: 9, subject: "I22201", class: "ม.2/2", room: "246" }
+          ],
+          "พฤหัสบดี": [
+            { period: 2, subject: "ท33101", class: "ม.6/4", room: "133" },
+            { period: 3, subject: "ท33101", class: "ม.6/3", room: "132" },
+            { period: 6, subject: "ท23101", class: "ม.3/4", room: "437" },
+            { period: 7, subject: "ท23101", class: "ม.3/13", room: "446" }
+          ],
+          "ศุกร์": [
+            { period: 3, subject: "ท23101", class: "ม.3/1", room: "315" },
+            { period: 7, subject: "ท23101", class: "ม.3/10", room: "445" },
+            { period: 8, subject: "ก22904", class: "ม.2/2", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T03",
+        name: "อภิชา  พุ่มพวง",
+        advisor: "ม.2/4",
+        room: "248",
+        isSpecialHead: true,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท23101", class: "ม.3/3", room: "436" },
+            { period: 2, subject: "ท23101", class: "ม.3/6", room: "441" },
+            { period: 3, subject: "ท23101", class: "ม.3/9", room: "444" },
+            { period: 7, subject: "ท23101", class: "ม.3/15", room: "การงาน 3" },
+            { period: 8, subject: "คุณธรรม", class: "ม.2/4", room: "248" },
+            { period: 9, subject: "I22201", class: "ม.2/4", room: "248" }
+          ],
+          "อังคาร": [
+            { period: 1, subject: "ท23101", class: "ม.3/12", room: "447" },
+            { period: 2, subject: "ท23101", class: "ม.3/3", room: "436" },
+            { period: 3, subject: "I22201", class: "ม.2/4", room: "248" },
+            { period: 7, subject: "ท23101", class: "ม.3/9", room: "444" },
+            { period: 9, subject: "PLC", class: "ชุมนุม", room: "หอประชุม" },
+            { period: 10, subject: "PLC", class: "ชุมนุม", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท23101", class: "ม.3/9", room: "444" },
+            { period: 2, subject: "ท23101", class: "ม.3/15", room: "การงาน 2" },
+            { period: 7, subject: "ลูกเสือ", class: "ม.2", room: "โดม" },
+            { period: 8, subject: "ท23101", class: "ม.3/6", room: "441" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท23101", class: "ม.3/3", room: "436" },
+            { period: 2, subject: "ท23101", class: "ม.3/6", room: "441" },
+            { period: 3, subject: "ท23101", class: "ม.3/15", room: "การงาน 2" },
+            { period: 8, subject: "ท23101", class: "ม.3/12", room: "447" }
+          ],
+          "ศุกร์": [
+            { period: 1, subject: "ท23101", class: "ม.3/12", room: "447" },
+            { period: 8, subject: "ก22904", class: "ม.2/4", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T04",
+        name: "กมลวรรณ  สังข์ทอง",
+        advisor: "ม.6/9",
+        room: "143",
+        isSpecialHead: false,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 2, subject: "ท32101", class: "ม.5/9", room: "154" },
+            { period: 3, subject: "ท32101", class: "ม.5/4", room: "151" },
+            { period: 6, subject: "ท32101", class: "ม.5/1", room: "323" },
+            { period: 8, subject: "ส33201", class: "ม.6/9", room: "143" }
+          ],
+          "อังคาร": [
+            { period: 3, subject: "ท32101", class: "ม.5/8", room: "153" },
+            { period: 4, subject: "ท32101", class: "ม.5/1", room: "323" },
+            { period: 6, subject: "ท32101", class: "ม.5/9", room: "154" },
+            { period: 7, subject: "ท32101", class: "ม.5/7", room: "316" },
+            { period: 9, subject: "PLC", class: "ชุมนุม", room: "หอประชุม" },
+            { period: 10, subject: "PLC", class: "ชุมนุม", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท32101", class: "ม.5/5", room: "152" },
+            { period: 2, subject: "ท32101", class: "ม.5/3", room: "145" },
+            { period: 3, subject: "ท32101", class: "ม.5/2", room: "144" },
+            { period: 6, subject: "ลูกเสือ", class: "ม.3", room: "โดม" },
+            { period: 7, subject: "ท32101", class: "ม.5/6", room: "325" },
+            { period: 8, subject: "ท32101", class: "ม.5/4", room: "151" }
+          ],
+          "พฤหัสบดี": [
+            { period: 2, subject: "ท32101", class: "ม.5/5", room: "152" },
+            { period: 3, subject: "เสริมทักษะวิชาการ", class: "ม.6/9", room: "141" },
+            { period: 4, subject: "เสริมทักษะวิชาการ", class: "ม.6/9", room: "141" },
+            { period: 6, subject: "ท32101", class: "ม.5/2", room: "144" },
+            { period: 7, subject: "ท32101", class: "ม.5/7", room: "316" }
+          ],
+          "ศุกร์": [
+            { period: 2, subject: "ท32101", class: "ม.5/8", room: "153" },
+            { period: 3, subject: "ท32101", class: "ม.5/3", room: "145" },
+            { period: 6, subject: "ท32101", class: "ม.5/6", room: "325" },
+            { period: 7, subject: "คุณธรรม", class: "ม.6/9", room: "143" },
+            { period: 8, subject: "ก33904", class: "ม.6/9", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T05",
+        name: "สุริยา  ก่อบุญ",
+        advisor: "ม.3/6",
+        room: "441",
+        isSpecialHead: false,
+        image: "👨‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 3, subject: "ท31101", class: "ม.4/3", room: "161" },
+            { period: 4, subject: "ท31101", class: "ม.4/9", room: "165" },
+            { period: 6, subject: "ท31101", class: "ม.4/7", room: "311" },
+            { period: 7, subject: "ท31101", class: "ม.4/8", room: "164" },
+            { period: 8, subject: "คุณธรรม", class: "ม.3/6", room: "441" }
+          ],
+          "อังคาร": [
+            { period: 3, subject: "ท31101", class: "ม.4/4", room: "162" },
+            { period: 4, subject: "ท31101", class: "ม.4/6", room: "321" },
+            { period: 6, subject: "ท31101", class: "ม.4/9", room: "165" },
+            { period: 7, subject: "ท31101", class: "ม.4/3", room: "161" },
+            { period: 9, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 2, subject: "ท31101", class: "ม.4/4", room: "162" },
+            { period: 3, subject: "ท31101", class: "ม.4/2", room: "155" },
+            { period: 6, subject: "ลูกเสือ", class: "ม.3", room: "โดม" },
+            { period: 7, subject: "เสริมทักษะวิชาการ", class: "ม.3/6", room: "441" },
+            { period: 8, subject: "ท31101", class: "ม.4/6", room: "321" }
+          ],
+          "พฤหัสบดี": [
+            { period: 0, subject: "ท31101", class: "ม.4/1", room: "322" },
+            { period: 4, subject: "ท31101", class: "ม.4/5", room: "163" },
+            { period: 6, subject: "ท31101", class: "ม.4/2", room: "155" },
+            { period: 7, subject: "ท31101", class: "ม.4/8", room: "164" }
+          ],
+          "ศุกร์": [
+            { period: 2, subject: "ท31101", class: "ม.4/5", room: "163" },
+            { period: 4, subject: "ท31101", class: "ม.4/7", room: "311" },
+            { period: 6, subject: "ท31101", class: "ม.4/1", room: "322" },
+            { period: 8, subject: "ก23904", class: "ม.3/6", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T06",
+        name: "ชินกร  ศิริโยธา",
+        advisor: "ม.2/13",
+        room: "432",
+        isSpecialHead: false,
+        image: "👨‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท21101", class: "ม.1/12", room: "242" },
+            { period: 3, subject: "ท21101", class: "ม.1/9", room: "237" },
+            { period: 5, subject: "ท20208", class: "ม.1", room: "233" },
+            { period: 6, subject: "ท20208", class: "ม.1", room: "233" },
+            { period: 7, subject: "I22201", class: "ม.2/13", room: "432" },
+            { period: 8, subject: "คุณธรรม", class: "ม.2/13", room: "432" }
+          ],
+          "อังคาร": [
+            { period: 2, subject: "I22201", class: "ม.2/13", room: "432" },
+            { period: 5, subject: "ท21101", class: "ม.1/15", room: "245" },
+            { period: 7, subject: "ท21101", class: "ม.1/2", room: "221" },
+            { period: 9, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท21101", class: "ม.1/5", room: "233" },
+            { period: 5, subject: "ท21101", class: "ม.1/12", room: "242" },
+            { period: 6, subject: "ท21101", class: "ม.1/2", room: "221" },
+            { period: 7, subject: "ลูกเสือ", class: "ม.2", room: "โดม" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท21101", class: "ม.1/5", room: "233" },
+            { period: 2, subject: "ท21101", class: "ม.1/15", room: "245" },
+            { period: 6, subject: "ส22201", class: "ม.2/13", room: "432" },
+            { period: 7, subject: "ท21101", class: "ม.1/9", room: "237" },
+            { period: 8, subject: "ท21101", class: "ม.1/12", room: "242" }
+          ],
+          "ศุกร์": [
+            { period: 1, subject: "ท21101", class: "ม.1/2", room: "221" },
+            { period: 5, subject: "ท21101", class: "ม.1/9", room: "237" },
+            { period: 6, subject: "ท21101", class: "ม.1/5", room: "233" },
+            { period: 7, subject: "ท21101", class: "ม.1/15", room: "245" },
+            { period: 8, subject: "ก22904", class: "ม.2/13", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T07",
+        name: "ชื่นฤดี  หรับหลี",
+        advisor: "ม.3/5",
+        room: "438",
+        isSpecialHead: false,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 2, subject: "ท22101", class: "ม.2/13", room: "31" },
+            { period: 6, subject: "ท22101", class: "ม.2/10", room: "426" },
+            { period: 7, subject: "ท22101", class: "ม.2/7", room: "423" },
+            { period: 8, subject: "คุณธรรม", class: "ม.3/5", room: "438" }
+          ],
+          "อังคาร": [
+            { period: 2, subject: "ส23201", class: "ม.3/5", room: "438" },
+            { period: 3, subject: "ท22101", class: "ม.2/10", room: "426" },
+            { period: 5, subject: "ท22101", class: "ม.2/1", room: "314" },
+            { period: 7, subject: "ท22101", class: "ม.2/4", room: "248" },
+            { period: 9, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 2, subject: "ท22101", class: "ม.2/13", room: "432" },
+            { period: 5, subject: "ท22101", class: "ม.2/7", room: "423" },
+            { period: 6, subject: "ลูกเสือ", class: "ม.3", room: "โดม" },
+            { period: 7, subject: "เสริมทักษะวิชาการ", class: "ม.3/5", room: "438" },
+            { period: 8, subject: "ท22101", class: "ม.2/1", room: "314" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท22101", class: "ม.2/10", room: "426" },
+            { period: 5, subject: "ท22101", class: "ม.2/4", room: "248" },
+            { period: 7, subject: "ท22101", class: "ม.2/1", room: "314" },
+            { period: 8, subject: "ท22101", class: "ม.2/13", room: "432" }
+          ],
+          "ศุกร์": [
+            { period: 3, subject: "ท20212", class: "ม.3", room: "435" },
+            { period: 4, subject: "ท20212", class: "ม.3", room: "435" },
+            { period: 6, subject: "ท22101", class: "ม.2/4", room: "248" },
+            { period: 7, subject: "ท22101", class: "ม.2/7", room: "423" },
+            { period: 8, subject: "ก23904", class: "ม.3/5", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T08",
+        name: "วนิชญา  เชียงน้อย",
+        advisor: "ม.3/13",
+        room: "448",
+        isSpecialHead: false,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท22101", class: "ม.2/2", room: "246" },
+            { period: 2, subject: "ท22101", class: "ม.2/14", room: "433" },
+            { period: 3, subject: "ท22101", class: "ม.2/11", room: "427" },
+            { period: 8, subject: "คุณธรรม", class: "ม.3/13", room: "448" }
+          ],
+          "อังคาร": [
+            { period: 1, subject: "ส23201", class: "ม.3/13", room: "446" },
+            { period: 7, subject: "ท22101", class: "ม.2/8", room: "424" },
+            { period: 9, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท22101", class: "ม.2/8", room: "424" },
+            { period: 2, subject: "ท22101", class: "ม.2/5", room: "421" },
+            { period: 5, subject: "ท22101", class: "ม.2/2", room: "246" },
+            { period: 6, subject: "ลูกเสือ", class: "ม.3", room: "โดม" },
+            { period: 7, subject: "เสริมทักษะวิชาการ", class: "ม.3/13", room: "446" },
+            { period: 8, subject: "ท22101", class: "ม.2/14", room: "433" }
+          ],
+          "พฤหัสบดี": [
+            { period: 2, subject: "ท22101", class: "ม.2/8", room: "424" },
+            { period: 3, subject: "ท22101", class: "ม.2/5", room: "421" },
+            { period: 6, subject: "ท22101", class: "ม.2/2", room: "246" },
+            { period: 7, subject: "ท22101", class: "ม.2/11", room: "427" },
+            { period: 8, subject: "ท22101", class: "ม.2/14", room: "433" }
+          ],
+          "ศุกร์": [
+            { period: 6, subject: "ท22101", class: "ม.2/5", room: "421" },
+            { period: 7, subject: "ท22101", class: "ม.2/11", room: "427" },
+            { period: 8, subject: "ก23904", class: "ม.3/13", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T09",
+        name: "อิงอร  สิทธิจินดา",
+        advisor: "ม.3/14",
+        room: "การงาน 1",
+        isSpecialHead: false,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท22101", class: "ม.2/6", room: "422" },
+            { period: 3, subject: "ท22101", class: "ม.2/3", room: "247" },
+            { period: 4, subject: "ส23201", class: "ม.3/14", room: "การงาน 1" },
+            { period: 7, subject: "ท22101", class: "ม.2/9", room: "425" },
+            { period: 8, subject: "คุณธรรม", class: "ม.3/14", room: "การงาน 1" }
+          ],
+          "อังคาร": [
+            { period: 1, subject: "ท22101", class: "ม.2/3", room: "247" },
+            { period: 3, subject: "ท22101", class: "ม.2/15", room: "434" },
+            { period: 7, subject: "เสริมทักษะวิชาการ", class: "ม.3/14", room: "การงาน 1" },
+            { period: 8, subject: "ชุมนุม", class: "-", room: "-" },
+            { period: 9, subject: "15.10 - 17.10 (PLC)", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10 (PLC)", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 5, subject: "ท22101", class: "ม.2/12", room: "431" },
+            { period: 6, subject: "ลูกเสือ", class: "ม.3", room: "โดม" },
+            { period: 8, subject: "ท22101", class: "ม.2/15", room: "434" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท22101", class: "ม.2/6", room: "422" },
+            { period: 2, subject: "ท22101", class: "ม.2/12", room: "431" },
+            { period: 5, subject: "ท20213", class: "ม.1", room: "233" },
+            { period: 6, subject: "ท20213", class: "ม.1", room: "233" },
+            { period: 7, subject: "ท22101", class: "ม.2/9", room: "425" }
+          ],
+          "ศุกร์": [
+            { period: 2, subject: "ท22101", class: "ม.2/9", room: "425" },
+            { period: 3, subject: "ท22101", class: "ม.2/15", room: "434" },
+            { period: 5, subject: "ท22101", class: "ม.2/3", room: "247" },
+            { period: 6, subject: "ท22101", class: "ม.2/6", room: "422" },
+            { period: 7, subject: "ท22101", class: "ม.2/12", room: "431" },
+            { period: 8, subject: "ก22904", class: "ม.3/14", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T10",
+        name: "เฉลิมชาติ  ภูผันผิน",
+        advisor: "ม.2/15",
+        room: "434",
+        isSpecialHead: false,
+        image: "👨‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท23101", class: "ม.3/14", room: "การงาน 1" },
+            { period: 2, subject: "I22201", class: "ม.2/15", room: "434" },
+            { period: 4, subject: "ท23101", class: "ม.3/5", room: "438" },
+            { period: 7, subject: "ท23101", class: "ม.3/8", room: "443" },
+            { period: 8, subject: "คุณธรรม", class: "ม.2/15", room: "434" }
+          ],
+          "อังคาร": [
+            { period: 2, subject: "ท23101", class: "ม.3/7", room: "442" },
+            { period: 4, subject: "ท23101", class: "ม.3/8", room: "443" },
+            { period: 7, subject: "ท23101", class: "ม.3/2", room: "435" },
+            { period: 8, subject: "ชุมนุม", class: "-", room: "-" },
+            { period: 9, subject: "15.10 - 17.10 (PLC)", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "15.10 - 17.10 (PLC)", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท23101", class: "ม.3/11", room: "446" },
+            { period: 2, subject: "ท23101", class: "ม.3/14", room: "การงาน 1" },
+            { period: 5, subject: "เสริมทักษะวิชาการ", class: "ม.2/15", room: "435" },
+            { period: 7, subject: "ลูกเสือ", class: "ม.2", room: "โดม" },
+            { period: 8, subject: "ท23101", class: "ม.3/2", room: "435" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท23101", class: "ม.3/5", room: "438" },
+            { period: 2, subject: "I22201", class: "ม.2/15", room: "434" },
+            { period: 3, subject: "ท23101", class: "ม.3/2", room: "435" },
+            { period: 4, subject: "ท23101", class: "ม.3/7", room: "447" },
+            { period: 7, subject: "ท23101", class: "ม.3/11", room: "446" },
+            { period: 8, subject: "ท23101", class: "ม.3/14", room: "การงาน 1" }
+          ],
+          "ศุกร์": [
+            { period: 1, subject: "ท23101", class: "ม.3/7", room: "442" },
+            { period: 2, subject: "ท23101", class: "ม.3/5", room: "438" },
+            { period: 6, subject: "ท23101", class: "ม.3/8", room: "443" },
+            { period: 7, subject: "ท23101", class: "ม.3/11", room: "446" },
+            { period: 8, subject: "ก22904", class: "ม.2/15", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T11",
+        name: "จิรวัฒน์  ศรีวโร",
+        advisor: "ม.2/10",
+        room: "426",
+        isSpecialHead: false,
+        image: "👨‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท21101", class: "ม.1/8", room: "236" },
+            { period: 2, subject: "ท21101", class: "ม.1/11", room: "241" },
+            { period: 3, subject: "ท21101", class: "ม.1/14", room: "244" },
+            { period: 5, subject: "ท21101", class: "ม.1/3", room: "231" },
+            { period: 8, subject: "คุณธรรม", class: "ม.2/10", room: "426" }
+          ],
+          "อังคาร": [
+            { period: 2, subject: "I22201", class: "ม.2/10", room: "426" },
+            { period: 5, subject: "ท21101", class: "ม.1/14", room: "244" },
+            { period: 6, subject: "ท21101", class: "ม.1/3", room: "231" },
+            { period: 8, subject: "ชุมนุม", class: "ชุมนุม", room: "-" },
+            { period: 9, subject: "PLC", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "PLC", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท21101", class: "ม.1/4", room: "448" },
+            { period: 2, subject: "ท21101", class: "ม.1/8", room: "236" },
+            { period: 3, subject: "ท30215", class: "ม.5/5", room: "152" },
+            { period: 6, subject: "ท21101", class: "ม.1/11", room: "241" },
+            { period: 7, subject: "ลูกเสือ", class: "ม.2", room: "โดม" },
+            { period: 8, subject: "I22201", class: "ม.2/10", room: "426" }
+          ],
+          "พฤหัสบดี": [
+            { period: 2, subject: "ส22201", class: "ม.2/10", room: "426" },
+            { period: 3, subject: "ท21101", class: "ม.1/14", room: "244" },
+            { period: 8, subject: "ท21101", class: "ม.1/4", room: "232" }
+          ],
+          "ศุกร์": [
+            { period: 2, subject: "ท21101", class: "ม.1/8", room: "236" },
+            { period: 5, subject: "ท21101", class: "ม.1/3", room: "231" },
+            { period: 6, subject: "ท21101", class: "ม.1/11", room: "241" },
+            { period: 7, subject: "ท21101", class: "ม.1/4", room: "232" },
+            { period: 8, subject: "ก21904", class: "ม.2/10", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T12",
+        name: "ศุภนุช  บุตรดี",
+        advisor: "ม.3/3",
+        room: "436",
+        isSpecialHead: false,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท21101", class: "ม.1/1", room: "313" },
+            { period: 3, subject: "ท21101", class: "ม.1/10", room: "238" },
+            { period: 7, subject: "ท21101", class: "ม.1/13", room: "243" },
+            { period: 8, subject: "คุณธรรม", class: "ม.3/3", room: "436" }
+          ],
+          "อังคาร": [
+            { period: 1, subject: "ท21101", class: "ม.1/6", room: "238" },
+            { period: 2, subject: "ท21101", class: "ม.1/7", room: "235" },
+            { period: 5, subject: "ท21101", class: "ม.1/13", room: "243" },
+            { period: 8, subject: "ชุมนุม", class: "ชุมนุม", room: "-" },
+            { period: 9, subject: "PLC", class: "PLC", room: "หอประชุม" },
+            { period: 10, subject: "PLC", class: "PLC", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 1, subject: "ท21101", class: "ม.1/10", room: "238" },
+            { period: 2, subject: "ท21101", class: "ม.1/1", room: "313" },
+            { period: 5, subject: "ท21101", class: "ม.1/13", room: "243" },
+            { period: 6, subject: "ลูกเสือ", class: "ม.3", room: "โดม" },
+            { period: 7, subject: "ท21101", class: "ม.1/6", room: "234" },
+            { period: 8, subject: "เสริมทักษะวิชาการ", class: "ม.3/3", room: "436" }
+          ],
+          "พฤหัสบดี": [
+            { period: 2, subject: "ส23201", class: "ม.3/3", room: "436" },
+            { period: 3, subject: "ท21101", class: "ม.1/7", room: "235" },
+            { period: 7, subject: "ท21101", class: "ม.1/6", room: "234" },
+            { period: 8, subject: "ท30213", class: "ม.4/5", room: "163" }
+          ],
+          "ศุกร์": [
+            { period: 2, subject: "ท21101", class: "ม.1/1", room: "313" },
+            { period: 3, subject: "ท21101", class: "ม.1/10", room: "238" },
+            { period: 5, subject: "ท21101", class: "ม.1/7", room: "235" },
+            { period: 8, subject: "ก23904", class: "ม.3/3", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T13",
+        name: "นันทกาญจน์ เรืองกระจาย",
+        advisor: "ม.2/14",
+        room: "433",
+        isSpecialHead: false,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท20214", class: "ม.1/13", room: "243" },
+            { period: 3, subject: "ท20214", class: "ม.1/6", room: "234" },
+            { period: 6, subject: "ส22201", class: "ม.2/14", room: "433" },
+            { period: 7, subject: "ท20214", class: "ม.1/10", room: "238" },
+            { period: 8, subject: "คุณธรรม", class: "ม.2/14", room: "244" }
+          ],
+          "อังคาร": [
+            { period: 6, subject: "ท20214", class: "ม.1/12", room: "242" },
+            { period: 7, subject: "ท20214", class: "ม.1/8", room: "236" },
+            { period: 8, subject: "ชุมนุม", class: "-", room: "-" },
+            { period: 9, subject: "PLC", class: "-", room: "หอประชุม" },
+            { period: 10, subject: "PLC", class: "-", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 2, subject: "I22201", class: "ม.2/14", room: "433" },
+            { period: 3, subject: "ท20205", class: "ม.3", room: "441" },
+            { period: 4, subject: "ท20205", class: "ม.3", room: "441" },
+            { period: 6, subject: "ท20214", class: "ม.1/3", room: "231" },
+            { period: 7, subject: "ลูกเสือ", class: "ม.2", room: "โดม" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท20214", class: "ม.1/2", room: "221" },
+            { period: 2, subject: "I22201", class: "ม.2/14", room: "433" },
+            { period: 5, subject: "ท20214", class: "ม.1/4", room: "232" },
+            { period: 6, subject: "ท20214", class: "ม.1/1", room: "313" },
+            { period: 7, subject: "ท20214", class: "ม.1/5", room: "233" }
+          ],
+          "ศุกร์": [
+            { period: 1, subject: "ท20214", class: "ม.1/9", room: "237" },
+            { period: 3, subject: "ท20214", class: "ม.1/7", room: "235" },
+            { period: 5, subject: "ท20214", class: "ม.1/15", room: "245" },
+            { period: 6, subject: "ท20214", class: "ม.1/14", room: "244" },
+            { period: 7, subject: "ท20214", class: "ม.1/11", room: "241" },
+            { period: 8, subject: "ก22904", class: "ม.2/14", room: "โดม" }
+          ]
+        }
+      },
+      {
+        id: "T14",
+        name: "วรวัลภ์ นิตยระวีวาร",
+        advisor: "ม.2/15",
+        room: "434",
+        isSpecialHead: false,
+        image: "👩‍🏫",
+        schedule: {
+          "จันทร์": [
+            { period: 1, subject: "ท20216", class: "ม.2/5", room: "421" },
+            { period: 2, subject: "I22201", class: "ม.2/14", room: "433" },
+            { period: 3, subject: "ท20216", class: "ม.2/13", room: "432" },
+            { period: 7, subject: "ท20216", class: "ม.2/10", room: "426" },
+            { period: 8, subject: "คุณธรรม", class: "ม.2/15", room: "434" },
+            { period: 9, subject: "ท20216", class: "ม.2/1", room: "314" }
+          ],
+          "อังคาร": [
+            { period: 1, subject: "ท20216", class: "ม.2/9", room: "425" },
+            { period: 5, subject: "ท20210", class: "ม.2", room: "ห้องสมุด" },
+            { period: 6, subject: "ท20210", class: "ม.2", room: "ห้องสมุด" },
+            { period: 7, subject: "ท20216", class: "ม.2/15", room: "433" },
+            { period: 8, subject: "ชุมนุม", class: "-", room: "-" },
+            { period: 9, subject: "PLC", class: "-", room: "หอประชุม" },
+            { period: 10, subject: "PLC", class: "-", room: "หอประชุม" }
+          ],
+          "พุธ": [
+            { period: 6, subject: "ท20216", class: "ม.2/4", room: "248" },
+            { period: 7, subject: "ลูกเสือ", class: "ม.2", room: "โดม" },
+            { period: 8, subject: "ท20216", class: "ม.2/6", room: "442" }
+          ],
+          "พฤหัสบดี": [
+            { period: 1, subject: "ท20216", class: "ม.2/7", room: "423" },
+            { period: 2, subject: "I22201", class: "ม.2/15", room: "434" },
+            { period: 3, subject: "ท20216", class: "ม.2/11", room: "427" },
+            { period: 8, subject: "ท20216", class: "ม.2/2", room: "246" }
+          ],
+          "ศุกร์": [
+            { period: 1, subject: "ท20216", class: "ม.2/8", room: "424" },
+            { period: 3, subject: "ท20216", class: "ม.2/14", room: "434" },
+            { period: 5, subject: "ท20216", class: "ม.2/12", room: "431" },
+            { period: 6, subject: "ส22201", class: "ม.2/15", room: "434" },
+            { period: 7, subject: "ท20216", class: "ม.2/3", room: "247" },
+            { period: 8, subject: "ก22904", class: "ม.2/15", room: "โดม" }
+          ]
+        }
+      }
+    ];
+
+    // วันอังคารคาบ 8-10 เป็นช่วงกิจกรรม/ประชุม ไม่ต้องนำไปจัดสอนแทน
+    TEACHERS_DB.forEach(teacher => {
+      teacher.schedule["อังคาร"] = (teacher.schedule["อังคาร"] || [])
+        .filter(slot => ![8, 9, 10].includes(Number(slot.period)));
+    });
+
+    const PERIOD_TIMES = {
+      0: "07.40-08.30 น.",
+      1: "08.30-09.20 น.",
+      2: "09.20-10.10 น.",
+      3: "10.10-11.00 น.",
+      4: "11.00-11.50 น.",
+      5: "11.50-12.40 น.",
+      6: "12.40-13.30 น.",
+      7: "13.30-14.20 น.",
+      8: "14.20-15.10 น.",
+      9: "15.10-16.00 น.",
+      10: "16.00-17.00 น."
+    };
+
+    const THAI_DAYS = ["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"];
+
+    // Format an ISO date string (YYYY-MM-DD) into short Thai form e.g. "15 มิ.ย. 2569"
+    const THAI_MONTHS_SHORT = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+    const THAI_MONTHS_FULL = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+    function formatThaiDateShort(dateStr) {
+      if (!dateStr) return "-";
+      const parts = dateStr.split("-");
+      if (parts.length !== 3) return dateStr;
+      const [y, m, d] = parts;
+      const day = parseInt(d, 10);
+      const monthIdx = parseInt(m, 10) - 1;
+      const buddhistYear = parseInt(y, 10) + 543;
+      const month = THAI_MONTHS_SHORT[monthIdx] || "";
+      if (!day || !month || !buddhistYear) return dateStr;
+      return `${day} ${month} ${buddhistYear}`;
+    }
+
+    function formatThaiMonthYear(monthValue) {
+      if (!/^\d{4}-\d{2}$/.test(monthValue || "")) return "เดือนที่เลือก";
+      const [year, month] = monthValue.split("-").map(Number);
+      return `${THAI_MONTHS_FULL[month - 1] || ""} ${year + 543}`;
+    }
+
+    // Group flat database rows into structured history object array
+    function groupRowsToHistory(flatRows) {
+      if (!Array.isArray(flatRows)) return [];
+      const groups = {};
+      
+      flatRows.forEach(row => {
+        const id = row.id;
+        if (!id) return;
+        
+        if (!groups[id]) {
+          let dateStr = row.date;
+          if (dateStr && dateStr.includes("T")) {
+            dateStr = dateStr.split("T")[0];
+          }
+          
+          groups[id] = {
+            id: id,
+            date: dateStr,
+            day: row.day || "",
+            absentTeacherId: row.absentTeacherId || "",
+            absentTeacherName: row.absentTeacherName || "ไม่ระบุ",
+            reason: row.reason || "",
+            workType: row.workType || "ภาษาไทย",
+            substitutes: []
+          };
+        }
+        
+        groups[id].substitutes.push({
+          period: parseInt(row.period),
+          subject: row.subject || "",
+          subjectCode: row.subjectCode || "",
+          class: row.class || "",
+          room: row.room || "",
+          subTeacherId: row.subTeacherId || "",
+          subTeacherName: row.subTeacherName || "ไม่ระบุ"
+        });
+      });
+      
+      return Object.values(groups).sort((a, b) => b.id.localeCompare(a.id));
+    }
+
+    function App() {
+      const [activeTab, setActiveTab] = useState("planner");
+      const [history, setHistory] = useState(() => {
+        const local = localStorage.getItem("sub_history");
+        return local ? JSON.parse(local) : [];
+      });
+
+      // State for Planner Form
+      const [selectedDate, setSelectedDate] = useState(() => {
+        const d = new Date();
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      });
+      const [selectedDay, setSelectedDay] = useState("จันทร์");
+      const [absentTeacherId, setAbsentTeacherId] = useState("T01");
+      const [leaveReason, setLeaveReason] = useState("ลาป่วย");
+      const [plannerMode, setPlannerMode] = useState("thai");
+      const [academicPeriod, setAcademicPeriod] = useState("1");
+      const [academicTeacherId, setAcademicTeacherId] = useState("");
+      const [summaryMonth, setSummaryMonth] = useState(() => selectedDate.slice(0, 7));
+      
+      // Current workspace draft of selections for each period
+      const [currentSelections, setCurrentSelections] = useState({});
+
+      // Print Slip Modal State
+      const [printRecord, setPrintRecord] = useState(null);
+
+      // State for Custom Safety Confirm Deletion
+      const [deleteTargetId, setDeleteTargetId] = useState(null);
+
+      // State for changing the assigned substitute on an existing history row
+      const [editSubstituteTarget, setEditSubstituteTarget] = useState(null);
+      const [replacementTeacherId, setReplacementTeacherId] = useState("");
+
+      // State for Beautiful Custom Toast Notifications
+      const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+
+      // Network Loading State
+      const [isLoading, setIsLoading] = useState(false);
+
+      // ตรวจสอบว่ากำลังรันอยู่บน Google Apps Script Web App หรือไม่
+      const isAppsScriptEnv = typeof google !== "undefined" && google.script && google.script.run;
+
+      // Helper to send POST requests / Server actions
+      const sendApiRequest = async (payload) => {
+        if (isAppsScriptEnv) {
+          return new Promise((resolve, reject) => {
+            if (payload.action === "save") {
+              google.script.run
+                .withSuccessHandler(resolve)
+                .withFailureHandler(reject)
+                .saveSubstitution(payload.data);
+            } else if (payload.action === "updateSubstitute") {
+              google.script.run
+                .withSuccessHandler(resolve)
+                .withFailureHandler(reject)
+                .updateSubstituteTeacher(
+                  payload.id,
+                  payload.period,
+                  payload.subTeacherId,
+                  payload.subTeacherName
+                );
+            } else if (payload.action === "delete") {
+              google.script.run
+                .withSuccessHandler(resolve)
+                .withFailureHandler(reject)
+                .deleteSubstitution(payload.id);
+            } else {
+              reject(new Error("Unknown action"));
+            }
+          });
+        } else {
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return await response.json();
+        }
+      };
+
+      // Fetch history from Google Sheets via Apps Script Web App on load
+      useEffect(() => {
+        const fetchHistory = async () => {
+          setIsLoading(true);
+          try {
+            let data;
+            if (isAppsScriptEnv) {
+              data = await new Promise((resolve, reject) => {
+                google.script.run
+                  .withSuccessHandler(resolve)
+                  .withFailureHandler(reject)
+                  .getHistoryData();
+              });
+            } else {
+              // หากรันภายนอก ให้ดึงข้อมูลผ่าน HTTP GET พร้อมใส่ action=getHistory
+              const response = await fetch(APPS_SCRIPT_URL + (APPS_SCRIPT_URL.includes("?") ? "&" : "?") + "action=getHistory");
+              if (!response.ok) throw new Error("Network response was not ok");
+              data = await response.json();
+            }
+
+            if (Array.isArray(data)) {
+              const structuredData = groupRowsToHistory(data);
+              setHistory(structuredData);
+              localStorage.setItem("sub_history", JSON.stringify(structuredData));
+            } else if (data && data.status === "error") {
+              console.error("Apps Script error:", data.message);
+            }
+          } catch (error) {
+            console.error("Failed to fetch history, falling back to local cache:", error);
+            // Check if history is currently empty/seed to show fallback toast
+            const local = localStorage.getItem("sub_history");
+            if (!local) {
+              showToast("เชื่อมต่อฐานข้อมูลชีทไม่สำเร็จ กำลังใช้ข้อมูลจำลองชั่วคราว", "warning");
+            }
+          } finally {
+            setIsLoading(false);
+          }
+        };
+
+        fetchHistory();
+      }, []);
+
+      // Sync History to LocalStorage
+      useEffect(() => {
+        localStorage.setItem("sub_history", JSON.stringify(history));
+      }, [history]);
+
+      // Trigger Custom Toast Notification Helper
+      const showToast = (message, type = "success") => {
+        setToast({ show: true, message, type });
+        setTimeout(() => {
+          setToast({ show: false, message: "", type: "success" });
+        }, 3500);
+      };
+
+      // Automatically derive Day of Week from Date Picker
+      useEffect(() => {
+        if (selectedDate) {
+          const dateObj = new Date(selectedDate);
+          const dayIndex = dateObj.getDay(); // 0 = Sunday, 1 = Monday ... 5 = Friday
+          if (dayIndex >= 1 && dayIndex <= 5) {
+            const thaiDaysMapping = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+            setSelectedDay(thaiDaysMapping[dayIndex]);
+          }
+        }
+      }, [selectedDate]);
+
+      // Accumulate Substitution Counts across all history
+      const subCounts = useMemo(() => {
+        const counts = {};
+        TEACHERS_DB.forEach(t => {
+          counts[t.id] = 0;
+        });
+        history.forEach(record => {
+          record.substitutes.forEach(sub => {
+            if (counts[sub.subTeacherId] !== undefined) {
+              counts[sub.subTeacherId] += 1;
+            }
+          });
+        });
+        return counts;
+      }, [history]);
+
+      // Flatten history into individual rows for the "สรุปการสอนแทน" tab,
+      // keeping only substitutions that actually happened (excludes "แลกคาบแล้ว" / __SWAPPED__ entries)
+      const summaryRows = useMemo(() => {
+        const rows = [];
+        history.forEach(record => {
+          (record.substitutes || []).forEach(sub => {
+            if (sub.subTeacherId === "__SWAPPED__" || sub.subTeacherName === "แลกคาบแล้ว") return;
+            rows.push({
+              rowKey: record.id + "-" + sub.period,
+              date: record.date,
+              day: record.day,
+              absentTeacherName: record.absentTeacherName,
+              reason: record.reason,
+              period: sub.period,
+              subject: sub.subject,
+              class: sub.class,
+              room: sub.room,
+              subTeacherName: sub.subTeacherName
+            });
+          });
+        });
+        return rows;
+      }, [history]);
+
+      const academicSubCounts = useMemo(() => {
+        const counts = {};
+        TEACHERS_DB.forEach(t => { counts[t.id] = 0; });
+        history.forEach(record => {
+          if (record.workType !== "วิชาการ" && record.absentTeacherId !== "000") return;
+          (record.substitutes || []).forEach(sub => {
+            if (counts[sub.subTeacherId] !== undefined) counts[sub.subTeacherId] += 1;
+          });
+        });
+        return counts;
+      }, [history]);
+
+      const monthlySummaryRows = useMemo(() => {
+        return summaryRows
+          .filter(row => String(row.date || "").slice(0, 7) === summaryMonth)
+          .sort((a, b) => String(a.date).localeCompare(String(b.date)) || Number(a.period) - Number(b.period));
+      }, [summaryRows, summaryMonth]);
+
+      const summaryMonthOptions = useMemo(() => {
+        const years = new Set([Number(selectedDate.slice(0, 4))]);
+        summaryRows.forEach(row => {
+          const year = Number(String(row.date || "").slice(0, 4));
+          if (year) years.add(year);
+        });
+        return [...years]
+          .sort((a, b) => a - b)
+          .flatMap(year => Array.from({ length: 12 }, (_, index) => `${year}-${String(index + 1).padStart(2, "0")}`));
+      }, [summaryRows, selectedDate]);
+
+      const summaryMonthLabel = formatThaiMonthYear(summaryMonth);
+      const [summaryPrintYear, summaryPrintMonth] = summaryMonth.split("-").map(Number);
+      const summaryMonthFormLabel = `${THAI_MONTHS_FULL[summaryPrintMonth - 1] || ""} พ.ศ. ${summaryPrintYear + 543}`;
+
+      const monthlyTeacherCounts = useMemo(() => {
+        const counts = {};
+        TEACHERS_DB.forEach(teacher => { counts[teacher.id] = 0; });
+        history.forEach(record => {
+          if (String(record.date || "").slice(0, 7) !== summaryMonth) return;
+          (record.substitutes || []).forEach(sub => {
+            if (sub.subTeacherId === "__SWAPPED__" || sub.subTeacherName === "แลกคาบแล้ว") return;
+            if (counts[sub.subTeacherId] !== undefined) counts[sub.subTeacherId] += 1;
+          });
+        });
+        return counts;
+      }, [history, summaryMonth]);
+
+      const monthlyTeacherTotal = Object.values(monthlyTeacherCounts).reduce((sum, count) => sum + count, 0);
+
+      // Get the schedule of the currently selected absent teacher for the selected day
+      const currentAbsentSchedule = useMemo(() => {
+        if (!absentTeacherId || !selectedDay) return [];
+        const teacher = TEACHERS_DB.find(t => t.id === absentTeacherId);
+        const sched = teacher ? (teacher.schedule[selectedDay] || []) : [];
+
+        return sched.filter(item => {
+          const sub = item.subject || "";
+
+          // คาบ 8-10 ของวันอังคารไม่อยู่ในขอบเขตการจัดสอนแทน
+          if (selectedDay === "อังคาร" && [8, 9, 10].includes(Number(item.period))) return false;
+
+          // 1. คาบโฮมรูม
+          if (sub.includes("โฮมรูม")) return false;
+          // 2. คาบคุณธรรม
+          if (sub.includes("คุณธรรม")) return false;
+          // 3. คาบลูกเสือ / เนตรนารี
+          if (sub.includes("ลูกเสือ") || sub.includes("เนตรนารี")) return false;
+          // 4. คาบ IS (วิชาตระกูล I..... หรือวิชาที่ขึ้นต้นด้วย 1 เป็นรหัส typo)
+          if (sub.startsWith("I") || sub.startsWith("i") || sub.startsWith("1")) return false;
+          // 5. คาบกิจกรรมพัฒนาผู้เรียน / แนะแนว (ขึ้นต้นด้วย ก..... เช่น ก22904)
+          if (sub.startsWith("ก") && sub.length > 1) return false;
+          // 6. คาบประชุม / PLC / ชุมนุม
+          if (sub.includes("ประชุม") || sub.toUpperCase().includes("PLC") || sub.includes("ชุมนุม")) return false;
+
+          return true;
+        }).sort((a, b) => a.period - b.period);
+      }, [absentTeacherId, selectedDay]);
+
+      // Recommend substitutes using availability, daily load and compact schedules.
+      const getRecommendationsForPeriod = (period, currentDayDraft) => {
+        if (!absentTeacherId) return [];
+
+        let candidates = TEACHERS_DB.filter(t => t.id !== absentTeacherId);
+
+        return candidates.map(teacher => {
+          const daySchedule = teacher.schedule[selectedDay] || [];
+          const regularPeriods = new Set(daySchedule.map(slot => slot.period));
+          const draftSubPeriods = Object.entries(currentDayDraft)
+            .filter(([p, id]) => parseInt(p) !== period && id === teacher.id && id !== "__SWAPPED__")
+            .map(([p]) => parseInt(p));
+          const occupiedBefore = new Set([...regularPeriods, ...draftSubPeriods]);
+          const isTeaching = regularPeriods.has(period);
+          const isFree = !isTeaching;
+          const alreadyAssignedToday = draftSubPeriods.length > 0;
+          const dailyRegularLoad = regularPeriods.size;
+          const draftSubCount = draftSubPeriods.length;
+          const dailyTotalLoad = dailyRegularLoad + draftSubCount;
+
+          const crossesLunchBreak = (a, b) => (a === 5 && b === 6) || (a === 6 && b === 5);
+          const adjacentPeriods = [period - 1, period + 1]
+            .filter(p => p >= 0 && p <= 10 && !crossesLunchBreak(period, p));
+          const adjacentRegular = adjacentPeriods.filter(p => regularPeriods.has(p));
+          const adjacentSub = adjacentPeriods.filter(p => draftSubPeriods.includes(p));
+          const bridgesGap = adjacentPeriods.length === 2 && adjacentPeriods.every(p => occupiedBefore.has(p));
+
+          const occupiedAfter = new Set([...occupiedBefore, period]);
+          let maxConsecutiveAfter = 0;
+          let currentRun = 0;
+          for (let p = 0; p <= 10; p++) {
+            if (occupiedAfter.has(p)) {
+              currentRun++;
+              maxConsecutiveAfter = Math.max(maxConsecutiveAfter, currentRun);
+            } else {
+              currentRun = 0;
+            }
+          }
+
+          let score = isFree ? 1000 : -10000;
+          let reasons = [];
+
+          if (!isFree) {
+            reasons.push("❌ ติดสอนคาบนี้ (จัดแทนได้หากจำเป็น)");
+          } else {
+            reasons.push("ว่างคาบนี้");
+          }
+
+          score -= dailyRegularLoad * 22;
+          score -= draftSubCount * 28;
+          reasons.push(`ภาระวันนี้ ${dailyTotalLoad} คาบ (ประจำ ${dailyRegularLoad} + แทน ${draftSubCount})`);
+
+          if (bridgesGap) {
+            score += 110;
+            reasons.push("เชื่อมคาบว่างระหว่างคาบสอน ลดคาบเว้นคาบ");
+          } else if (adjacentSub.length > 0) {
+            score += 85;
+            reasons.push(`ต่อเนื่องกับคาบสอนแทน ${adjacentSub.join(", ")}`);
+          } else if (adjacentRegular.length > 0) {
+            score += 55;
+            reasons.push(`ต่อเนื่องกับคาบสอนประจำ ${adjacentRegular.join(", ")}`);
+          } else if (alreadyAssignedToday) {
+            score -= 90;
+            reasons.push("หลีกเลี่ยงการจัดสอนแทนแบบคาบเว้นคาบ");
+          }
+
+          if (maxConsecutiveAfter >= 4) {
+            score -= (maxConsecutiveAfter - 3) * 95;
+            reasons.push(`ภาระต่อเนื่องจะเป็น ${maxConsecutiveAfter} คาบ`);
+          }
+
+          if (teacher.isSpecialHead) {
+            score -= 55;
+            reasons.push("⭐⭐ มีภารกิจหัวหน้างานพิเศษ (ตัวเลือกท้ายสุด)");
+          }
+
+          const prevSubsCount = subCounts[teacher.id] || 0;
+          score -= (prevSubsCount * 12);
+          if (prevSubsCount > 0) {
+            reasons.push(`เคยสอนแทนสะสม ${prevSubsCount} คาบ`);
+          } else {
+            reasons.push("ยังไม่เคยช่วยสอนแทน");
+          }
+
+          const teachesPeriod5 = regularPeriods.has(5) || currentDayDraft[5] === teacher.id;
+          const teachesPeriod6 = regularPeriods.has(6) || currentDayDraft[6] === teacher.id;
+          const isLunchConflict = (period === 5 && teachesPeriod6) || (period === 6 && teachesPeriod5);
+
+          if (isLunchConflict) {
+            score -= 200;
+            reasons.push("🍔 ต้องการเวลาพักเที่ยง (ติดสอนคาบข้างเคียง)");
+          }
+
+          const currentClass = currentAbsentSchedule.find(c => c.period === period);
+          if (currentClass) {
+            const absentGrade = currentClass.class.split('/')[0];
+            const teachesSameGrade = (Object.values(teacher.schedule || {}).flat())
+              .some(c => c.class.startsWith(absentGrade));
+
+            if (teachesSameGrade) {
+              score += 15;
+              reasons.push(`สอนสายชั้น ${absentGrade} เช่นกัน`);
+            }
+          }
+
+          return {
+            ...teacher,
+            isFree,
+            alreadyAssignedToday,
+            score,
+            reasons,
+            prevSubsCount,
+            isLunchConflict,
+            dailyRegularLoad,
+            draftSubCount,
+            dailyTotalLoad,
+            adjacentRegular,
+            adjacentSub,
+            bridgesGap,
+            maxConsecutiveAfter
+          };
+        })
+          .sort((a, b) =>
+            b.score - a.score ||
+            a.dailyTotalLoad - b.dailyTotalLoad ||
+            a.prevSubsCount - b.prevSubsCount ||
+            a.name.localeCompare(b.name, "th")
+          );
+      };
+
+      // Helper to calculate daily workload and consecutive periods for a teacher
+      const getTeacherDayStatus = (teacherId, day, periodBeingScheduled, currentSelections) => {
+        const teacher = TEACHERS_DB.find(t => t.id === teacherId);
+        if (!teacher) return null;
+
+        // Find regular classes for this day
+        const regularClasses = teacher.schedule[day] || [];
+
+        // Find other substitutions assigned to this teacher today (excluding swapped)
+        const otherSubs = Object.entries(currentSelections)
+          .filter(([p, id]) => parseInt(p) !== periodBeingScheduled && id === teacherId && id !== "__SWAPPED__")
+          .map(([p]) => parseInt(p));
+
+        // Determine status for each period 0 to 10
+        const periodsStatus = Array.from({ length: 11 }, (_, p) => {
+          const regular = regularClasses.find(slot => slot.period === p);
+          const isThisSub = p === periodBeingScheduled;
+          const isOtherSub = otherSubs.includes(p);
+
+          let status = "free"; // free, regular, otherSub, thisSub
+          let label = "ว่าง";
+          let detail = "";
+
+          if (regular) {
+            status = "regular";
+            label = "สอน";
+            detail = `สอนวิชา ${regular.subject} ห้อง ${regular.class} (${regular.room})`;
+          } else if (isThisSub) {
+            status = "thisSub";
+            label = "แทน";
+            detail = `จัดสอนแทนคาบนี้`;
+          } else if (isOtherSub) {
+            status = "otherSub";
+            label = "แทน";
+            detail = `สอนแทนคาบอื่นวันนี้`;
+          }
+
+          return { period: p, status, label, detail };
+        });
+
+        // Calculate consecutive periods
+        let maxConsecutive = 0;
+        let currentConsecutive = 0;
+        let consecutiveRanges = [];
+        let tempRange = [];
+
+        periodsStatus.forEach(p => {
+          if (p.status !== "free") {
+            currentConsecutive++;
+            tempRange.push(p.period);
+          } else {
+            if (currentConsecutive > 0) {
+              if (currentConsecutive > maxConsecutive) {
+                maxConsecutive = currentConsecutive;
+              }
+              consecutiveRanges.push([...tempRange]);
+              tempRange = [];
+            }
+            currentConsecutive = 0;
+          }
+        });
+        if (currentConsecutive > 0) {
+          if (currentConsecutive > maxConsecutive) {
+            maxConsecutive = currentConsecutive;
+          }
+          consecutiveRanges.push([...tempRange]);
+        }
+
+        // Find the range containing the current periodBeingScheduled to highlight it
+        const affectedRange = consecutiveRanges.find(range => range.includes(periodBeingScheduled)) || [];
+
+        // Count free periods out of 11
+        const freeCount = periodsStatus.filter(p => p.status === "free").length;
+
+        return {
+          periodsStatus,
+          maxConsecutive,
+          consecutiveRanges,
+          affectedRange,
+          freeCount
+        };
+      };
+
+      // Reset the selection draft when teacher, day or date changes
+      useEffect(() => {
+        const initialSelections = {};
+        [...currentAbsentSchedule]
+          .sort((a, b) => a.period - b.period)
+          .forEach(slot => {
+            const recs = getRecommendationsForPeriod(slot.period, initialSelections);
+            const bestFree = recs.find(r => r.isFree && !r.isLunchConflict) || recs.find(r => r.isFree);
+            initialSelections[slot.period] = bestFree ? bestFree.id : "";
+          });
+        setCurrentSelections(initialSelections);
+      }, [absentTeacherId, selectedDay, selectedDate, history]);
+
+      // Handle change of substitute for a specific period
+      const handleSubChange = (period, subTeacherId) => {
+        setCurrentSelections(prev => ({
+          ...prev,
+          [period]: subTeacherId
+        }));
+      };
+
+      // Save the current draft of substitutions into history
+      const handleSaveSubstitution = async () => {
+        if (currentAbsentSchedule.length === 0) return;
+
+        const substitutesList = currentAbsentSchedule.map(slot => {
+          const subId = currentSelections[slot.period];
+          const subTeacher = TEACHERS_DB.find(t => t.id === subId);
+          const isSwapped = subId === "__SWAPPED__";
+          return {
+            period: slot.period,
+            subject: slot.subject,
+            class: slot.class,
+            room: slot.room,
+            subTeacherId: subId,
+            subTeacherName: isSwapped ? "แลกคาบแล้ว" : (subTeacher ? subTeacher.name : "ไม่ได้ระบุ")
+          };
+        });
+
+        const absentTeacher = TEACHERS_DB.find(t => t.id === absentTeacherId);
+
+        const newRecord = {
+          id: "sub-" + Date.now(),
+          date: selectedDate,
+          day: selectedDay,
+          absentTeacherId,
+          absentTeacherName: absentTeacher ? absentTeacher.name : "ไม่ระบุ",
+          reason: leaveReason,
+          substitutes: substitutesList
+        };
+
+        setIsLoading(true);
+        try {
+          const res = await sendApiRequest({
+            action: "save",
+            data: newRecord
+          });
+
+          if (res && res.status === "success") {
+            setHistory(prev => [newRecord, ...prev]);
+            showToast("บันทึกข้อมูลการจัดสอนแทนลงประวัติสำเร็จแล้ว!", "success");
+            setActiveTab("history");
+          } else {
+            throw new Error(res?.message || "เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง");
+          }
+        } catch (error) {
+          console.error("Failed to save via Apps Script:", error);
+          // Fallback: Save to local state history and localStorage if server save fails
+          setHistory(prev => {
+            const updated = [newRecord, ...prev];
+            localStorage.setItem("sub_history", JSON.stringify(updated));
+            return updated;
+          });
+          showToast("⚠️ เชื่อมต่อ Google Sheets ล้มเหลว บันทึกข้อมูลสำเร็จเฉพาะในเครื่องนี้แล้ว!", "warning");
+          setActiveTab("history");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      const handleSaveAcademicSubstitution = async () => {
+        const period = Number(academicPeriod);
+        const subTeacher = TEACHERS_DB.find(t => t.id === academicTeacherId);
+        if (!selectedDate || !period || !subTeacher) {
+          showToast("กรุณาเลือกวันที่ คาบ และครูผู้สอนแทนให้ครบ", "warning");
+          return;
+        }
+
+        const newRecord = {
+          id: "academic-" + Date.now(),
+          date: selectedDate,
+          day: selectedDay,
+          absentTeacherId: "000",
+          absentTeacherName: "วิชาการ",
+          reason: "สอนแทนวิชาการ",
+          workType: "วิชาการ",
+          substitutes: [{
+            period,
+            subject: "วิชาการ",
+            subjectCode: "000",
+            class: "000",
+            room: "000",
+            subTeacherId: subTeacher.id,
+            subTeacherName: subTeacher.name
+          }]
+        };
+
+        setIsLoading(true);
+        try {
+          const res = await sendApiRequest({ action: "save", data: newRecord });
+          if (!res || res.status !== "success") throw new Error(res?.message || "เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง");
+          setHistory(prev => [newRecord, ...prev]);
+          setAcademicTeacherId("");
+          showToast("บันทึกสอนแทนวิชาการและเพิ่มสถิติรายครูเรียบร้อยแล้ว!", "success");
+          setActiveTab("history");
+        } catch (error) {
+          console.error("Failed to save academic substitution:", error);
+          setHistory(prev => {
+            const updated = [newRecord, ...prev];
+            localStorage.setItem("sub_history", JSON.stringify(updated));
+            return updated;
+          });
+          setAcademicTeacherId("");
+          showToast("⚠️ บันทึกวิชาการไว้เฉพาะในเครื่องนี้ เนื่องจากเชื่อมต่อ Google Sheets ไม่สำเร็จ", "warning");
+          setActiveTab("history");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      const openSubstituteEditor = (record, sub) => {
+        setEditSubstituteTarget({
+          recordId: record.id,
+          absentTeacherId: record.absentTeacherId,
+          absentTeacherName: record.absentTeacherName,
+          date: record.date,
+          day: record.day,
+          period: sub.period,
+          className: sub.class,
+          subject: sub.subject,
+          currentTeacherId: sub.subTeacherId,
+          currentTeacherName: sub.subTeacherName
+        });
+        setReplacementTeacherId("");
+      };
+
+      const executeSubstituteUpdate = async () => {
+        if (!editSubstituteTarget || !replacementTeacherId) {
+          showToast("กรุณาเลือกครูผู้สอนแทนคนใหม่", "warning");
+          return;
+        }
+
+        const replacementTeacher = TEACHERS_DB.find(teacher => teacher.id === replacementTeacherId);
+        if (!replacementTeacher) {
+          showToast("ไม่พบข้อมูลครูที่เลือก", "warning");
+          return;
+        }
+        if (replacementTeacherId === editSubstituteTarget.currentTeacherId) {
+          showToast("กรุณาเลือกครูคนใหม่ที่ต่างจากคนเดิม", "warning");
+          return;
+        }
+
+        setIsLoading(true);
+        try {
+          const res = await sendApiRequest({
+            action: "updateSubstitute",
+            id: editSubstituteTarget.recordId,
+            period: editSubstituteTarget.period,
+            subTeacherId: replacementTeacher.id,
+            subTeacherName: replacementTeacher.name
+          });
+          if (!res || res.status !== "success") {
+            throw new Error(res?.message || "เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง");
+          }
+
+          setHistory(prev => prev.map(record => {
+            if (record.id !== editSubstituteTarget.recordId) return record;
+            return {
+              ...record,
+              substitutes: record.substitutes.map(sub =>
+                Number(sub.period) === Number(editSubstituteTarget.period)
+                  ? { ...sub, subTeacherId: replacementTeacher.id, subTeacherName: replacementTeacher.name }
+                  : sub
+              )
+            };
+          }));
+          setEditSubstituteTarget(null);
+          setReplacementTeacherId("");
+          showToast(`เปลี่ยนครูผู้สอนแทนเป็นครู${replacementTeacher.name} เรียบร้อยแล้ว`, "success");
+        } catch (error) {
+          console.error("Failed to update substitute teacher:", error);
+          showToast(`แก้ไขไม่สำเร็จ: ${error.message || "ไม่สามารถเชื่อมต่อ Google Sheets ได้"}`, "warning");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      // Open custom dialog before deletion
+      const promptDeleteHistory = (id) => {
+        setDeleteTargetId(id);
+      };
+
+      // Confirmed deletion process
+      const executeDeleteHistory = async () => {
+        if (deleteTargetId) {
+          setIsLoading(true);
+          try {
+            const res = await sendApiRequest({
+              action: "delete",
+              id: deleteTargetId
+            });
+
+            if (res && res.status === "success") {
+              setHistory(prev => prev.filter(item => item.id !== deleteTargetId));
+              showToast("ลบประวัติการสอนแทนเรียบร้อยแล้ว", "success");
+            } else {
+              throw new Error(res?.message || "เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง");
+            }
+          } catch (error) {
+            console.error("Failed to delete via Apps Script:", error);
+            // Fallback: Delete from local state and localStorage if server delete fails
+            setHistory(prev => {
+              const updated = prev.filter(item => item.id !== deleteTargetId);
+              localStorage.setItem("sub_history", JSON.stringify(updated));
+              return updated;
+            });
+            showToast("⚠️ ลบข้อมูลสำเร็จเฉพาะในเครื่องนี้เท่านั้น (ไม่สามารถซิงค์กับ Google Sheets ได้)", "warning");
+          } finally {
+            setDeleteTargetId(null);
+            setIsLoading(false);
+          }
+        }
+      };
+
+      return (
+        <div className="luxury-shell min-h-screen flex flex-col">
+          {/* Beautiful Network Loading Overlay */}
+          {isLoading && (
+            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex flex-col items-center justify-center pointer-events-auto">
+              <div className="lux-card bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center gap-4 border border-slate-100 max-w-xs text-center animate-fade-in">
+                <div className="w-10 h-10 border-4 border-emerald-700 border-t-transparent rounded-full animate-spin"></div>
+                <div className="space-y-1">
+                  <h4 className="font-bold text-slate-800 text-sm">กำลังประมวลผล...</h4>
+                  <p className="text-xs text-slate-500">ระบบกำลังสื่อสารกับ Google Sheets กรุณารอสักครู่</p>
+                </div>
+              </div>
+            </div>
+          )}
+          {/* Header block with the luxe1 brand mark */}
+          <header className="no-print luxury-hero text-white">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 pt-7 pb-5 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_360px] items-center gap-5">
+              <div className="flex items-center gap-4">
+                <div className="luxury-logo w-20 h-20 md:w-28 md:h-28 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                  <img
+                    src="luxe1.png"
+                    alt="ตราระบบจัดการงานสอนแทน"
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentNode.innerHTML = '<span class="text-emerald-800 font-extrabold text-xl tracking-tight">สอนแทน</span>';
+                    }}
+                  />
+                </div>
+                <div className="min-w-0">
+                  <div className="luxury-badge mb-3">✨ SMART SUBSTITUTE • 1/2569</div>
+                  <h1 className="luxury-title text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">ระบบจัดการงานสอนแทน<span className="gold-text">อัจฉริยะ</span></h1>
+                  <p className="text-emerald-50/80 text-sm mt-2 max-w-2xl">กลุ่มสาระการเรียนรู้ภาษาไทย • โรงเรียนพูลเจริญวิทยาคม • ภาคเรียนที่ 1/2569</p>
+                  <div className="hidden md:flex flex-wrap gap-2 mt-4">
+                    <span className="hero-chip">🧠 จัดสรรอัตโนมัติ</span>
+                    <span className="hero-chip">⚖️ สมดุลภาระงาน</span>
+                    <span className="hero-chip">🟢 ตรวจคาบว่าง</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden xl:flex justify-center items-center w-[300px] h-40 flex-shrink-0" aria-hidden="true">
+                <img src="assets/hero-3d.png" alt="" className="hero-art w-full h-auto object-contain drop-shadow-2xl" />
+              </div>
+
+              {/* Tab Navigation Menu */}
+              <div className="luxury-nav xl:col-span-2 grid grid-cols-2 sm:grid-cols-5 gap-1.5 p-1.5 rounded-2xl w-full">
+                <button
+                  onClick={() => setActiveTab("planner")}
+                  aria-pressed={activeTab === 'planner'}
+                  className={`lux-nav-button px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${activeTab === 'planner' ? 'lux-nav-active' : 'text-emerald-50'}`}
+                >
+                  📅 จัดสอนแทนใหม่
+                </button>
+                <button
+                  onClick={() => setActiveTab("history")}
+                  aria-pressed={activeTab === 'history'}
+                  className={`lux-nav-button px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${activeTab === 'history' ? 'lux-nav-active' : 'text-emerald-50'}`}
+                >
+                  📝 ประวัติจัดสอนแทน
+                </button>
+                <button
+                  onClick={() => setActiveTab("summary")}
+                  aria-pressed={activeTab === 'summary'}
+                  className={`lux-nav-button px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${activeTab === 'summary' ? 'lux-nav-active' : 'text-emerald-50'}`}
+                >
+                  📋 สรุปการสอนแทน
+                </button>
+                <button
+                  onClick={() => setActiveTab("analytics")}
+                  aria-pressed={activeTab === 'analytics'}
+                  className={`lux-nav-button px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${activeTab === 'analytics' ? 'lux-nav-active' : 'text-emerald-50'}`}
+                >
+                  📊 ตารางภาระงานสะสม
+                </button>
+                <button
+                  onClick={() => setActiveTab("schedules")}
+                  aria-pressed={activeTab === 'schedules'}
+                  className={`lux-nav-button col-span-2 sm:col-span-1 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${activeTab === 'schedules' ? 'lux-nav-active' : 'text-emerald-50'}`}
+                >
+                  🏫 ตารางสอนทั้งหมด
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* Main Workspace content */}
+          <main className="no-print flex-grow max-w-7xl w-full mx-auto px-4 py-8">
+            {activeTab === "planner" && (
+              <>
+                <div className="mb-6 inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+                  <button
+                    onClick={() => setPlannerMode("thai")}
+                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${plannerMode === "thai" ? "bg-emerald-700 text-white shadow" : "text-slate-600 hover:bg-slate-50"}`}
+                  >
+                    📚 ภาษาไทย
+                  </button>
+                  <button
+                    onClick={() => setPlannerMode("academic")}
+                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${plannerMode === "academic" ? "bg-amber-500 text-slate-900 shadow" : "text-slate-600 hover:bg-slate-50"}`}
+                  >
+                    ⭐ วิชาการ
+                  </button>
+                </div>
+
+                {plannerMode === "thai" ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Left Form: Leave Inputs */}
+                <div className="lux-card lg:col-span-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                  <h2 className="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
+                    <span>📝</span> ข้อมูลการลาปฏิบัติหน้าที่
+                  </h2>
+
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">ระบุวันที่ครูลา</label>
+                      <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all text-slate-800 font-medium"
+                      />
+                      <p className="text-xs text-slate-400 mt-1">ตรงกับ วัน{selectedDay}</p>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">เลือกคุณครูที่ลา</label>
+                      <select
+                        id="absent-teacher-select"
+                        value={absentTeacherId}
+                        onChange={(e) => setAbsentTeacherId(e.target.value)}
+                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all text-slate-800 font-medium"
+                      >
+                        {TEACHERS_DB.map(t => (
+                          <option key={t.id} value={t.id}>
+                            ครู{t.name} {t.isSpecialHead ? "⭐ (หัวหน้างานพิเศษ)" : ""}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">สาเหตุการลา</label>
+                      <select
+                        value={leaveReason}
+                        onChange={(e) => setLeaveReason(e.target.value)}
+                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all text-slate-800 font-medium"
+                      >
+                        <option value="ลาป่วย">ลาป่วย</option>
+                        <option value="ลากิจฉุกเฉิน">ลากิจฉุกเฉิน</option>
+                        <option value="ไปราชการฉุกเฉิน">ไปราชการฉุกเฉิน</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Rules Summary Badge block for visual assurance */}
+                  <div className="mt-8 pt-6 border-t border-slate-100 bg-slate-50/50 p-4 rounded-xl space-y-3">
+                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">กติกาการจัดสรรอัจฉริยะ</h4>
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <span className="text-emerald-600 font-bold">✓</span>
+                      <span>คัดครูที่ว่างและมีภาระสอนวันนี้น้อยก่อน</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <span className="text-emerald-600 font-bold">✓</span>
+                      <span>ลดคาบเว้นคาบ โดยจัดต่อกับคาบสอนที่มีอยู่</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <span className="text-emerald-600 font-bold">✓</span>
+                      <span>ครูหัวหน้างานพิเศษอยู่ตัวเลือกท้ายสุด</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <span className="text-amber-600 font-bold">✓</span>
+                      <span className="font-semibold text-amber-800">เว้นคาบสอนต่อกันระหว่างพักกลางวัน</span>
+                    </div>
+                    <div className="flex flex-col gap-1 border-t border-slate-200/60 pt-2 text-xs text-slate-500">
+                      <span className="font-bold text-emerald-700">💡 ระบบช่วยจัดให้แล้ว</span>
+                      <p className="text-[11px] leading-relaxed text-slate-600">
+                        ระบบคัดเลือกครูที่ว่างและเหมาะสมให้เบื้องต้น คุณยังเปลี่ยนรายชื่อได้ทุกคาบก่อนบันทึก
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Grid: Active Period Planning Workspace */}
+                <div className="lg:col-span-8 flex flex-col gap-6">
+                  <div className="lux-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex-grow">
+                    <div className="flex justify-between items-center mb-6">
+                      <div>
+                        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                          <span>📅</span> ตารางที่ต้องจัดสอนแทนของครู{TEACHERS_DB.find(t => t.id === absentTeacherId)?.name}
+                        </h2>
+                        <p className="text-xs text-slate-500 mt-1">ประจำวัน{selectedDay} ที่กำหนด มีทั้งหมด {currentAbsentSchedule.length} คาบวิชาเรียน (คัดกรองคาบกิจกรรมออกแล้ว)</p>
+                      </div>
+
+                      {currentAbsentSchedule.length > 0 && (
+                        <button
+                          onClick={handleSaveSubstitution}
+                          className="lux-primary px-5 py-2.5 text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center gap-2"
+                        >
+                          <span>💾</span> บันทึกตารางสอนแทนทั้งหมด
+                        </button>
+                      )}
+                    </div>
+
+                    {currentAbsentSchedule.length === 0 ? (
+                      <div className="text-center py-20 bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
+                        <span className="text-5xl">🎉</span>
+                        <h3 className="font-bold text-slate-700 mt-4 text-lg">ไม่มีชั่วโมงสอนวิชาการในวันนี้</h3>
+                        <p className="text-sm text-slate-400 mt-1">คุณครูผู้ลาอาจไม่มีคาบสอนวิชาภาษาไทย หรือมีเฉพาะคาบกิจกรรมกลางที่ได้รับการละเว้นตามข้อตกลง</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-6">
+                        {currentAbsentSchedule.map((slot) => {
+                          const recommendations = getRecommendationsForPeriod(slot.period, currentSelections);
+                          const selectedSubId = currentSelections[slot.period] || "";
+                          const currentSubDetail = recommendations.find(r => r.id === selectedSubId);
+
+                          return (
+                            <div key={slot.period} className="lux-period-card p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col md:flex-row justify-between gap-6 items-start md:items-center relative overflow-hidden">
+                              {/* Left segment showing Class/Subject */}
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">
+                                    คาบที่ {slot.period}
+                                  </span>
+                                  <span className="text-xs text-slate-500 font-medium">{PERIOD_TIMES[slot.period]}</span>
+                                </div>
+                                <div className="text-lg font-bold text-slate-800">
+                                  {slot.subject} — {slot.class}
+                                </div>
+                                <div className="text-xs font-medium text-slate-500 flex items-center gap-1">
+                                  <span>📍 ห้องเรียน:</span>
+                                  <span className="text-slate-700 font-bold">{slot.room}</span>
+                                </div>
+                              </div>
+
+                              {/* Middle Dropdown choice segment */}
+                              <div className="w-full min-w-0 md:w-auto md:min-w-[340px] space-y-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">ผู้ปฏิบัติหน้าที่สอนแทน</label>
+                                <select
+                                  value={selectedSubId}
+                                  onChange={(e) => handleSubChange(slot.period, e.target.value)}
+                                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold focus:ring-2 focus:ring-emerald-500"
+                                >
+                                  <option value="">-- กรุณาเลือกครูผู้สอนแทน --</option>
+                                  <option value="__SWAPPED__">🔄 แลกคาบแล้ว (ไม่ต้องจัดสอนแทน)</option>
+                                  {recommendations.map(candidate => (
+                                    /* UNLOCKED: Completely removed disabled blocking tag */
+                                    <option key={candidate.id} value={candidate.id}>
+                                      ครู{candidate.name} (วันนี้ {candidate.dailyTotalLoad} คาบ | แทนสะสม {candidate.prevSubsCount}) {!candidate.isFree ? " [⚠️ ติดสอนคาบนี้]" : " [ว่าง]"}
+                                    </option>
+                                  ))}
+                                </select>
+
+                                {/* Small recommendation logic output line */}
+                                {!selectedSubId && !recommendations.some(candidate => candidate.isFree) && (
+                                  <div className="text-[11px] flex items-start gap-1.5 bg-amber-50 text-amber-900 border border-amber-200 p-2 rounded-md font-medium">
+                                    <span aria-hidden="true">⚠️</span>
+                                    <span className="min-w-0 leading-relaxed">คาบนี้ไม่มีครูว่าง ระบบจึงยังไม่เลือกให้อัตโนมัติ กรุณาพิจารณาแลกคาบหรือเลือกผู้สอนตามความจำเป็น</span>
+                                  </div>
+                                )}
+                                {selectedSubId === "__SWAPPED__" && (
+                                  <div className="text-[11px] flex items-center gap-1.5 bg-blue-50 text-blue-800 border border-blue-200 p-2 rounded-md font-medium">
+                                    🔄 คาบนี้ครูจัดการแลกคาบเรียบร้อยแล้ว ไม่ต้องจัดสอนแทนเพิ่มเติม
+                                  </div>
+                                )}
+                                {selectedSubId && selectedSubId !== "__SWAPPED__" && (
+                                  <>
+                                    <div className="text-[11px] text-slate-500 flex flex-wrap gap-1 items-center bg-white p-2 rounded-md border border-slate-100">
+                                      <span className="font-bold text-emerald-700">คำแนะนำ:</span>
+                                      {currentSubDetail?.reasons.map((r, i) => (
+                                        <span
+                                          key={i}
+                                          className={`px-1 py-0.5 rounded text-[10px] font-medium ${r.includes("ติดสอน")
+                                              ? "bg-rose-100 text-rose-800 border border-rose-200"
+                                              : r.includes("พักกลางวัน")
+                                                ? "bg-amber-100 text-amber-800 border border-amber-200"
+                                                : "bg-slate-100 text-slate-600"
+                                            }`}
+                                        >
+                                          {r}
+                                        </span>
+                                      ))}
+                                    </div>
+                                    {(() => {
+                                      const statusInfo = getTeacherDayStatus(selectedSubId, selectedDay, slot.period, currentSelections);
+                                      if (!statusInfo) return null;
+
+                                      const { periodsStatus, maxConsecutive, affectedRange, freeCount } = statusInfo;
+                                      const teacherName = TEACHERS_DB.find(t => t.id === selectedSubId)?.name;
+
+                                      return (
+                                        <div className="mt-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5 text-[11px] text-slate-600">
+                                          <div className="flex justify-between items-center text-slate-700 font-bold">
+                                            <span className="flex items-center gap-1.5">📊 ตารางสอนวันนี้ของครู {teacherName}</span>
+                                            <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-slate-200">ว่าง {freeCount}/11 คาบ</span>
+                                          </div>
+
+                                          {/* Timeline Grid */}
+                                          <div className="flex gap-1 overflow-x-auto pb-0.5">
+                                            {periodsStatus.map((p) => {
+                                              let bgClass = "bg-slate-200/85 text-slate-400 hover:bg-slate-300";
+                                              let borderClass = "border border-slate-300/60";
+                                              let statusText = "ว่าง";
+
+                                              if (p.status === "regular") {
+                                                bgClass = "bg-slate-600 text-white hover:bg-slate-700";
+                                                borderClass = "border border-slate-700";
+                                                statusText = "สอน";
+                                              } else if (p.status === "thisSub") {
+                                                bgClass = "bg-emerald-600 text-white font-bold hover:bg-emerald-700";
+                                                borderClass = "border-2 border-emerald-500 ring-2 ring-emerald-300/30";
+                                                statusText = "แทน";
+                                              } else if (p.status === "otherSub") {
+                                                bgClass = "bg-amber-500 text-slate-900 font-semibold hover:bg-amber-600";
+                                                borderClass = "border border-amber-600";
+                                                statusText = "แทน";
+                                              }
+
+                                              return (
+                                                <div
+                                                  key={p.period}
+                                                  className={`flex-1 flex flex-col items-center justify-center py-1 rounded text-center transition-all ${bgClass} ${borderClass}`}
+                                                  title={`คาบที่ ${p.period} (${PERIOD_TIMES[p.period]}): ${p.detail || 'ว่าง'}`}
+                                                  style={{ minWidth: "26px" }}
+                                                >
+                                                  <span className="text-[9px] font-bold">ค.{p.period}</span>
+                                                  <span className="text-[8px] opacity-90">{statusText}</span>
+                                                </div>
+                                              );
+                                            })}
+                                          </div>
+
+                                          {/* Load indicator / Warnings */}
+                                          <div className="flex flex-wrap gap-1.5 pt-0.5">
+                                            {maxConsecutive >= 4 && (
+                                              <div className="w-full flex items-center gap-1.5 bg-rose-100 text-rose-800 border border-rose-200 px-2 py-1.5 rounded-lg font-bold text-[10px]">
+                                                <span>🚨 สอนติดกัน {maxConsecutive} คาบ ({affectedRange.map(p => `คาบ ${p}`).join(', ')}) — ภาระหนักเกินไป</span>
+                                              </div>
+                                            )}
+                                            {maxConsecutive < 3 && maxConsecutive > 0 && (
+                                              <span className="text-slate-500 font-medium bg-slate-200/50 px-2 py-0.5 rounded">สอนติดกันสูงสุด {maxConsecutive} คาบ</span>
+                                            )}
+                                            {maxConsecutive === 0 && (
+                                              <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">ว่างตลอดทั้งวัน</span>
+                                            )}
+                                          </div>
+                                        </div>
+                                      );
+                                    })()}
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                  </div>
+                ) : (
+                  <div className="lux-card bg-white p-6 rounded-2xl shadow-sm border border-amber-200 max-w-3xl mx-auto">
+                    <div className="flex items-start gap-3 mb-6">
+                      <span className="text-3xl">⭐</span>
+                      <div>
+                        <h2 className="text-xl font-bold text-slate-900">บันทึกสอนแทนวิชาการ</h2>
+                        <p className="text-sm text-slate-500 mt-1">ใช้สำหรับงานสอนแทนจากวิชาการหรือหมวดอื่นที่เกิดขึ้นเป็นกรณีพิเศษ</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">วันที่สอนแทน</label>
+                        <input
+                          type="date"
+                          value={selectedDate}
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 text-slate-800 font-medium"
+                        />
+                        <p className="text-xs text-slate-400 mt-1">ตรงกับ วัน{selectedDay}</p>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">คาบที่</label>
+                        <select
+                          value={academicPeriod}
+                          onChange={(e) => setAcademicPeriod(e.target.value)}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 text-slate-800 font-medium"
+                        >
+                          {Array.from({ length: 10 }, (_, i) => i + 1).map(period => (
+                            <option key={period} value={period}>คาบ {period} {PERIOD_TIMES[period] ? `(${PERIOD_TIMES[period]})` : ""}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">ครูผู้สอนแทน</label>
+                        <select
+                          value={academicTeacherId}
+                          onChange={(e) => setAcademicTeacherId(e.target.value)}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 text-slate-800 font-medium"
+                        >
+                          <option value="">-- กรุณาเลือกครูผู้สอนแทน --</option>
+                          {TEACHERS_DB.map(teacher => (
+                            <option key={teacher.id} value={teacher.id}>
+                              ครู{teacher.name} (แทนสะสม {subCounts[teacher.id] || 0} คาบ)
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                      <div className="text-xs font-bold text-amber-900 mb-2">ข้อมูลที่ระบบกำหนดให้อัตโนมัติ</div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                        <div><span className="text-slate-500">วิชา:</span> <strong>วิชาการ</strong></div>
+                        <div><span className="text-slate-500">รหัส:</span> <strong>000</strong></div>
+                        <div><span className="text-slate-500">ชั้น:</span> <strong>000</strong></div>
+                        <div><span className="text-slate-500">ห้อง:</span> <strong>000</strong></div>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handleSaveAcademicSubstitution}
+                      disabled={isLoading}
+                      className="mt-6 w-full px-5 py-3 bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-slate-900 font-black rounded-xl transition-all shadow-md"
+                    >
+                      💾 บันทึกสอนแทนวิชาการและเพิ่มสถิติ
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+
+            {/* Tab: History Log table view */}
+            {activeTab === "history" && (
+              <div className="lux-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">📝 ประวัติการส่งมอบงานและการจัดสอนแทน</h2>
+                    <p className="text-xs text-slate-500 mt-1">รายการสะสมเพื่อความเสมอภาคและตรวจสอบภาระงานได้จริง</p>
+                  </div>
+                </div>
+
+                {history.length === 0 ? (
+                  <div className="text-center py-20 text-slate-400">
+                    <span className="text-4xl">📭</span>
+                    <p className="mt-2 text-sm">ยังไม่พบประวัติการบันทึกสอนแทน</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                          <th className="p-4 rounded-l-xl">วันที่และครูที่ลา</th>
+                          <th className="p-4">รายละเอียดการสอนแทน</th>
+                          <th className="p-4">สาเหตุการลา</th>
+                          <th className="p-4 text-center rounded-r-xl">ดำเนินการ</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 text-sm">
+                        {history.map((record) => (
+                          <tr key={record.id} className="hover:bg-slate-50/50 transition-colors">
+                            <td className="p-4">
+                              <div className="font-bold text-slate-900">{record.date}</div>
+                              <div className="text-xs text-slate-500">วัน{record.day}</div>
+                              <div className="mt-1 font-semibold text-emerald-800 flex items-center gap-1">
+                                <span>👤 ครูที่ลา:</span>
+                                <span>ครู{record.absentTeacherName}</span>
+                              </div>
+                            </td>
+                            <td className="p-4">
+                              <div className="space-y-2">
+                                {record.substitutes.map((sub, i) => (
+                                  <div key={i} className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
+                                    <span className="bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded font-bold">
+                                      คาบ {sub.period} ({sub.class})
+                                    </span>
+                                    <span>วิชา {sub.subject}</span>
+                                    <span>➡️</span>
+                                    <span className="font-bold text-slate-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/50">
+                                      {sub.subTeacherName}
+                                    </span>
+                                    <button
+                                      onClick={() => openSubstituteEditor(record, sub)}
+                                      className="px-2 py-0.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded border border-indigo-200 font-bold transition-all"
+                                      title={`เปลี่ยนครูผู้สอนแทนคาบ ${sub.period}`}
+                                    >
+                                      ✏️ เปลี่ยนครู
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                            <td className="p-4 text-slate-600 font-medium">
+                              {record.reason || "ลากิจชั่วคราว"}
+                            </td>
+                            <td className="p-4 text-center">
+                              <div className="flex justify-center items-center gap-2">
+                                <button
+                                  onClick={() => setPrintRecord(record)}
+                                  className="px-3 py-1.5 bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-lg text-xs font-bold transition-all flex items-center gap-1"
+                                >
+                                  <span>🖨️</span> พิมพ์ใบแจ้ง
+                                </button>
+                                <button
+                                  onClick={() => promptDeleteHistory(record.id)} // Custom Safe Confirmation Triggered
+                                  className="px-3 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg text-xs font-bold transition-all"
+                                >
+                                  ลบ
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Tab: Summary of completed substitutions only (excludes swapped periods) */}
+            {activeTab === "summary" && (
+              <div className="lux-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">📋 สรุปการสอนแทน</h2>
+                    <p className="text-xs text-slate-500 mt-1">แสดงเฉพาะรายการที่จัดสอนแทนสำเร็จจริง ไม่รวมคาบที่แลกคาบกันเอง ใช้สำหรับพิมพ์เป็นบันทึกการสอนแทน</p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-end gap-3 w-full sm:w-auto">
+                    <label className="block w-full sm:w-auto">
+                      <span className="block text-xs font-bold text-slate-500 mb-1.5">เลือกเดือนสรุป</span>
+                      <select
+                        aria-label="เลือกเดือนสรุปการสอนแทน"
+                        value={summaryMonth}
+                        onChange={(e) => setSummaryMonth(e.target.value)}
+                        className="w-full sm:w-48 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800"
+                      >
+                        {summaryMonthOptions.map(monthValue => (
+                          <option key={monthValue} value={monthValue}>{formatThaiMonthYear(monthValue)}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <button
+                      onClick={() => window.print()}
+                      disabled={monthlySummaryRows.length === 0}
+                      className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap"
+                    >
+                      <span>🖨️</span> พิมพ์รายงานประจำเดือน
+                    </button>
+                  </div>
+                </div>
+
+                {monthlySummaryRows.length === 0 ? (
+                  <div className="text-center py-20 text-slate-400">
+                    <span className="text-4xl">📭</span>
+                    <p className="mt-2 text-sm">ยังไม่มีรายการสอนแทนในเดือน{summaryMonthLabel}</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <h3 className="text-center font-bold text-slate-900 mb-1">บันทึกการสอนแทน</h3>
+                    <p className="text-center text-xs text-slate-500 mb-4">ประจำเดือน{summaryMonthLabel} • รวม {monthlySummaryRows.length} คาบ</p>
+                    <table className="w-full text-left border-collapse text-xs">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200 font-bold text-slate-500 uppercase tracking-wider">
+                          <th className="p-3 border border-slate-200">วันเดือนปี</th>
+                          <th className="p-3 border border-slate-200">รายชื่อครูขาด/ลา/ไปราชการ</th>
+                          <th className="p-3 border border-slate-200 text-center">คาบที่สอน</th>
+                          <th className="p-3 border border-slate-200">รหัสวิชา</th>
+                          <th className="p-3 border border-slate-200">ชั้น/ห้อง</th>
+                          <th className="p-3 border border-slate-200">สถานที่สอน</th>
+                          <th className="p-3 border border-slate-200">รายชื่อครูสอนแทน</th>
+                          <th className="p-3 border border-slate-200">ลงชื่อสอนแทน</th>
+                          <th className="p-3 border border-slate-200">หมายเหตุ</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {monthlySummaryRows.map((row) => (
+                          <tr key={row.rowKey} className="hover:bg-slate-50/50 transition-colors">
+                            <td className="p-3 border border-slate-200 whitespace-nowrap">{formatThaiDateShort(row.date)}</td>
+                            <td className="p-3 border border-slate-200 font-medium">ครู{row.absentTeacherName}</td>
+                            <td className="p-3 border border-slate-200 text-center font-bold">{row.period}</td>
+                            <td className="p-3 border border-slate-200">{row.subject}</td>
+                            <td className="p-3 border border-slate-200 font-bold">{row.class}</td>
+                            <td className="p-3 border border-slate-200">ห้อง {row.room}</td>
+                            <td className="p-3 border border-slate-200 font-bold text-emerald-900">ครู{row.subTeacherName}</td>
+                            <td className="p-3 border border-slate-200"></td>
+                            <td className="p-3 border border-slate-200">{row.reason || "-"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                <div className="mt-12 text-center text-sm">
+                  <p>ลงชื่อ......................................................</p>
+                  <p className="mt-1">(นายรามิล ปัญญพัทธ์)</p>
+                  <p>หัวหน้ากลุ่มสาระการเรียนรู้ภาษาไทย</p>
+                </div>
+              </div>
+            )}
+
+            {/* Tab: Workload Dashboard (Analytics) */}
+            {activeTab === "analytics" && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="lux-card md:col-span-3 bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">🖨️ พิมพ์สรุปการสอนแทนประจำเดือน</h2>
+                    <p className="text-xs text-slate-500 mt-1">จัดรูปแบบตามเอกสารสรุปรายเดือนของกลุ่มสาระฯ พร้อมจำนวนคาบรายบุคคลและยอดรวม</p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-end gap-3 w-full sm:w-auto">
+                    <label className="block w-full sm:w-auto">
+                      <span className="block text-xs font-bold text-slate-500 mb-1.5">เลือกเดือน</span>
+                      <select
+                        aria-label="เลือกเดือนพิมพ์ภาระงานสะสม"
+                        value={summaryMonth}
+                        onChange={(e) => setSummaryMonth(e.target.value)}
+                        className="w-full sm:w-48 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800"
+                      >
+                        {summaryMonthOptions.map(monthValue => (
+                          <option key={monthValue} value={monthValue}>{formatThaiMonthYear(monthValue)}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <button
+                      onClick={async () => {
+                        if (document.fonts) {
+                          await Promise.all([
+                            document.fonts.load("400 16pt 'TH Sarabun New'"),
+                            document.fonts.load("700 18pt 'TH Sarabun New'")
+                          ]);
+                          await document.fonts.ready;
+                        }
+                        window.print();
+                      }}
+                      className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 whitespace-nowrap"
+                    >
+                      <span>🖨️</span> พิมพ์แบบสรุปรายเดือน
+                    </button>
+                  </div>
+                </div>
+
+                {/* Workload stats description card */}
+                <div className="lux-card md:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 self-start space-y-4">
+                  <h2 className="text-lg font-bold text-slate-900">📊 แดชบอร์ดตรวจสอบภาระงานสะสม</h2>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    ระบบจัดสรรจะคอยดูสถิตินี้ หากมีการเรียกสอนแทน ระบบจะคัดคนที่ได้ภาระงานสะสมน้อยที่สุดขึ้นมาก่อนเสมอ เพื่อหลีกเลี่ยงข้อครหาและรักษาสมดุลความช่วยเหลือภายในกลุ่มสาระฯ
+                  </p>
+
+                  <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
+                    <div className="text-2xl font-black text-amber-700">
+                      {Object.values(subCounts).reduce((a, b) => a + b, 0)} คาบ
+                    </div>
+                    <div className="text-xs font-bold text-amber-900 mt-1">จำนวนภาระงานสอนแทนทั้งหมดสะสม</div>
+                  </div>
+                </div>
+
+                {/* Progress bars representing workload counts dynamically */}
+                <div className="lux-card md:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                  <h3 className="text-md font-bold text-slate-800 mb-6 flex justify-between items-center">
+                    <span>ชั่วโมงสอนแทนสะสมของแต่ละบุคคล</span>
+                    <span className="text-xs text-slate-400 font-medium">*อิงจากประวัติทั้งหมด</span>
+                  </h3>
+
+                  <div className="space-y-4">
+                    {TEACHERS_DB.map(teacher => {
+                      const count = subCounts[teacher.id] || 0;
+                      const maxCount = Math.max(...Object.values(subCounts), 1);
+                      const percentage = (count / maxCount) * 100;
+
+                      return (
+                        <div key={teacher.id} className="space-y-1">
+                          <div className="flex justify-between items-center text-xs">
+                            <div className="font-semibold text-slate-800 flex items-center gap-1.5">
+                              <span>{teacher.image}</span>
+                              <span>ครู{teacher.name}</span>
+                              {teacher.isSpecialHead && (
+                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-500 font-bold border border-slate-200">งานพิเศษ</span>
+                              )}
+                            </div>
+                            <span className="font-black text-emerald-800 text-sm text-right">
+                              {count} คาบ
+                              <span className="block text-[10px] font-bold text-amber-700">วิชาการ {academicSubCounts[teacher.id] || 0} คาบ</span>
+                            </span>
+                          </div>
+                          <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all duration-500 ${teacher.isSpecialHead ? 'bg-indigo-400' : 'bg-emerald-500'}`}
+                              style={{ width: `${Math.max(percentage, 3)}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tab: Weekly Timetable Inspector for All Teachers */}
+            {activeTab === "schedules" && (
+              <div className="lux-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-slate-900">🏫 แฟ้มตารางสอนประจำกลุ่มสาระภาษาไทย 1/2569</h2>
+                  <p className="text-xs text-slate-500 mt-1">ตารางสอนอิงจากโครงสร้างฐานข้อมูลอย่างเป็นทางการล่าสุด (อัปเดต ณ วันที่ 18 มิถุนายน 2569)</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {TEACHERS_DB.map(teacher => (
+                    <div key={teacher.id} className="p-4 bg-slate-50 rounded-xl border border-slate-200 hover:border-emerald-300 transition-colors">
+                      <div className="flex justify-between items-start mb-3 border-b border-slate-200 pb-2">
+                        <div className="font-bold text-slate-800 flex items-center gap-1.5">
+                          <span>{teacher.image}</span>
+                          <span>ครู{teacher.name}</span>
+                        </div>
+                        <span className="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold">
+                          ห้อง {teacher.room}
+                        </span>
+                      </div>
+
+                      <div className="space-y-1 text-xs text-slate-600">
+                        {THAI_DAYS.map(day => {
+                          const slots = teacher.schedule[day] || [];
+                          return (
+                            <div key={day} className="flex justify-between items-center py-1">
+                              <span className="font-bold text-slate-500 w-12">{day}:</span>
+                              <span className="flex-grow flex flex-wrap gap-1 justify-end">
+                                {slots.length === 0 ? (
+                                  <span className="text-slate-400 italic">ไม่มีสอน</span>
+                                ) : (
+                                  slots.map((s, idx) => (
+                                    <span key={idx} className="bg-emerald-50 text-emerald-800 px-1.5 py-0.5 rounded font-bold">
+                                      คาบ {s.period} ({s.class})
+                                    </span>
+                                  ))
+                                )}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </main>
+
+          {/* Change Substitute Teacher Dialog */}
+          {editSubstituteTarget && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 no-print">
+              <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
+                <div className="space-y-2">
+                  <div className="text-3xl text-center">🔄</div>
+                  <h3 className="text-lg font-bold text-slate-900 text-center">เปลี่ยนครูผู้สอนแทน</h3>
+                  <div className="rounded-xl bg-slate-50 border border-slate-200 p-3 text-sm text-slate-600 space-y-1">
+                    <p><strong>วันที่:</strong> {editSubstituteTarget.date} (วัน{editSubstituteTarget.day})</p>
+                    <p><strong>คาบ:</strong> {editSubstituteTarget.period} • {editSubstituteTarget.subject} • {editSubstituteTarget.className}</p>
+                    <p><strong>ครูเดิม:</strong> ครู{editSubstituteTarget.currentTeacherName}</p>
+                  </div>
+                  <label className="block pt-2">
+                    <span className="block text-sm font-bold text-slate-700 mb-1.5">เลือกครูคนใหม่</span>
+                    <select
+                      value={replacementTeacherId}
+                      onChange={(event) => setReplacementTeacherId(event.target.value)}
+                      className="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option value="">-- เลือกครูผู้สอนแทน --</option>
+                      {TEACHERS_DB
+                        .filter(teacher =>
+                          teacher.id !== editSubstituteTarget.absentTeacherId &&
+                          teacher.id !== editSubstituteTarget.currentTeacherId
+                        )
+                        .map(teacher => (
+                          <option key={teacher.id} value={teacher.id}>{teacher.name}</option>
+                        ))}
+                    </select>
+                  </label>
+                  <p className="text-xs text-amber-700">โปรดตรวจสอบตารางว่างของครูคนใหม่ก่อนยืนยัน</p>
+                </div>
+                <div className="flex gap-3 mt-6">
+                  <button
+                    onClick={() => {
+                      setEditSubstituteTarget(null);
+                      setReplacementTeacherId("");
+                    }}
+                    className="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all"
+                  >
+                    ยกเลิก
+                  </button>
+                  <button
+                    onClick={executeSubstituteUpdate}
+                    disabled={!replacementTeacherId || isLoading}
+                    className="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all"
+                  >
+                    ยืนยันการเปลี่ยน
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Delete Confirmation Dialog */}
+          {deleteTargetId && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 no-print">
+              <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl">
+                <div className="text-center space-y-3">
+                  <div className="text-4xl">🗑️</div>
+                  <h3 className="text-lg font-bold text-slate-900">ยืนยันการลบ?</h3>
+                  <p className="text-sm text-slate-500">ประวัติการสอนแทนรายการนี้จะถูกลบออกถาวร ไม่สามารถกู้คืนได้</p>
+                </div>
+                <div className="flex gap-3 mt-6">
+                  <button
+                    onClick={() => setDeleteTargetId(null)}
+                    className="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all"
+                  >
+                    ยกเลิก
+                  </button>
+                  <button
+                    onClick={executeDeleteHistory}
+                    className="flex-1 px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition-all"
+                  >
+                    ลบเลย
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Official Printable Thai School slip generated nicely */}
+          {printRecord && (
+            <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 overflow-y-auto no-print">
+              <div className="bg-white rounded-2xl max-w-3xl w-full p-8 shadow-2xl relative my-8">
+                <button
+                  onClick={() => setPrintRecord(null)}
+                  className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-xl"
+                >
+                  ✕
+                </button>
+
+                <div id="printable-slip" className="p-8 border border-slate-300 bg-white text-slate-900 font-serif leading-relaxed">
+                  <div className="text-center space-y-2 border-b-2 border-slate-800 pb-6">
+                    <h2 className="text-xl font-bold font-sans">บันทึกข้อความการมอบหมายปฏิบัติการสอนแทน</h2>
+                    <h3 className="text-lg font-bold font-sans">กลุ่มสาระการเรียนรู้ภาษาไทย โรงเรียนพูลเจริญวิทยาคม</h3>
+                    <p className="text-xs text-slate-600">ตารางปฏิบัติงานวันที่ {printRecord.date} (วัน{printRecord.day})</p>
+                  </div>
+
+                  <div className="my-6 space-y-4">
+                    <div className="flex justify-between text-sm">
+                      <div><strong>เรียน:</strong> ผู้อำนวยการโรงเรียนพูลเจริญวิทยาคม</div>
+                      <div><strong>วันที่พิมพ์:</strong> {new Date().toLocaleDateString('th-TH')}</div>
+                    </div>
+
+                    <p className="text-sm">
+                      เนื่องด้วย <strong>ครู{printRecord.absentTeacherName}</strong> มีภารกิจ/ความจำเป็น <strong>{printRecord.reason || "ลากิจชั่วคราว"}</strong> ไม่สามารถปฏิบัติการสอนได้ตามปกติ จึงขอมอบหมายงานจัดครูผู้รับผิดชอบปฏิบัติการสอนแทน ตามรายคาบดังนี้เพื่อสิทธิประโยชน์สูงสุดของนักเรียน:
+                    </p>
+
+                    <table className="w-full text-left text-xs border border-slate-400 border-collapse mt-4">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-400">
+                          <th className="p-2 border border-slate-400">คาบเวลา</th>
+                          <th className="p-2 border border-slate-400">วิชา</th>
+                          <th className="p-2 border border-slate-400">สายชั้น/ห้อง</th>
+                          <th className="p-2 border border-slate-400">สถานที่เรียน</th>
+                          <th className="p-2 border border-slate-400">ผู้สอนแทนปฏิบัติหน้าที่</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {printRecord.substitutes.map((sub, i) => (
+                          <tr key={i} className="border-b border-slate-400">
+                            <td className="p-2 border border-slate-400 font-bold">คาบ {sub.period} ({PERIOD_TIMES[sub.period]})</td>
+                            <td className="p-2 border border-slate-400">{sub.subject}</td>
+                            <td className="p-2 border border-slate-400 font-bold">{sub.class}</td>
+                            <td className="p-2 border border-slate-400">ห้อง {sub.room}</td>
+                            <td className="p-2 border border-slate-400 font-bold text-emerald-900">ครู{sub.subTeacherName}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="mt-12 grid grid-cols-2 gap-8 text-xs text-center">
+                    <div className="space-y-8">
+                      <div className="space-y-1">
+                        <p>ลงชื่อ..............................................................</p>
+                        <p>( ครู{printRecord.absentTeacherName} )</p>
+                        <p>ผู้มอบหมายงาน/ครูผู้ลา</p>
+                      </div>
+
+                      <div className="space-y-1">
+                        <p>ลงชื่อ..............................................................</p>
+                        <p>( ครูรามิล ปัญญพัทธ์ )</p>
+                        <p>ผู้ประสานงานจัดสอนแทนกลุ่มสาระฯ</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-8">
+                      <div className="space-y-1">
+                        <p>ลงชื่อ..............................................................</p>
+                        <p>( นางสุภาพร รัตน์น้อย )</p>
+                        <p>ผู้อำนวยการโรงเรียนพูลเจริญวิทยาคม</p>
+                      </div>
+
+                      <div className="p-2 bg-slate-50 border border-slate-300 rounded text-[11px] text-slate-500">
+                        *เอกสารชุดนี้ใช้เพื่อแจ้งยืนยันและนำเสนอเซ็นประวัติราชการสอนแทนเป็นหลักฐาน
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-3 mt-6">
+                  <button
+                    onClick={() => window.print()}
+                    className="px-6 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl transition-all shadow-md"
+                  >
+                    🖨️ พิมพ์เอกสาร (Print)
+                  </button>
+                  <button
+                    onClick={() => setPrintRecord(null)}
+                    className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all"
+                  >
+                    ปิดหน้าต่างนี้
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Classic Printable Layout container rendered strictly in print stylesheet media */}
+          {printRecord && (
+            <div className="hidden print:block bg-white p-8 text-black" style={{ minWidth: "100%" }}>
+              <div className="text-center space-y-1 border-b-2 border-slate-800 pb-4">
+                <h2 className="text-xl font-bold">บันทึกข้อความการมอบหมายปฏิบัติการสอนแทน</h2>
+                <h3 className="text-md">กลุ่มสาระการเรียนรู้ภาษาไทย โรงเรียนพูลเจริญวิทยาคม</h3>
+                <p className="text-xs">ตารางการทำงานประการวันที่ {printRecord.date} (วัน{printRecord.day})</p>
+              </div>
+
+              <div className="my-6 space-y-4">
+                <div className="flex justify-between text-sm">
+                  <div><strong>เรียน:</strong> ผู้อำนวยการโรงเรียนพูลเจริญวิทยาคม</div>
+                  <div><strong>วันที่พิมพ์:</strong> {new Date().toLocaleDateString('th-TH')}</div>
+                </div>
+
+                <p className="text-sm">
+                  เนื่องด้วย <strong>ครู{printRecord.absentTeacherName}</strong> มีภารกิจ/ความจำเป็น <strong>{printRecord.reason || "ลากิจชั่วคราว"}</strong> ไม่สามารถปฏิบัติการสอนได้ตามปกติ จึงขอมอบหมายงานจัดครูผู้รับผิดชอบปฏิบัติการสอนแทน เพื่อจัดกิจกรรมการเรียนรู้ของโรงเรียนพูลเจริญวิทยาคม ดังรายการ:
+                </p>
+
+                <table className="w-full text-xs border border-slate-400 border-collapse mt-4">
+                  <thead>
+                    <tr className="bg-slate-100">
+                      <th className="p-2 border border-slate-400 text-left">คาบเวลา</th>
+                      <th className="p-2 border border-slate-400 text-left">วิชา</th>
+                      <th className="p-2 border border-slate-400 text-left">สายชั้น/ห้อง</th>
+                      <th className="p-2 border border-slate-400 text-left">สถานที่เรียน</th>
+                      <th className="p-2 border border-slate-400 text-left">ผู้รับหน้าที่สอนแทน</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {printRecord.substitutes.map((sub, i) => (
+                      <tr key={i}>
+                        <td className="p-2 border border-slate-400">คาบ {sub.period} ({PERIOD_TIMES[sub.period]})</td>
+                        <td className="p-2 border border-slate-400">{sub.subject}</td>
+                        <td className="p-2 border border-slate-400 font-bold">{sub.class}</td>
+                        <td className="p-2 border border-slate-400">ห้อง {sub.room}</td>
+                        <td className="p-2 border border-slate-400 font-bold">ครู{sub.subTeacherName}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-16 grid grid-cols-2 gap-12 text-sm text-center">
+                <div className="space-y-12">
+                  <div className="space-y-1">
+                    <p>ลงชื่อ..............................................................</p>
+                    <p>( ครู{printRecord.absentTeacherName} )</p>
+                    <p>ครูผู้ลา/ผู้ส่งต่อกิจกรรม</p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p>ลงชื่อ..............................................................</p>
+                    <p>( ครูรามิล ปัญญพัทธ์ )</p>
+                    <p>ผู้ประสานงานจัดสอนแทนกลุ่มสาระฯ</p>
+                  </div>
+                </div>
+
+                <div className="space-y-12">
+                  <div className="space-y-1">
+                    <p>ลงชื่อ..............................................................</p>
+                    <p>( นางสุภาพร รัตน์น้อย )</p>
+                    <p>ผู้อำนวยการโรงเรียนพูลเจริญวิทยาคม</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Print-only layout for the "สรุปการสอนแทน" summary tab (only rendered while that tab is active) */}
+          {activeTab === "summary" && (
+            <div className="hidden print:block bg-white p-6 text-black">
+              <h2 className="text-center text-lg font-bold mb-1">บันทึกการสอนแทน</h2>
+              <p className="text-center text-xs">กลุ่มสาระการเรียนรู้ภาษาไทย โรงเรียนพูลเจริญวิทยาคม</p>
+              <p className="text-center text-xs font-bold mb-4">ประจำเดือน{summaryMonthLabel} • รวม {monthlySummaryRows.length} คาบ</p>
+              <table className="w-full text-left border-collapse text-[10px]">
+                <thead>
+                  <tr className="bg-slate-100">
+                    <th className="p-1.5 border border-slate-400">วันเดือนปี</th>
+                    <th className="p-1.5 border border-slate-400">รายชื่อครูขาด/ลา/ไปราชการ</th>
+                    <th className="p-1.5 border border-slate-400">คาบที่สอน</th>
+                    <th className="p-1.5 border border-slate-400">รหัสวิชา</th>
+                    <th className="p-1.5 border border-slate-400">ชั้น/ห้อง</th>
+                    <th className="p-1.5 border border-slate-400">สถานที่สอน</th>
+                    <th className="p-1.5 border border-slate-400">รายชื่อครูสอนแทน</th>
+                    <th className="p-1.5 border border-slate-400">ลงชื่อสอนแทน</th>
+                    <th className="p-1.5 border border-slate-400">หมายเหตุ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {monthlySummaryRows.map((row) => (
+                    <tr key={row.rowKey}>
+                      <td className="p-1.5 border border-slate-400 whitespace-nowrap">{formatThaiDateShort(row.date)}</td>
+                      <td className="p-1.5 border border-slate-400">ครู{row.absentTeacherName}</td>
+                      <td className="p-1.5 border border-slate-400 text-center">{row.period}</td>
+                      <td className="p-1.5 border border-slate-400">{row.subject}</td>
+                      <td className="p-1.5 border border-slate-400">{row.class}</td>
+                      <td className="p-1.5 border border-slate-400">ห้อง {row.room}</td>
+                      <td className="p-1.5 border border-slate-400">ครู{row.subTeacherName}</td>
+                      <td className="p-1.5 border border-slate-400"></td>
+                      <td className="p-1.5 border border-slate-400">{row.reason || "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="mt-12 text-center text-sm">
+                <p>ลงชื่อ......................................................</p>
+                <p className="mt-1">(นายรามิล ปัญญพัทธ์)</p>
+                <p>หัวหน้ากลุ่มสาระการเรียนรู้ภาษาไทย</p>
+              </div>
+            </div>
+          )}
+
+          {/* Print-only monthly workload form based on the official uploaded template */}
+          {activeTab === "analytics" && (
+            <div id="monthly-workload-print" className="hidden print:block bg-white px-8 py-4 text-black font-sans">
+              <div className="text-center mb-5">
+                <img src="assets/school-logo.jpg" alt="ตราโรงเรียนพูลเจริญวิทยาคม" className="monthly-school-logo mx-auto mb-2 object-contain" />
+                <h1 className="text-xl font-bold">สรุปการสอนแทน</h1>
+                <h2 className="text-lg font-bold mt-4">ประจำเดือน {summaryMonthFormLabel}</h2>
+              </div>
+
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr>
+                    <th className="w-14 py-2 border border-black text-center">ลำดับที่</th>
+                    <th className="py-2 border border-black text-center">รายชื่อครูปฏิบัติหน้าที่สอนแทน</th>
+                    <th className="w-40 py-2 border border-black text-center">จำนวนคาบที่สอน</th>
+                    <th className="w-40 py-2 border border-black text-center">หมายเหตุ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {TEACHERS_DB.map((teacher, index) => (
+                    <tr key={teacher.id}>
+                      <td className="h-8 border border-black text-center">{index + 1}</td>
+                      <td className="h-8 px-3 border border-black">{FORMAL_TEACHER_NAMES[teacher.id] || teacher.name}</td>
+                      <td className="h-8 border border-black text-center font-bold">{monthlyTeacherCounts[teacher.id] || 0}</td>
+                      <td className="h-8 border border-black"></td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="2" className="h-9 border border-black text-center font-bold">รวมจำนวนคาบทั้งหมด</td>
+                    <td className="h-9 border border-black text-center font-bold">{monthlyTeacherTotal}</td>
+                    <td className="h-9 border border-black"></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="mt-10 text-sm text-center space-y-8">
+                <div>
+                  <p>ลงชื่อ..............................................................</p>
+                  <p className="mt-1">(นายรามิล ปัญญพัทธ์)</p>
+                  <p>หัวหน้ากลุ่มสาระการเรียนรู้ภาษาไทย</p>
+                </div>
+                <div>
+                  <p>ลงชื่อ..............................................................</p>
+                  <p className="mt-1">(นางสาวภัทรพร ประมาตร)</p>
+                  <p>รองผู้อำนวยการ กลุ่มบริหารวิชาการ</p>
+                </div>
+                <div>
+                  <p>ลงชื่อ..............................................................</p>
+                  <p className="mt-1">(นางสุภาพร รัตน์น้อย)</p>
+                  <p>ผู้อำนวยการโรงเรียนพูลเจริญวิทยาคม</p>
+                  <p className="mt-2">................/................/................</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Minimalist modern footer */}
+          <footer className="no-print bg-emerald-950/95 border-t border-amber-400/30 py-6 text-center text-xs text-emerald-100/70 mt-12">
+            <p>© โรงเรียนพูลเจริญวิทยาคม • พัฒนาขึ้นเพื่อความเท่าเทียมและจัดสรรภาระงานกลุ่มสาระการเรียนรู้ภาษาไทย 1/2569</p>
+          </footer>
+
+          {/* Beautiful Custom Toast Notification */}
+          {toast.show && (
+            <div className="fixed bottom-5 right-5 z-[10000] max-w-md animate-slide-in no-print">
+              <div className={`p-4 rounded-xl shadow-2xl flex items-center gap-3 border ${
+                toast.type === "success" 
+                  ? "bg-emerald-50 text-emerald-800 border-emerald-200" 
+                  : toast.type === "warning"
+                    ? "bg-amber-50 text-amber-800 border-amber-200"
+                    : "bg-rose-50 text-rose-800 border-rose-200"
+              }`}>
+                <span className="text-xl">
+                  {toast.type === "success" ? "✅" : toast.type === "warning" ? "⚠️" : "❌"}
+                </span>
+                <div className="font-semibold text-sm">{toast.message}</div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
