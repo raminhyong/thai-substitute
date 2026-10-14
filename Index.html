@@ -420,6 +420,11 @@
     // กำหนด URL ของ Google Apps Script Web App สำหรับดึงข้อมูลกรณีรันแบบ Local (ใส่ URL Web App ของคุณที่นี่)
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyiMzQ02TEhikt1opXCBQs-bL6y5DVKm0VlFBahUFZKR7uxf6K7Mg-OOYRcSMTl617hOA/exec";
 
+    // ⚠️ ตารางสอนชุดนี้เป็นของ "ภาคเรียนที่ 1/2569"
+    //    โรงเรียนยังไม่ได้ส่งตารางภาคเรียนที่ 2/2569 มาจึงใช้ชุดนี้ไปพลางก่อน
+    //    ผลกระทบ: คาบว่าง/คาบสอนของครูจะไม่ตรงกับตารางจริงของเทอม 2
+    //    เมื่อได้ตารางใหม่ ต้องแก้ให้ตรงกัน 2 ที่:
+    //      1) ที่นี่  และ  2) teachers_db_converted.js
     // Unified 14 Teachers Official Database 1/2569 with audited names & correct schedule lists
     const TEACHERS_DB = [
       {

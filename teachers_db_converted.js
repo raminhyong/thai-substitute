@@ -1,4 +1,8 @@
-﻿const TEACHERS_DB = [
+﻿// ⚠️ ตารางสอนชุดนี้เป็นของ "ภาคเรียนที่ 1/2569"
+//    โรงเรียนยังไม่ได้ส่งตารางภาคเรียนที่ 2/2569 มาจึงใช้ชุดนี้ไปพลางก่อน
+//    ไฟล์นี้ต้องตรงกับ TEACHERS_DB ที่ฝังอยู่ใน Index.html เสมอ (อัปเดตพร้อมกันทั้ง 2 ที่)
+// Unified 14 Teachers Official Database 1/2569 with audited names & correct schedule lists
+const TEACHERS_DB = [
   {
     id: "T01",
     name: "รามิล ปัญญพัทธ์",
