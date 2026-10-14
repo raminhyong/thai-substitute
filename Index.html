@@ -1072,6 +1072,77 @@
     // Format an ISO date string (YYYY-MM-DD) into short Thai form e.g. "15 มิ.ย. 2569"
     const THAI_MONTHS_SHORT = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     const THAI_MONTHS_FULL = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // ภาคเรียน (Semester) — ใช้แยกสถิติการสอนแทนเป็นรายภาคเรียน
+    // ───────────────────────────────────────────────────────────────────────
+    // กติกาปีการศึกษาของโรงเรียนพูลเจริญวิทยาคม:
+    //   เทอม 1 : 15 พฤษภาคม  – 30 กันยายน  ของปีนั้น
+    //   เทอม 2 : 20 ตุลาคม   ของปีนั้น – 31 มีนาคม ของปีถัดไป
+    //
+    // ช่วงรอยต่อ (1 เม.ย.–14 พ.ค. และ 1–19 ต.ค.) นับเป็นของ "ภาคเรียนถัดไป"
+    //   เหตุผล: ทำให้ปฏิทินต่อเนื่องไม่มีวันหลุด และตรงกับที่โรงเรียนเรียกใช้จริง
+    //   (ช่วงก่อนเปิดเทอมคือการเตรียมงานของเทอมที่จะมาถึง ไม่ใช่ของเทอมที่จบแล้ว)
+    //   ※ หากต้องการให้ช่วงรอยต่อนับเป็นของเทอมที่แล้ว แก้ที่ GAP_BELONGS_TO
+    // ═══════════════════════════════════════════════════════════════════════
+    const GAP_BELONGS_TO = "upcoming"; // "upcoming" | "previous"
+
+    function getSemesterOfDate(dateStr) {
+      const s = String(dateStr || "").slice(0, 10);
+      const y = Number(s.slice(0, 4));
+      const m = Number(s.slice(5, 7));
+      const d = Number(s.slice(8, 10));
+      if (!y || !m || !d) return null;
+
+      const be = y + 543;
+      const md = m * 100 + d; // เช่น 15 พ.ค. = 515, 20 ต.ค. = 1020
+
+      const mk = (year, term) => ({
+        key: year + "-" + term,
+        year: year,
+        term: term,
+        label: "ภาคเรียนที่ " + term + "/" + year
+      });
+
+      if (md >= 515 && md <= 930) return mk(be, 1);          // 15 พ.ค. – 30 ก.ย.
+      if (md >= 1020) return mk(be, 2);                       // 20 ต.ค. – 31 ธ.ค.
+      if (md <= 331) return mk(be - 1, 2);                    // 1 ม.ค. – 31 มี.ค. (เทอม 2 ของปีก่อน)
+      if (md <= 514) {                                        // 1 เม.ย. – 14 พ.ค.
+        return GAP_BELONGS_TO === "upcoming" ? mk(be, 1) : mk(be - 1, 2);
+      }
+      return GAP_BELONGS_TO === "upcoming" ? mk(be, 2) : mk(be, 1); // 1–19 ต.ค.
+    }
+
+    // ภาคเรียนปัจจุบัน — ใช้ "วันที่ของเครื่องผู้ใช้" (ครูอยู่ไทย จึงตรงกับเวลาท้องถิ่น)
+    function getCurrentSemester(now) {
+      const dt = now || new Date();
+      const iso = dt.getFullYear() + "-" +
+        String(dt.getMonth() + 1).padStart(2, "0") + "-" +
+        String(dt.getDate()).padStart(2, "0");
+      return getSemesterOfDate(iso);
+    }
+
+    // ตรวจว่า record อยู่ในภาคเรียนที่ระบุหรือไม่ (คีย์ว่าง = ไม่กรอง)
+    function isRecordInSemester(record, semesterKey) {
+      if (!semesterKey) return true;
+      const sem = getSemesterOfDate(record && record.date);
+      return !!sem && sem.key === semesterKey;
+    }
+
+    // เรียงคีย์ภาคเรียนใหม่ → เก่า (คีย์รูป "2569-2" เทียบบัญญัติตัวอักษรได้ตรงกับตัวเลข)
+    function compareSemesterKeysDesc(a, b) {
+      return String(b).localeCompare(String(a));
+    }
+
+    // เดือนแรกของภาคเรียน (รูปแบบ YYYY-MM) — ใช้เป็นค่าเริ่มต้นเมื่อภาคเรียนนั้นยังไม่มีข้อมูล
+    function getSemesterStartMonth(semesterKey) {
+      const parts = String(semesterKey || "").split("-");
+      const be = Number(parts[0]);
+      const term = Number(parts[1]);
+      if (!be || !term) return null;
+      const ce = be - 543;
+      return ce + (term === 1 ? "-05" : "-10");
+    }
     function formatThaiDateShort(dateStr) {
       if (!dateStr) return "-";
       const parts = dateStr.split("-");
@@ -1132,6 +1203,32 @@
       return Object.values(groups).sort((a, b) => b.id.localeCompare(a.id));
     }
 
+    // ตัวเลือกภาคเรียน — ใช้ร่วมกันทั้งแท็บ "สรุปการสอนแทน" และ "สถิติ"
+    // ค่าเริ่มต้นที่ส่งเข้ามาคือภาคเรียนปัจจุบันเสมอ (ดู state selectedSemester)
+    function SemesterSelect({ options, value, onChange, hint }) {
+      const current = options.find(o => o.isCurrent);
+      return (
+        <label className="block w-full sm:w-auto">
+          <span className="block text-xs font-bold text-slate-500 mb-1.5">เลือกภาคเรียน</span>
+          <select
+            aria-label="เลือกภาคเรียนสำหรับแสดงสถิติ"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full sm:w-56 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800"
+          >
+            {options.map(opt => (
+              <option key={opt.key} value={opt.key}>
+                {opt.label}{opt.isCurrent ? "  ★ ปัจจุบัน" : ""}
+              </option>
+            ))}
+          </select>
+          <span className="block text-[10px] text-slate-400 mt-1">
+            {hint || (current ? "★ = ภาคเรียนปัจจุบัน" : "")}
+          </span>
+        </label>
+      );
+    }
+
     function App() {
       const [activeTab, setActiveTab] = useState("planner");
       const [history, setHistory] = useState(() => {
@@ -1154,6 +1251,14 @@
       const [academicPeriod, setAcademicPeriod] = useState("1");
       const [academicTeacherId, setAcademicTeacherId] = useState("");
       const [summaryMonth, setSummaryMonth] = useState(() => selectedDate.slice(0, 7));
+
+      // ── ภาคเรียนที่กำลังดูสถิติ ──────────────────────────────────────────
+      // ค่าเริ่มต้น = ภาคเรียนปัจจุบันเสมอ (คำนวณจากวันที่ของเครื่องผู้ใช้)
+      // ใช้กับแท็บ "สรุปการสอนแทน" และ "สถิติ" เท่านั้น
+      // ※ การจัดอันดับครูสอนแทนใช้ "ภาคเรียนปัจจุบัน" เสมอ ไม่ขึ้นกับตัวเลือกนี้
+      //   เพราะการจัดสอนแทนเป็นเหตุการณ์ที่เกิดขึ้น "ตอนนี้" ไม่ใช่ย้อนหลัง
+      const currentSemester = useMemo(() => getCurrentSemester(), []);
+      const [selectedSemester, setSelectedSemester] = useState(() => getCurrentSemester().key);
       
       // Current workspace draft of selections for each period
       const [currentSelections, setCurrentSelections] = useState({});
@@ -1297,26 +1402,41 @@
       }, [selectedDate]);
 
       // Accumulate Substitution Counts across all history
-      const subCounts = useMemo(() => {
+      // ── สถิติการสอนแทนรายครู (แยกตามภาคเรียน) ──────────────────────────────
+      // นับเฉพาะ record ที่อยู่ในภาคเรียนที่กำหนด — ไม่รวม "แลกคาบแล้ว"
+      const countSubstitutionsByTeacher = (records, semesterKey, onlyAcademic) => {
         const counts = {};
-        TEACHERS_DB.forEach(t => {
-          counts[t.id] = 0;
-        });
-        history.forEach(record => {
-          record.substitutes.forEach(sub => {
-            if (counts[sub.subTeacherId] !== undefined) {
-              counts[sub.subTeacherId] += 1;
-            }
+        TEACHERS_DB.forEach(t => { counts[t.id] = 0; });
+        records.forEach(record => {
+          if (!isRecordInSemester(record, semesterKey)) return;
+          if (onlyAcademic && record.workType !== "วิชาการ" && record.absentTeacherId !== "000") return;
+          (record.substitutes || []).forEach(sub => {
+            if (counts[sub.subTeacherId] !== undefined) counts[sub.subTeacherId] += 1;
           });
         });
         return counts;
-      }, [history]);
+      };
+
+      // ใช้สำหรับ "การจัดอันดับครูสอนแทน" — ยึดภาคเรียนปัจจุบันเสมอ
+      // เพราะความเป็นธรรมที่ต้องรักษาคือความเป็นธรรมของเทอมที่กำลังสอนอยู่
+      const currentTermSubCounts = useMemo(
+        () => countSubstitutionsByTeacher(history, currentSemester.key, false),
+        [history, currentSemester.key]
+      );
+
+      // ใช้สำหรับ "แสดงสถิติ" — ตามภาคเรียนที่ผู้ใช้เลือกดู
+      const subCounts = useMemo(
+        () => countSubstitutionsByTeacher(history, selectedSemester, false),
+        [history, selectedSemester]
+      );
 
       // Flatten history into individual rows for the "สรุปการสอนแทน" tab,
       // keeping only substitutions that actually happened (excludes "แลกคาบแล้ว" / __SWAPPED__ entries)
+      // และกรองเฉพาะภาคเรียนที่เลือกไว้
       const summaryRows = useMemo(() => {
         const rows = [];
         history.forEach(record => {
+          if (!isRecordInSemester(record, selectedSemester)) return;
           (record.substitutes || []).forEach(sub => {
             if (sub.subTeacherId === "__SWAPPED__" || sub.subTeacherName === "แลกคาบแล้ว") return;
             rows.push({
@@ -1334,19 +1454,48 @@
           });
         });
         return rows;
-      }, [history]);
+      }, [history, selectedSemester]);
 
-      const academicSubCounts = useMemo(() => {
-        const counts = {};
-        TEACHERS_DB.forEach(t => { counts[t.id] = 0; });
+      const academicSubCounts = useMemo(
+        () => countSubstitutionsByTeacher(history, selectedSemester, true),
+        [history, selectedSemester]
+      );
+
+      // รายการภาคเรียนให้เลือก = ภาคเรียนปัจจุบัน + ภาคเรียนที่มีข้อมูลจริง (ใหม่ → เก่า)
+      const semesterOptions = useMemo(() => {
+        const keys = new Set([currentSemester.key]);
         history.forEach(record => {
-          if (record.workType !== "วิชาการ" && record.absentTeacherId !== "000") return;
-          (record.substitutes || []).forEach(sub => {
-            if (counts[sub.subTeacherId] !== undefined) counts[sub.subTeacherId] += 1;
-          });
+          const sem = getSemesterOfDate(record.date);
+          if (sem) keys.add(sem.key);
         });
-        return counts;
-      }, [history]);
+        return [...keys].sort(compareSemesterKeysDesc).map(k => {
+          const parts = String(k).split("-");
+          return {
+            key: k,
+            label: "ภาคเรียนที่ " + parts[1] + "/" + parts[0],
+            isCurrent: k === currentSemester.key
+          };
+        });
+      }, [history, currentSemester.key]);
+
+      const selectedSemesterLabel = (semesterOptions.find(o => o.key === selectedSemester) || {}).label
+        || (selectedSemester === currentSemester.key ? currentSemester.label : selectedSemester);
+
+      // เมื่อเปลี่ยนภาคเรียน ให้เลื่อนเดือนที่กำลังดูให้อยู่ในภาคเรียนนั้นเสมอ
+      // เพื่อไม่ให้ตารางว่างเปล่าโดยผู้ใช้ไม่รู้สาเหตุ (เดือนค้างอยู่ที่ภาคเรียนก่อน)
+      useEffect(() => {
+        const monthsInSemester = [...new Set(
+          summaryRows.map(row => String(row.date || "").slice(0, 7))
+        )].filter(Boolean).sort();
+
+        if (monthsInSemester.includes(summaryMonth)) return;
+
+        const fallback = monthsInSemester.length
+          ? monthsInSemester[monthsInSemester.length - 1]
+          : getSemesterStartMonth(selectedSemester);
+
+        if (fallback && fallback !== summaryMonth) setSummaryMonth(fallback);
+      }, [selectedSemester, summaryRows, summaryMonth]);
 
       const monthlySummaryRows = useMemo(() => {
         return summaryRows
@@ -1502,12 +1651,14 @@
             reasons.push("⭐⭐ มีภารกิจหัวหน้างานพิเศษ (ตัวเลือกท้ายสุด)");
           }
 
-          const prevSubsCount = subCounts[teacher.id] || 0;
+          // สถิติที่ใช้ตัดสินความเป็นธรรม = สถิติของ "ภาคเรียนปัจจุบัน" เท่านั้น
+          // (ไม่ขึ้นกับภาคเรียนที่กำลังเปิดดูในแท็บสถิติ เพราะนี่คือการจัดสอนแทนที่เกิดขึ้นจริงตอนนี้)
+          const prevSubsCount = currentTermSubCounts[teacher.id] || 0;
           score -= (prevSubsCount * 20);
           if (prevSubsCount > 0) {
-            reasons.push(`เคยสอนแทนสะสม ${prevSubsCount} คาบ`);
+            reasons.push(`สอนแทนสะสมภาคนี้ ${prevSubsCount} คาบ`);
           } else {
-            reasons.push("ยังไม่เคยช่วยสอนแทน");
+            reasons.push("ยังไม่เคยช่วยสอนแทนภาคนี้");
           }
 
           const teachesPeriod5 = regularPeriods.has(5) || currentDayDraft[5] === teacher.id;
@@ -1993,9 +2144,9 @@
                   />
                 </div>
                 <div className="min-w-0">
-                  <div className="luxury-badge mb-3">✨ SMART SUBSTITUTE • 1/2569</div>
+                  <div className="luxury-badge mb-3">✨ SMART SUBSTITUTE • {currentSemester.term}/{currentSemester.year}</div>
                   <h1 className="luxury-title text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">ระบบจัดการงานสอนแทน<span className="gold-text">อัจฉริยะ</span></h1>
-                  <p className="text-emerald-50/80 text-sm mt-2 max-w-2xl">กลุ่มสาระการเรียนรู้ภาษาไทย • โรงเรียนพูลเจริญวิทยาคม • ภาคเรียนที่ 1/2569</p>
+                  <p className="text-emerald-50/80 text-sm mt-2 max-w-2xl">กลุ่มสาระการเรียนรู้ภาษาไทย • โรงเรียนพูลเจริญวิทยาคม • {currentSemester.label}</p>
                   <div className="hidden md:flex flex-wrap gap-2 mt-4">
                     <span className="hero-chip">🧠 จัดสรรอัตโนมัติ</span>
                     <span className="hero-chip">⚖️ สมดุลภาระงาน</span>
@@ -2482,7 +2633,7 @@
                           <option value="">-- กรุณาเลือกครูผู้สอนแทน --</option>
                           {TEACHERS_DB.map(teacher => (
                             <option key={teacher.id} value={teacher.id}>
-                              ครู{teacher.name} (แทนสะสม {subCounts[teacher.id] || 0} คาบ)
+                              ครู{teacher.name} (แทนสะสมภาคนี้ {currentTermSubCounts[teacher.id] || 0} คาบ)
                             </option>
                           ))}
                         </select>
@@ -2608,6 +2759,11 @@
                     <p className="text-xs text-slate-500 mt-1">แสดงเฉพาะรายการที่จัดสอนแทนสำเร็จจริง ไม่รวมคาบที่แลกคาบกันเอง ใช้สำหรับพิมพ์เป็นบันทึกการสอนแทน</p>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-end gap-3 w-full sm:w-auto">
+                    <SemesterSelect
+                      options={semesterOptions}
+                      value={selectedSemester}
+                      onChange={setSelectedSemester}
+                    />
                     <label className="block w-full sm:w-auto">
                       <span className="block text-xs font-bold text-slate-500 mb-1.5">เลือกเดือนสรุป</span>
                       <select
@@ -2634,12 +2790,24 @@
                 {monthlySummaryRows.length === 0 ? (
                   <div className="text-center py-20 text-slate-400">
                     <span className="text-4xl">📭</span>
-                    <p className="mt-2 text-sm">ยังไม่มีรายการสอนแทนในเดือน{summaryMonthLabel}</p>
+                    {summaryRows.length === 0 ? (
+                      <>
+                        <p className="mt-2 text-sm font-semibold text-slate-500">
+                          ยังไม่มีข้อมูลการสอนแทนใน{selectedSemesterLabel}
+                        </p>
+                        <p className="mt-1 text-xs leading-relaxed max-w-md mx-auto">
+                          สถิติถูกแยกเป็นรายภาคเรียน ข้อมูลของภาคเรียนก่อนหน้าจะไม่ถูกนำมาปนกัน —
+                          เปลี่ยนที่ <span className="font-bold text-slate-600">"เลือกภาคเรียน"</span> ด้านบนเพื่อดูย้อนหลัง
+                        </p>
+                      </>
+                    ) : (
+                      <p className="mt-2 text-sm">ยังไม่มีรายการสอนแทนในเดือน{summaryMonthLabel}</p>
+                    )}
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
                     <h3 className="text-center font-bold text-slate-900 mb-1">บันทึกการสอนแทน</h3>
-                    <p className="text-center text-xs text-slate-500 mb-4">ประจำเดือน{summaryMonthLabel} • รวม {monthlySummaryRows.length} คาบ</p>
+                    <p className="text-center text-xs text-slate-500 mb-4">{selectedSemesterLabel} • ประจำเดือน{summaryMonthLabel} • รวม {monthlySummaryRows.length} คาบ</p>
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
                         <tr className="bg-slate-50 border-b border-slate-200 font-bold text-slate-500 uppercase tracking-wider">
@@ -2724,23 +2892,44 @@
                 {/* Workload stats description card */}
                 <div className="lux-card md:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 self-start space-y-4">
                   <h2 className="text-lg font-bold text-slate-900">📊 แดชบอร์ดตรวจสอบภาระงานสะสม</h2>
+
+                  <SemesterSelect
+                    options={semesterOptions}
+                    value={selectedSemester}
+                    onChange={setSelectedSemester}
+                    hint="★ = ภาคเรียนปัจจุบัน · ตัวเลขด้านล่างเป็นของภาคเรียนที่เลือก"
+                  />
+
                   <p className="text-xs text-slate-500 leading-relaxed">
-                    ระบบจัดสรรจะคอยดูสถิตินี้ หากมีการเรียกสอนแทน ระบบจะคัดคนที่ได้ภาระงานสะสมน้อยที่สุดขึ้นมาก่อนเสมอ เพื่อหลีกเลี่ยงข้อครหาและรักษาสมดุลความช่วยเหลือภายในกลุ่มสาระฯ
+                    ระบบจัดสรรจะคอยดูสถิติของ <span className="font-bold text-slate-700">ภาคเรียนปัจจุบัน</span> เท่านั้น
+                    หากมีการเรียกสอนแทน ระบบจะคัดคนที่ได้ภาระงานสะสมน้อยที่สุดขึ้นมาก่อนเสมอ เพื่อหลีกเลี่ยงข้อครหาและรักษาสมดุลความช่วยเหลือภายในกลุ่มสาระฯ
                   </p>
 
                   <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
                     <div className="text-2xl font-black text-amber-700">
                       {Object.values(subCounts).reduce((a, b) => a + b, 0)} คาบ
                     </div>
-                    <div className="text-xs font-bold text-amber-900 mt-1">จำนวนภาระงานสอนแทนทั้งหมดสะสม</div>
+                    <div className="text-xs font-bold text-amber-900 mt-1">
+                      ภาระงานสอนแทนสะสมทั้งหมด · {selectedSemesterLabel}
+                    </div>
                   </div>
+
+                  {selectedSemester !== currentSemester.key && (
+                    <div className="text-[11px] flex items-start gap-1.5 bg-indigo-50 text-indigo-900 border border-indigo-200 p-2.5 rounded-lg font-medium">
+                      <span aria-hidden="true">ℹ️</span>
+                      <span className="min-w-0 leading-relaxed">
+                        กำลังดูสถิติย้อนหลังของ {selectedSemesterLabel} — การจัดอันดับครูสอนแทนยังใช้สถิติของ
+                        {" "}{currentSemester.label} ตามปกติ
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Progress bars representing workload counts dynamically */}
                 <div className="lux-card md:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                   <h3 className="text-md font-bold text-slate-800 mb-6 flex justify-between items-center">
                     <span>ชั่วโมงสอนแทนสะสมของแต่ละบุคคล</span>
-                    <span className="text-xs text-slate-400 font-medium">*อิงจากประวัติทั้งหมด</span>
+                    <span className="text-xs text-slate-400 font-medium">{selectedSemesterLabel}</span>
                   </h3>
 
                   <div className="space-y-4">
@@ -2782,7 +2971,7 @@
             {activeTab === "schedules" && (
               <div className="lux-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div className="mb-6">
-                  <h2 className="text-lg font-bold text-slate-900">🏫 แฟ้มตารางสอนประจำกลุ่มสาระภาษาไทย 1/2569</h2>
+                  <h2 className="text-lg font-bold text-slate-900">🏫 แฟ้มตารางสอนประจำกลุ่มสาระภาษาไทย {currentSemester.term}/{currentSemester.year}</h2>
                   <p className="text-xs text-slate-500 mt-1">ตารางสอนอิงจากโครงสร้างฐานข้อมูลอย่างเป็นทางการล่าสุด (อัปเดต ณ วันที่ 18 มิถุนายน 2569)</p>
                 </div>
 
@@ -3081,7 +3270,7 @@
             <div className="hidden print:block bg-white p-6 text-black">
               <h2 className="text-center text-lg font-bold mb-1">บันทึกการสอนแทน</h2>
               <p className="text-center text-xs">กลุ่มสาระการเรียนรู้ภาษาไทย โรงเรียนพูลเจริญวิทยาคม</p>
-              <p className="text-center text-xs font-bold mb-4">ประจำเดือน{summaryMonthLabel} • รวม {monthlySummaryRows.length} คาบ</p>
+              <p className="text-center text-xs font-bold mb-4">{selectedSemesterLabel} • ประจำเดือน{summaryMonthLabel} • รวม {monthlySummaryRows.length} คาบ</p>
               <table className="w-full text-left border-collapse text-[10px]">
                 <thead>
                   <tr className="bg-slate-100">
@@ -3179,7 +3368,7 @@
 
           {/* Minimalist modern footer */}
           <footer className="no-print bg-emerald-950/95 border-t border-amber-400/30 py-6 text-center text-xs text-emerald-100/70 mt-12">
-            <p>© โรงเรียนพูลเจริญวิทยาคม • พัฒนาขึ้นเพื่อความเท่าเทียมและจัดสรรภาระงานกลุ่มสาระการเรียนรู้ภาษาไทย 1/2569</p>
+            <p>© โรงเรียนพูลเจริญวิทยาคม • พัฒนาขึ้นเพื่อความเท่าเทียมและจัดสรรภาระงานกลุ่มสาระการเรียนรู้ภาษาไทย {currentSemester.term}/{currentSemester.year}</p>
           </footer>
 
           {/* Beautiful Custom Toast Notification */}
