@@ -2278,11 +2278,18 @@
                                         const adv = advisory[slot.period].result;
 
                                         if (adv.status !== "success") {
+                                          const raw = String(adv.message || "");
+                                          const needsBackendUpdate = /ไม่พบคำสั่ง|Unknown action/i.test(raw);
                                           return (
-                                            <div className="text-[10px] flex items-start gap-1.5 bg-slate-50 text-slate-600 border border-slate-200 p-2 rounded-md font-medium">
-                                              <span aria-hidden="true">💤</span>
+                                            <div className={`text-[10px] flex items-start gap-1.5 p-2 rounded-md font-medium ${needsBackendUpdate
+                                                ? "bg-amber-50 text-amber-900 border border-amber-200"
+                                                : "bg-slate-50 text-slate-600 border border-slate-200"
+                                              }`}>
+                                              <span aria-hidden="true">{needsBackendUpdate ? "⚙️" : "💤"}</span>
                                               <span className="min-w-0 leading-relaxed">
-                                                {adv.message || "TypeSafe ยังไม่พร้อมใช้งาน — ระบบเดิมยังทำงานตามปกติ"}
+                                                {needsBackendUpdate
+                                                  ? "ยังไม่ได้อัปเดต Code.gs ใน Apps Script — ต้องวางโค้ดใหม่แล้ว Deploy ใหม่ก่อน จึงจะใช้ความเห็นที่สองได้ (การจัดครูสอนแทนตามปกติยังทำงานได้ครบ)"
+                                                  : (raw || "TypeSafe ยังไม่พร้อมใช้งาน — ระบบเดิมยังทำงานตามปกติ")}
                                               </span>
                                             </div>
                                           );

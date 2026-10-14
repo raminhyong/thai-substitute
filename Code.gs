@@ -551,9 +551,12 @@ function apiTypeSafeAdvisory(data) {
   var result = typeSafeEvaluate_(state, questions);
 
   if (!result || !result.answers) {
+    var hasKey = !!getTypeSafeKey_();
     return {
       status: 'unavailable',
-      message: 'ยังไม่ได้ตั้งค่าคีย์ TypeSafe หรือเชื่อมต่อไม่สำเร็จ — ระบบเดิมยังทำงานได้ตามปกติ',
+      message: hasKey
+        ? 'เชื่อมต่อ TypeSafe ไม่สำเร็จชั่วคราว — ระบบเดิมยังทำงานได้ตามปกติ'
+        : 'ยังไม่ได้ตั้งค่า TYPESAFE_API_KEY ใน Apps Script (Project Settings → Script properties) — ระบบเดิมยังทำงานได้ตามปกติ',
       fallback: true
     };
   }
