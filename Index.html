@@ -1414,12 +1414,20 @@
       }, [absentTeacherId, selectedDay]);
 
       // Recommend substitutes using availability, daily load and compact schedules.
+      //
+      // กติกาหลัก (ปรับปรุง 2569): "ความเป็นธรรมเรื่องภาระต้องมาก่อนความสวยงามของตาราง"
+      //   1) ครูที่ว่างในคาบนั้นมาก่อนเสมอ
+      //   2) ในบรรดาครูที่ว่าง พิจารณาเฉพาะกลุ่มที่ "ภาระจริง" เบาสุด +1 คาบ (เพดานความเป็นธรรม)
+      //   3) ภายในกลุ่มนั้นจึงใช้คะแนน (คาบติดกัน/ภารกิจพิเศษ/สถิติสะสม) ตัดสิน
+      //   เหตุผล: เดิมโบนัส "คาบติดกัน" เท่ากับ 5 คาบสอน ทำให้เสนอครูที่งานหนักกว่าคนว่าง
+      const BAND_TOLERANCE = 1;
+
       const getRecommendationsForPeriod = (period, currentDayDraft) => {
         if (!absentTeacherId) return [];
 
         let candidates = TEACHERS_DB.filter(t => t.id !== absentTeacherId);
 
-        return candidates.map(teacher => {
+        const scored = candidates.map(teacher => {
           const daySchedule = teacher.schedule[selectedDay] || [];
           const regularPeriods = new Set(daySchedule.map(slot => slot.period));
           const draftSubPeriods = Object.entries(currentDayDraft)
@@ -1461,19 +1469,24 @@
             reasons.push("ว่างคาบนี้");
           }
 
-          score -= dailyRegularLoad * 22;
-          score -= draftSubCount * 28;
+          // ── น้ำหนักคะแนน (ปรับปรุง 2569) ────────────────────────────────────
+          // ปัญหาเดิม: "คาบติดกัน" ให้โบนัสถึง +110 เทียบเท่าคาบสอน 5 คาบ
+          //            → ครูที่งานหนักกว่าถูกเสนอแทนครูที่ว่างกว่า (ขัดหลักความเป็นธรรม)
+          // แนวทางใหม่: "ภาระ" เป็นตัวชี้ขาด · "คาบติดกัน" เป็นเพียงตัวตัดสินรอง
+          //            (เพดานความเป็นธรรมถูกบังคับใช้ที่ขั้นตอนจัดอันดับด้านล่าง)
+          score -= dailyRegularLoad * 30;
+          score -= draftSubCount * 34;
           reasons.push(`ภาระวันนี้ ${dailyTotalLoad} คาบ (ประจำ ${dailyRegularLoad} + แทน ${draftSubCount})`);
 
           if (bridgesGap) {
-            score += 110;
-            reasons.push("เชื่อมคาบว่างระหว่างคาบสอน ลดคาบเว้นคาบ");
+            score += 25;
+            reasons.push("เชื่อมคาบว่างระหว่างคาบสอน (ตัวตัดสินรอง)");
           } else if (adjacentSub.length > 0) {
-            score += 85;
-            reasons.push(`ต่อเนื่องกับคาบสอนแทน ${adjacentSub.join(", ")}`);
+            score += 22;
+            reasons.push(`ต่อเนื่องกับคาบสอนแทน ${adjacentSub.join(", ")} (ตัวตัดสินรอง)`);
           } else if (adjacentRegular.length > 0) {
-            score += 55;
-            reasons.push(`ต่อเนื่องกับคาบสอนประจำ ${adjacentRegular.join(", ")}`);
+            score += 15;
+            reasons.push(`ต่อเนื่องกับคาบสอนประจำ ${adjacentRegular.join(", ")} (ตัวตัดสินรอง)`);
           } else if (alreadyAssignedToday) {
             score -= 90;
             reasons.push("หลีกเลี่ยงการจัดสอนแทนแบบคาบเว้นคาบ");
@@ -1490,7 +1503,7 @@
           }
 
           const prevSubsCount = subCounts[teacher.id] || 0;
-          score -= (prevSubsCount * 12);
+          score -= (prevSubsCount * 20);
           if (prevSubsCount > 0) {
             reasons.push(`เคยสอนแทนสะสม ${prevSubsCount} คาบ`);
           } else {
@@ -1518,6 +1531,10 @@
             }
           }
 
+          // ภาระจริง = คาบสอนประจำ + คาบสอนแทนที่จัดให้ไปแล้วในวันนี้
+          // ใช้เป็นฐานของ "เพดานความเป็นธรรม" เพื่อไม่ให้เทงานซ้ำใส่ครูคนเดิม
+          const effectiveLoad = dailyRegularLoad + draftSubCount;
+
           return {
             ...teacher,
             isFree,
@@ -1529,18 +1546,48 @@
             dailyRegularLoad,
             draftSubCount,
             dailyTotalLoad,
+            effectiveLoad,
             adjacentRegular,
             adjacentSub,
             bridgesGap,
             maxConsecutiveAfter
           };
-        })
-          .sort((a, b) =>
-            b.score - a.score ||
-            a.dailyTotalLoad - b.dailyTotalLoad ||
-            a.prevSubsCount - b.prevSubsCount ||
-            a.name.localeCompare(b.name, "th")
-          );
+        });
+
+        // ── เพดานความเป็นธรรม (Fairness band) ──────────────────────────────
+        // หา "ภาระจริง" ที่เบาสุดในกลุ่มครูที่ว่าง แล้วให้สิทธิ์เฉพาะกลุ่มที่เบาสุด +1 คาบ
+        // เพื่อรับประกันว่าโบนัส "คาบติดกัน" จะไม่มีทางเอาชนะเรื่องภาระได้อีก
+        const freeEffectiveLoads = scored.filter(c => c.isFree).map(c => c.effectiveLoad);
+        const minFreeEffectiveLoad = freeEffectiveLoads.length ? Math.min(...freeEffectiveLoads) : null;
+
+        return scored
+          .map(c => {
+            const withinFairnessBand =
+              c.isFree && minFreeEffectiveLoad !== null &&
+              c.effectiveLoad <= minFreeEffectiveLoad + BAND_TOLERANCE;
+
+            // อธิบายให้ผู้ใช้เห็นว่าทำไมถูกจัดลำดับรอง (ความโปร่งใส — ครูต้องตรวจสอบได้)
+            let bandReasons = c.reasons;
+            if (c.isFree && !withinFairnessBand && minFreeEffectiveLoad !== null) {
+              bandReasons = c.reasons.concat([
+                `จัดลำดับรอง: ภาระจริง ${c.effectiveLoad} คาบ มากกว่าคนที่เบาสุด (${minFreeEffectiveLoad} คาบ) เกิน ${BAND_TOLERANCE} คาบ`
+              ]);
+            }
+            return { ...c, withinFairnessBand, reasons: bandReasons };
+          })
+          .sort((a, b) => {
+            // 1) ครูที่ว่างในคาบนั้นมาก่อนเสมอ
+            if (a.isFree !== b.isFree) return a.isFree ? -1 : 1;
+            // 2) เพดานความเป็นธรรม — กลุ่มที่ภาระเบากว่ามาก่อน
+            if (a.withinFairnessBand !== b.withinFairnessBand) return a.withinFairnessBand ? -1 : 1;
+            // 3) ภายในกลุ่มเดียวกันจึงใช้คะแนน และตัวตัดสินสำรองตามเดิม
+            return (
+              b.score - a.score ||
+              a.dailyTotalLoad - b.dailyTotalLoad ||
+              a.prevSubsCount - b.prevSubsCount ||
+              a.name.localeCompare(b.name, "th")
+            );
+          });
       };
 
       // ─── TypeSafe (Jev) — "ความเห็นที่สอง" ─────────────────────────────────
@@ -2193,7 +2240,9 @@
                                               ? "bg-rose-100 text-rose-800 border border-rose-200"
                                               : r.includes("พักกลางวัน")
                                                 ? "bg-amber-100 text-amber-800 border border-amber-200"
-                                                : "bg-slate-100 text-slate-600"
+                                                : r.includes("จัดลำดับรอง")
+                                                  ? "bg-indigo-100 text-indigo-800 border border-indigo-200"
+                                                  : "bg-slate-100 text-slate-600"
                                             }`}
                                         >
                                           {r}
