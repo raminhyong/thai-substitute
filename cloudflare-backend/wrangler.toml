@@ -1,0 +1,9 @@
+name = "thai-substitute-api"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+# ผูกกับฐานข้อมูล Cloudflare D1 (ฟรี 5GB, 5 ล้าน requests/วัน)
+[[d1_databases]]
+binding = "DB"
+database_name = "thai_substitute_db"
+database_id = "6ca3b947-4945-49b3-b3af-afaad1e7b8d8"

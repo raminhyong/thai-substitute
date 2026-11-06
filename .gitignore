@@ -3,6 +3,8 @@ tmp/
 *.tmp
 tmp-*
 diff.txt
+.wrangler/
+**/.wrangler/
 
 # Archive and deploy packages
 deploy/

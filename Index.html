@@ -397,6 +397,8 @@
 <body class="text-slate-800 antialiased">
   <div id="root"></div>
 
+  <script src="config.js"></script>
+  <script src="api.js"></script>
   <script type="text/babel" data-presets="react-classic">
     const { useState, useEffect, useMemo } = React;
 
@@ -765,8 +767,23 @@
       // ตรวจสอบว่ากำลังรันอยู่บน Google Apps Script Web App หรือไม่
       const isAppsScriptEnv = typeof google !== "undefined" && google.script && google.script.run;
 
-      // Helper to send POST requests / Server actions
+      // Helper to send POST / PUT / DELETE requests using Unified SubstituteApi Client
       const sendApiRequest = async (payload) => {
+        if (window.SubstituteApi) {
+          if (payload.action === "save") {
+            return await window.SubstituteApi.saveSubstitution(payload.data);
+          } else if (payload.action === "updateSubstitute") {
+            return await window.SubstituteApi.updateSubstitute(
+              payload.id,
+              payload.period,
+              payload.subTeacherId,
+              payload.subTeacherName
+            );
+          } else if (payload.action === "delete") {
+            return await window.SubstituteApi.deleteSubstitution(payload.id);
+          }
+        }
+
         if (isAppsScriptEnv) {
           return new Promise((resolve, reject) => {
             if (payload.action === "save") {
@@ -808,13 +825,26 @@
         }
       };
 
-      // Fetch history from Google Sheets via Apps Script Web App on load
+      // Fetch history using Unified SubstituteApi Client (Cloudflare Worker -> Google Sheets -> LocalStorage)
       useEffect(() => {
         const fetchHistory = async () => {
           setIsLoading(true);
           try {
-            let data;
-            if (isAppsScriptEnv) {
+            let data = null;
+
+            if (window.SubstituteApi) {
+              const res = await window.SubstituteApi.getHistory();
+              if (res && res.data) {
+                data = res.data;
+                if (res.source === "cloudflare") {
+                  showToast("เชื่อมต่อ Cloudflare Worker สำเร็จ ⚡", "success");
+                } else if (res.source === "appsscript") {
+                  showToast("เชื่อมต่อฐานข้อมูล Google Sheets สำเร็จ ✅", "success");
+                } else if (res.warning) {
+                  showToast(res.warning, "warning");
+                }
+              }
+            } else if (isAppsScriptEnv) {
               data = await new Promise((resolve, reject) => {
                 google.script.run
                   .withSuccessHandler(resolve)
@@ -829,18 +859,20 @@
             }
 
             if (Array.isArray(data)) {
-              const structuredData = groupRowsToHistory(data);
+              const structuredData = data.length > 0 && data[0].id && !data[0].substitutes
+                ? groupRowsToHistory(data)
+                : data;
               setHistory(structuredData);
               localStorage.setItem("sub_history", JSON.stringify(structuredData));
             } else if (data && data.status === "error") {
-              console.error("Apps Script error:", data.message);
+              console.error("Backend error:", data.message);
             }
           } catch (error) {
             console.error("Failed to fetch history, falling back to local cache:", error);
             // Check if history is currently empty/seed to show fallback toast
             const local = localStorage.getItem("sub_history");
             if (!local) {
-              showToast("เชื่อมต่อฐานข้อมูลชีทไม่สำเร็จ กำลังใช้ข้อมูลจำลองชั่วคราว", "warning");
+              showToast("เชื่อมต่อฐานข้อมูลไม่สำเร็จ กำลังใช้ข้อมูลจำลองชั่วคราว", "warning");
             }
           } finally {
             setIsLoading(false);
