@@ -1,0 +1,3543 @@
+{
+  "semester": "2/2569",
+  "non_substitution_periods": {
+    "อังคาร": [
+      8,
+      9,
+      10
+    ]
+  },
+  "school": "โรงเรียนพูลเจริญวิทยาคม",
+  "department": "ภาษาไทย",
+  "total_teachers": 14,
+  "teachers": [
+    {
+      "name": "ครูรามิล ปัญญพัทธ์",
+      "homeroom_class": "4/2",
+      "homeroom_room": "155",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.6/2",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "131",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.6/5",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "134",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.6/1",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "324",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.6/7",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "141",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.4/2",
+            "time_start": "",
+            "subject": "ส31202",
+            "period_end": 8,
+            "time_end": "",
+            "room": "155",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.6/6",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "135",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.6/5",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "134",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.6/7",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "141",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก31906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.6/2",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "131",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "143",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.6/1",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "324",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.6/8",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "142",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ลูกเสือ ม.1",
+            "time_start": "",
+            "subject": "ก21907",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.6/6",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "135",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.6/8",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "142",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "-",
+            "time_start": "",
+            "subject": "ประชุมวิชาการ",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": true,
+            "period_start": 7
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.6/5",
+            "time_start": "",
+            "subject": "ท30218",
+            "period_end": 4,
+            "time_end": "",
+            "room": "134",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "143",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.4/2",
+            "time_start": "",
+            "subject": "ก31907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "155",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.4/2",
+            "time_start": "",
+            "subject": "ก32908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูวรางคณา ศรีม่วง",
+      "homeroom_class": "2/2",
+      "homeroom_room": "246",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.3/4",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "437",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3/1",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "315",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "ส21202",
+            "period_end": 5,
+            "time_end": "",
+            "room": "242",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.3/10",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "445",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "246",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.3/13",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "448",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.6/4",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "133",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/4",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "437",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.3/4",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "437",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/13",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "448",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ลูกเสือ ม.2",
+            "time_start": "",
+            "subject": "ก22907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 9,
+            "time_end": "",
+            "room": "246",
+            "double_period": true,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.6/3",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "132",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/1",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "315",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3/10",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "445",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/13",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "448",
+            "double_period": false,
+            "period_start": 7
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.3/10",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "445",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.6/4",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "133",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.6/3",
+            "time_start": "",
+            "subject": "ท33102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "132",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.3/1",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "315",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "ก22908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูอภิชา พุ่มพวง",
+      "homeroom_class": "2/4",
+      "homeroom_room": "248",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.3/3",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "436",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/9",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "444",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/15",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "การงาน 3",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.3/12",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "447",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/6",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "441",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "248",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.3/3",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "436",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3/6",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "441",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/12",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "447",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.3/15",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "การงาน 3",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.3/6",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "441",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3",
+            "time_start": "",
+            "subject": "ท20211",
+            "period_end": 4,
+            "time_end": "",
+            "room": "438",
+            "double_period": true,
+            "period_start": 3
+          },
+          {
+            "class": "ลูกเสือ ม.2",
+            "time_start": "",
+            "subject": "ก22907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "ส22202",
+            "period_end": 8,
+            "time_end": "",
+            "room": "248",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.3/15",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "การงาน 3",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/9",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "444",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3/12",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "447",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 9,
+            "time_end": "",
+            "room": "248",
+            "double_period": true,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.3/3",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "436",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/9",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "444",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "ก22908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูกมลวรรณ สังข์ทอง",
+      "homeroom_class": "6/9",
+      "homeroom_room": "143",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.5/2",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "144",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.5/8",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "153",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.5/6",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "325",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.5/9",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "154",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "ส33202",
+            "period_end": 8,
+            "time_end": "",
+            "room": "143",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.5/1",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "323",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.5/3",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "145",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.5/2",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "144",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก33906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.5/8",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "153",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.5/4",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "151",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.5/6",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "325",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ลูกเสือ ม.3",
+            "time_start": "",
+            "subject": "ก23907",
+            "period_end": 6,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.5/1",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "323",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 8,
+            "time_end": "",
+            "room": "143",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.5/7",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "316",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 2,
+            "time_end": "",
+            "room": "143",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.5/6",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "325",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.5/9",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "154",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.5/5",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "152",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 8,
+            "time_end": "",
+            "room": "143",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.5/4",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "151",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.5/3",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "145",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.5/7",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "316",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.5/5",
+            "time_start": "",
+            "subject": "ท32102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "152",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "ก33907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "143",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.6/9",
+            "time_start": "",
+            "subject": "ก33908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูสุริยา ก่อบุญ",
+      "homeroom_class": "3/6",
+      "homeroom_room": "441",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.4/1",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "322",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.4/4",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "162",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.4/2",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "155",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.4/9",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "165",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/6",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "441",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.4/7",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "311",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.4/6",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "321",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.4/4",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "162",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก23906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.4/7",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "311",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.4/3",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "161",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.4/5",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "163",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ลูกเสือ ม.3",
+            "time_start": "",
+            "subject": "ก23907",
+            "period_end": 6,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.4/2",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "155",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.3/6",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 8,
+            "time_end": "",
+            "room": "441",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.4/8",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "164",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.4/1",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "322",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.4/9",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "165",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.4/6",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "321",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/6",
+            "time_start": "",
+            "subject": "ส23202",
+            "period_end": 8,
+            "time_end": "",
+            "room": "441",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.4/8",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "164",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.4/5",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "163",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.4/3",
+            "time_start": "",
+            "subject": "ท31102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "161",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.3/6",
+            "time_start": "",
+            "subject": "ก23908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูชินกร ศิริโยธา",
+      "homeroom_class": "2/13",
+      "homeroom_room": "432",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.1/2",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "221",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 7,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.1/15",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "245",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/9",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "237",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/2",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "221",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.1/12",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "242",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.1/12",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "242",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/9",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "237",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/5",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "233",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ลูกเสือ ม.2",
+            "time_start": "",
+            "subject": "ก22907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 8,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.1/15",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "245",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/9",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "237",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/5",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "233",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.1/2",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "221",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 2,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/5",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "233",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.1/12",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "242",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.1/15",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "245",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "ก22908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูชื่นฤดี หรับหลี",
+      "homeroom_class": "3/5",
+      "homeroom_room": "438",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/1",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "314",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/7",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "423",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "248",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/5",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "438",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.2/7",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "423",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/1",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "314",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก23906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "248",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ลูกเสือ ม.3",
+            "time_start": "",
+            "subject": "ก23907",
+            "period_end": 6,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/5",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 7,
+            "time_end": "",
+            "room": "438",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/7",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "423",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.2/1",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "314",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "248",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.3/5",
+            "time_start": "",
+            "subject": "ก23908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูวนิชญา เชียงน้อย",
+      "homeroom_class": "3/13",
+      "homeroom_room": "448",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.2/8",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "424",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/13",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 2,
+            "time_end": "",
+            "room": "448",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.2/5",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "421",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "246",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.3/13",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "448",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "246",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2",
+            "time_start": "",
+            "subject": "ท20218",
+            "period_end": 6,
+            "time_end": "",
+            "room": "421",
+            "double_period": true,
+            "period_start": 5
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก23906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.2/11",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "427",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ลูกเสือ ม.3",
+            "time_start": "",
+            "subject": "ก23907",
+            "period_end": 6,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/5",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "421",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.2/5",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "421",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/11",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "427",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/8",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "424",
+            "double_period": false,
+            "period_start": 5
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.2/11",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "427",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/8",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "424",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "246",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/13",
+            "time_start": "",
+            "subject": "ก23908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูอิงอร สิทธิจินดา",
+      "homeroom_class": "3/14",
+      "homeroom_room": "การงาน 1",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/12",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "431",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/6",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "422",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.3/14",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "การงาน 1",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.3/14",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 3,
+            "time_end": "",
+            "room": "การงาน 1",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/9",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "425",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก23906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.2/3",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "247",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/9",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "425",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ลูกเสือ ม.3",
+            "time_start": "",
+            "subject": "ก23907",
+            "period_end": 6,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.2/12",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "431",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/3",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "247",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/6",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "422",
+            "double_period": false,
+            "period_start": 7
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.2/6",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "422",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/3",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "247",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/9",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "425",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/12",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "431",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.3/14",
+            "time_start": "",
+            "subject": "ก23908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูเฉลิมชาติ ภูผันผิน",
+      "homeroom_class": "2/15",
+      "homeroom_room": "434",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.3/11",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "446",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3/8",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "443",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/7",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "442",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.3/2",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "435",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.3/14",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "การงาน 1",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 2,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3/2",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "435",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/8",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "443",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.3/5",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "438",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.3/5",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "438",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/14",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "การงาน 1",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ลูกเสือ ม.2",
+            "time_start": "",
+            "subject": "ก22907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.3/2",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "435",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.3/8",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "443",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/7",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 4,
+            "time_end": "",
+            "room": "442",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.3/14",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "การงาน 1",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.3/11",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "446",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.3/7",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "442",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.3/11",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "446",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "ส22202",
+            "period_end": 3,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/5",
+            "time_start": "",
+            "subject": "ท23102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "438",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 7,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "ก22908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูจิรวัฒน์ ศรีวโร",
+      "homeroom_class": "2/10",
+      "homeroom_room": "426",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.1/14",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "244",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/11",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "241",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1",
+            "time_start": "",
+            "subject": "ท20220",
+            "period_end": 6,
+            "time_end": "",
+            "room": "235",
+            "double_period": true,
+            "period_start": 5
+          },
+          {
+            "class": "ม.1/3",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "231",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.1/8",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "236",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 2,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/4",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "232",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.1/3",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "231",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/11",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "241",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/4",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "232",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.5/5",
+            "time_start": "",
+            "subject": "ท30216",
+            "period_end": 6,
+            "time_end": "",
+            "room": "152",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ลูกเสือ ม.2",
+            "time_start": "",
+            "subject": "ก22907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 7
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.1/8",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "236",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 2,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/11",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "241",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/4",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "232",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.1/14",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 8,
+            "time_end": "",
+            "room": "244",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.1/14",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "244",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/3",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "231",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.1/8",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "236",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 7,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "ก22908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูศุภนุช บุตรดี",
+      "homeroom_class": "3/3",
+      "homeroom_room": "436",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.1/1",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "313",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.3/3",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 4,
+            "time_end": "",
+            "room": "436",
+            "double_period": false,
+            "period_start": 4
+          },
+          {
+            "class": "ม.1/7",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "235",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.3/3",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "436",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.1/13",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "243",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/6",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "234",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/10",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "238",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.1/7",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 6,
+            "time_end": "",
+            "room": "235",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.1/1",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "313",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.1/13",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "243",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/6",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "234",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ลูกเสือ ม.3",
+            "time_start": "",
+            "subject": "ก23907",
+            "period_end": 6,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.1/10",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "238",
+            "double_period": false,
+            "period_start": 7
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.1/7",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "235",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1",
+            "time_start": "",
+            "subject": "ท20207",
+            "period_end": 6,
+            "time_end": "",
+            "room": "233",
+            "double_period": true,
+            "period_start": 5
+          },
+          {
+            "class": "ม.4/5",
+            "time_start": "",
+            "subject": "ท30214",
+            "period_end": 7,
+            "time_end": "",
+            "room": "163",
+            "double_period": false,
+            "period_start": 7
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.1/10",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 1,
+            "time_end": "",
+            "room": "238",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/1",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 2,
+            "time_end": "",
+            "room": "313",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/13",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 3,
+            "time_end": "",
+            "room": "243",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/6",
+            "time_start": "",
+            "subject": "ท21102",
+            "period_end": 7,
+            "time_end": "",
+            "room": "234",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.3/3",
+            "time_start": "",
+            "subject": "ก23908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูนันทกาญจน์ เรืองกระจาย",
+      "homeroom_class": "2/14",
+      "homeroom_room": "433",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.1/15",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 1,
+            "time_end": "",
+            "room": "245",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 6,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.1/7",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 1,
+            "time_end": "",
+            "room": "235",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.1/6",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 2,
+            "time_end": "",
+            "room": "234",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.1/11",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 6,
+            "time_end": "",
+            "room": "241",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.1/8",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 7,
+            "time_end": "",
+            "room": "236",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.1/5",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 3,
+            "time_end": "",
+            "room": "233",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/9",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 5,
+            "time_end": "",
+            "room": "237",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.1/4",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 6,
+            "time_end": "",
+            "room": "232",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ลูกเสือ ม.2",
+            "time_start": "",
+            "subject": "ก22907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 8,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.1/12",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 3,
+            "time_end": "",
+            "room": "242",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/14",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 7,
+            "time_end": "",
+            "room": "244",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.1/3",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 8,
+            "time_end": "",
+            "room": "231",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.1/13",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 1,
+            "time_end": "",
+            "room": "243",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 3,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.1/10",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 5,
+            "time_end": "",
+            "room": "238",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
+            "class": "ม.1/1",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 6,
+            "time_end": "",
+            "room": "313",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.1/2",
+            "time_start": "",
+            "subject": "ท20215",
+            "period_end": 7,
+            "time_end": "",
+            "room": "221",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "ก22908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    },
+    {
+      "name": "ครูวรวัลภ์ นิตยระวีวาร",
+      "homeroom_class": "2/15",
+      "homeroom_room": "434",
+      "schedule": {
+        "จันทร์": [
+          {
+            "class": "ม.2/3",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 2,
+            "time_end": "",
+            "room": "247",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/1",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 6,
+            "time_end": "",
+            "room": "314",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/12",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 7,
+            "time_end": "",
+            "room": "431",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "คุณธรรม",
+            "period_end": 8,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "อังคาร": [
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 2,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/5",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 3,
+            "time_end": "",
+            "room": "421",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/8",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 7,
+            "time_end": "",
+            "room": "424",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ชุมนุม",
+            "time_start": "",
+            "subject": "ก22906",
+            "period_end": 8,
+            "time_end": "",
+            "room": "-",
+            "double_period": false,
+            "period_start": 8
+          },
+          {
+            "class": "PLC",
+            "time_start": "",
+            "subject": "15.10 - 17.10",
+            "period_end": 10,
+            "time_end": "",
+            "room": "หอประชุม",
+            "double_period": true,
+            "period_start": 9
+          }
+        ],
+        "พุธ": [
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 1,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/13",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 2,
+            "time_end": "",
+            "room": "432",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.2/11",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 3,
+            "time_end": "",
+            "room": "427",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "เสริมทักษะวิชาการ",
+            "period_end": 6,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ลูกเสือ ม.2",
+            "time_start": "",
+            "subject": "ก22907",
+            "period_end": 7,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/9",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 8,
+            "time_end": "",
+            "room": "425",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "พฤหัสบดี": [
+          {
+            "class": "ม.2/6",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 1,
+            "time_end": "",
+            "room": "422",
+            "double_period": false,
+            "period_start": 1
+          },
+          {
+            "class": "ม.2/10",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 3,
+            "time_end": "",
+            "room": "426",
+            "double_period": false,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/2",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 6,
+            "time_end": "",
+            "room": "246",
+            "double_period": false,
+            "period_start": 6
+          },
+          {
+            "class": "ม.2/4",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 7,
+            "time_end": "",
+            "room": "248",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/7",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 8,
+            "time_end": "",
+            "room": "423",
+            "double_period": false,
+            "period_start": 8
+          }
+        ],
+        "ศุกร์": [
+          {
+            "class": "ม.2/14",
+            "time_start": "",
+            "subject": "ท20217",
+            "period_end": 2,
+            "time_end": "",
+            "room": "433",
+            "double_period": false,
+            "period_start": 2
+          },
+          {
+            "class": "ม.3",
+            "time_start": "",
+            "subject": "ท20206",
+            "period_end": 4,
+            "time_end": "",
+            "room": "438",
+            "double_period": true,
+            "period_start": 3
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "I22202",
+            "period_end": 7,
+            "time_end": "",
+            "room": "434",
+            "double_period": false,
+            "period_start": 7
+          },
+          {
+            "class": "ม.2/15",
+            "time_start": "",
+            "subject": "ก22908",
+            "period_end": 8,
+            "time_end": "",
+            "room": "โดม",
+            "double_period": false,
+            "period_start": 8
+          }
+        ]
+      }
+    }
+  ]
+}
