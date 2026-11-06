@@ -2149,6 +2149,145 @@
                           ))}
                         </select>
                       </div>
+
+                      {/* Schedule Timeline Bar for Selected Academic Substitute Teacher */}
+                      {academicTeacherId && (() => {
+                        const teacher = TEACHERS_DB.find(t => t.id === academicTeacherId);
+                        if (!teacher) return null;
+
+                        const otherSubsToday = (history || [])
+                          .filter(r => r.date === selectedDate && r.subTeacherId === academicTeacherId && r.subTeacherId !== "__SWAPPED__")
+                          .map(r => Number(r.period));
+
+                        const targetPeriod = Number(academicPeriod);
+                        const regularClasses = getPlannerSchedule(teacher, selectedDay, plannerSemesterId);
+
+                        const periodsStatus = Array.from({ length: 11 }, (_, p) => {
+                          const regular = regularClasses.find(slot => slot.period === p);
+                          const isThisSub = p === targetPeriod;
+                          const isOtherSub = otherSubsToday.includes(p);
+
+                          let status = "free";
+                          let label = "ว่าง";
+                          let detail = "";
+                          let room = "";
+                          let className = "";
+                          let subject = "";
+
+                          if (regular) {
+                            status = "regular";
+                            className = regular.class || "";
+                            subject = regular.subject || "";
+                            room = regular.room || "";
+                            label = (className && className !== "-") ? className : (subject || "สอน");
+                            detail = `สอนวิชา ${subject} ห้อง ${className} (${room})`;
+                          } else if (isThisSub) {
+                            status = "thisSub";
+                            label = "แทน";
+                            detail = `จัดสอนแทนวิชาการคาบนี้ (${PERIOD_TIMES[p] || ''})`;
+                          } else if (isOtherSub) {
+                            status = "otherSub";
+                            label = "แทน";
+                            detail = `สอนแทนคาบอื่นวันนี้ (${PERIOD_TIMES[p] || ''})`;
+                          } else {
+                            detail = `ว่าง (${PERIOD_TIMES[p] || ''})`;
+                          }
+
+                          return { period: p, status, label, detail, room, className, subject };
+                        });
+
+                        const freeCount = periodsStatus.filter(p => p.status === "free").length;
+
+                        let maxConsecutive = 0;
+                        let currentConsecutive = 0;
+                        let consecutiveRanges = [];
+                        let tempRange = [];
+
+                        periodsStatus.forEach(p => {
+                          if (p.status !== "free") {
+                            currentConsecutive++;
+                            tempRange.push(p.period);
+                          } else {
+                            if (currentConsecutive > maxConsecutive) maxConsecutive = currentConsecutive;
+                            if (tempRange.length >= 4) consecutiveRanges.push([...tempRange]);
+                            currentConsecutive = 0;
+                            tempRange = [];
+                          }
+                        });
+                        if (currentConsecutive > maxConsecutive) maxConsecutive = currentConsecutive;
+                        if (tempRange.length >= 4) consecutiveRanges.push([...tempRange]);
+
+                        const isTeachingConflict = regularClasses.some(slot => slot.period === targetPeriod);
+
+                        return (
+                          <div className="md:col-span-2 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+                            <div className="flex justify-between items-center text-slate-800 font-bold flex-wrap gap-1">
+                              <span className="flex items-center gap-1.5 text-sm">
+                                <span>📊</span> ตารางสอนวันนี้ของครู {teacher.name}
+                              </span>
+                              <span className="text-xs bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700 font-semibold shadow-xs">
+                                ว่าง {freeCount}/11 คาบ
+                              </span>
+                            </div>
+
+                            {isTeachingConflict && (
+                              <div className="text-xs flex items-center gap-1.5 bg-rose-100 text-rose-800 border border-rose-200 p-2.5 rounded-xl font-bold">
+                                <span>⚠️</span>
+                                <span>ครู{teacher.name} มีคาบสอนประจำในคาบที่ {academicPeriod} (กรุณาพิจารณาความเหมาะสมก่อนบันทึก)</span>
+                              </div>
+                            )}
+
+                            <div className="flex gap-1.5 overflow-x-auto pb-1 pt-0.5" style={{ scrollbarWidth: "thin" }}>
+                              {periodsStatus.map(p => {
+                                let bgClass = "bg-slate-100/90 text-slate-400 border-slate-200";
+                                let numClass = "text-slate-400";
+                                let labelClass = "text-slate-400";
+
+                                if (p.status === "regular") {
+                                  bgClass = "bg-slate-700 text-white border-slate-700 shadow-xs";
+                                  numClass = "text-slate-300";
+                                  labelClass = "text-amber-300 font-bold";
+                                } else if (p.status === "thisSub") {
+                                  bgClass = "bg-emerald-600 text-white border-emerald-600 shadow-xs ring-2 ring-emerald-400/40";
+                                  numClass = "text-emerald-100";
+                                  labelClass = "text-white font-extrabold";
+                                } else if (p.status === "otherSub") {
+                                  bgClass = "bg-amber-500 text-slate-950 border-amber-500 shadow-xs";
+                                  numClass = "text-amber-950 font-bold";
+                                  labelClass = "text-slate-950 font-extrabold";
+                                }
+
+                                return (
+                                  <div
+                                    key={p.period}
+                                    title={`คาบที่ ${p.period} (${PERIOD_TIMES[p.period] || ''}): ${p.detail}`}
+                                    className={`flex-1 min-w-[46px] max-w-[62px] py-1.5 px-0.5 rounded-xl border flex flex-col items-center justify-between text-center transition-all select-none ${bgClass}`}
+                                  >
+                                    <div className={`text-[10px] font-extrabold tracking-tight ${numClass}`}>
+                                      ค.{p.period}
+                                    </div>
+                                    <div className={`text-[11px] leading-tight truncate w-full px-0.5 ${labelClass}`}>
+                                      {p.label}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                              {maxConsecutive >= 4 ? (
+                                <div className="w-full flex items-center gap-1.5 bg-rose-100 text-rose-800 border border-rose-200 px-2.5 py-1.5 rounded-xl font-bold text-xs">
+                                  <span>🚨</span> สอนติดกัน {maxConsecutive} คาบ — ภาระหนักเกินไป
+                                </div>
+                              ) : maxConsecutive > 0 ? (
+                                <span className="text-xs text-slate-600 font-semibold bg-slate-200/60 px-3 py-1 rounded-xl">
+                                  สอนติดกันสูงสุด {maxConsecutive} คาบ
+                                </span>
+                              ) : null}
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
