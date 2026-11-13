@@ -392,10 +392,10 @@
             "class": "ม.2/2",
             "time_start": "",
             "subject": "I22202",
-            "period_end": 9,
+            "period_end": 8,
             "time_end": "",
             "room": "246",
-            "double_period": true,
+            "double_period": false,
             "period_start": 8
           }
         ],
@@ -574,16 +574,6 @@
             "period_start": 2
           },
           {
-            "class": "ม.3/6",
-            "time_start": "",
-            "subject": "ท23102",
-            "period_end": 3,
-            "time_end": "",
-            "room": "441",
-            "double_period": false,
-            "period_start": 3
-          },
-          {
             "class": "ม.3/12",
             "time_start": "",
             "subject": "ท23102",
@@ -688,6 +678,16 @@
             "period_start": 2
           },
           {
+            "period_start": 4,
+            "period_end": 4,
+            "subject": "ท23102",
+            "class": "ม.3/6",
+            "room": "441",
+            "double_period": false,
+            "time_start": "",
+            "time_end": ""
+          },
+          {
             "class": "ม.3/12",
             "time_start": "",
             "subject": "ท23102",
@@ -701,10 +701,10 @@
             "class": "ม.2/4",
             "time_start": "",
             "subject": "I22202",
-            "period_end": 9,
+            "period_end": 8,
             "time_end": "",
             "room": "248",
-            "double_period": true,
+            "double_period": false,
             "period_start": 8
           }
         ],
@@ -873,12 +873,12 @@
             "period_start": 3
           },
           {
-            "class": "ม.5/6",
+            "class": "ม.5/5",
             "time_start": "",
             "subject": "ท32102",
             "period_end": 4,
             "time_end": "",
-            "room": "325",
+            "room": "152",
             "double_period": false,
             "period_start": 4
           },
@@ -953,16 +953,6 @@
             "room": "154",
             "double_period": false,
             "period_start": 6
-          },
-          {
-            "class": "ม.5/5",
-            "time_start": "",
-            "subject": "ท32102",
-            "period_end": 7,
-            "time_end": "",
-            "room": "152",
-            "double_period": false,
-            "period_start": 7
           },
           {
             "class": "ม.6/9",
@@ -1358,11 +1348,11 @@
             "class": "ม.1/9",
             "time_start": "",
             "subject": "ท21102",
-            "period_end": 2,
+            "period_end": 3,
             "time_end": "",
             "room": "237",
             "double_period": false,
-            "period_start": 2
+            "period_start": 3
           },
           {
             "class": "ม.1/2",
