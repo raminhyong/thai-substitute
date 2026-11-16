@@ -1674,6 +1674,16 @@
             "period_start": 3
           },
           {
+            "class": "ม.2/7",
+            "time_start": "",
+            "subject": "ท22102",
+            "period_end": 5,
+            "time_end": "",
+            "room": "423",
+            "double_period": false,
+            "period_start": 5
+          },
+          {
             "class": "ลูกเสือ ม.3",
             "time_start": "",
             "subject": "ก23907",
@@ -1692,16 +1702,6 @@
             "room": "438",
             "double_period": false,
             "period_start": 7
-          },
-          {
-            "class": "ม.2/7",
-            "time_start": "",
-            "subject": "ท22102",
-            "period_end": 8,
-            "time_end": "",
-            "room": "423",
-            "double_period": false,
-            "period_start": 8
           }
         ],
         "พฤหัสบดี": [
@@ -3181,11 +3181,11 @@
             "class": "ม.1/12",
             "time_start": "",
             "subject": "ท20215",
-            "period_end": 3,
+            "period_end": 1,
             "time_end": "",
             "room": "242",
             "double_period": false,
-            "period_start": 3
+            "period_start": 1
           },
           {
             "class": "ม.1/14",
