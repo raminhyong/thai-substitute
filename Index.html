@@ -1107,6 +1107,26 @@
       //   เหตุผล: เดิมโบนัส "คาบติดกัน" เท่ากับ 5 คาบสอน ทำให้เสนอครูที่งานหนักกว่าคนว่าง
       const BAND_TOLERANCE = 1;
 
+      // ดึงรายการที่ครูถูกบันทึกให้ไปสอนแทนจริงแล้วในวันนั้นจาก history
+      // (ยกเว้น __SWAPPED__ / แลกคาบแล้ว และ __ACADEMIC__ / วิชาการที่ไม่มีครูสอนแทนจริง)
+      const getHistorySubsForDate = (date) => {
+        const subs = [];
+        (history || []).forEach(record => {
+          if (String(record.date) !== String(date)) return;
+          (record.substitutes || []).forEach(sub => {
+            if (sub.subTeacherId === "__SWAPPED__" || sub.subTeacherName === "แลกคาบแล้ว") return;
+            if (sub.subTeacherId === "__ACADEMIC__" || sub.subTeacherName === "วิชาการ") return;
+            subs.push({
+              period: Number(sub.period),
+              subTeacherId: sub.subTeacherId,
+              absentTeacherId: record.absentTeacherId,
+              absentTeacherName: record.absentTeacherName || "ไม่ระบุ"
+            });
+          });
+        });
+        return subs;
+      };
+
       const getRecommendationsForPeriod = (period, currentDayDraft) => {
         if (!absentTeacherId) return [];
 
@@ -1117,19 +1137,42 @@
         ]);
         let candidates = TEACHERS_DB.filter(t => !absentTodayIds.has(t.id));
 
+        // ดึงรายการที่ครูถูกบันทึกให้ไปสอนแทนจริงแล้วในวันนี้จาก history
+        // เพื่อให้ครูที่ติดสอนแทนในคาบนี้ไปแล้วถือว่า "ไม่ว่าง" ทันที
+        const historySubsToday = getHistorySubsForDate(selectedDate);
+        const alreadySubbingThisPeriodTeachers = new Set(
+          historySubsToday
+            .filter(s => s.period === Number(period))
+            .map(s => s.subTeacherId)
+        );
+        const alreadySubbedPeriodsToday = {};
+        historySubsToday.forEach(s => {
+          if (!alreadySubbedPeriodsToday[s.subTeacherId]) {
+            alreadySubbedPeriodsToday[s.subTeacherId] = new Set();
+          }
+          alreadySubbedPeriodsToday[s.subTeacherId].add(s.period);
+        });
+
         const scored = candidates.map(teacher => {
           const daySchedule = getPlannerSchedule(teacher, selectedDay, plannerSemesterId);
           const regularPeriods = new Set(daySchedule.map(slot => slot.period));
           const draftSubPeriods = Object.entries(currentDayDraft)
             .filter(([p, id]) => parseInt(p) !== period && id === teacher.id && id !== "__SWAPPED__")
             .map(([p]) => parseInt(p));
-          const occupiedBefore = new Set([...regularPeriods, ...draftSubPeriods]);
-          const isTeaching = regularPeriods.has(period);
+          const isSubbingThisPeriod = alreadySubbingThisPeriodTeachers.has(teacher.id);
+          const allHistorySubPeriods = alreadySubbedPeriodsToday[teacher.id]
+            ? [...alreadySubbedPeriodsToday[teacher.id]]
+            : [];
+          const historySubPeriods = allHistorySubPeriods.filter(p => p !== Number(period));
+          const occupiedBefore = new Set([...regularPeriods, ...draftSubPeriods, ...historySubPeriods]);
+          const isTeachingRegular = regularPeriods.has(period);
+          const isTeaching = isTeachingRegular || isSubbingThisPeriod;
           const isFree = !isTeaching;
           const alreadyAssignedToday = draftSubPeriods.length > 0;
           const dailyRegularLoad = regularPeriods.size;
           const draftSubCount = draftSubPeriods.length;
-          const dailyTotalLoad = dailyRegularLoad + draftSubCount;
+          const historySubCount = allHistorySubPeriods.length;
+          const dailyTotalLoad = dailyRegularLoad + draftSubCount + historySubCount;
 
           const crossesLunchBreak = (a, b) => (a === 5 && b === 6) || (a === 6 && b === 5);
           const adjacentPeriods = [period - 1, period + 1]
@@ -1153,7 +1196,9 @@
           let score = isFree ? 1000 : -10000;
           let reasons = [];
 
-          if (!isFree) {
+          if (isSubbingThisPeriod) {
+            reasons.push("❌ ติดสอนแทนในคาบนี้แล้ว");
+          } else if (!isFree) {
             reasons.push("❌ ติดสอนคาบนี้ (จัดแทนได้หากจำเป็น)");
           } else {
             reasons.push("ว่างคาบนี้");
@@ -1166,7 +1211,7 @@
           //            (เพดานความเป็นธรรมถูกบังคับใช้ที่ขั้นตอนจัดอันดับด้านล่าง)
           score -= dailyRegularLoad * 30;
           score -= draftSubCount * 34;
-          reasons.push(`ภาระวันนี้ ${dailyTotalLoad} คาบ (ประจำ ${dailyRegularLoad} + แทน ${draftSubCount})`);
+          reasons.push(`ภาระวันนี้ ${dailyTotalLoad} คาบ (ประจำ ${dailyRegularLoad} + แทน ${draftSubCount + historySubCount})`);
 
           if (bridgesGap) {
             score += 25;
@@ -1225,11 +1270,13 @@
 
           // ภาระจริง = คาบสอนประจำ + คาบสอนแทนที่จัดให้ไปแล้วในวันนี้
           // ใช้เป็นฐานของ "เพดานความเป็นธรรม" เพื่อไม่ให้เทงานซ้ำใส่ครูคนเดิม
-          const effectiveLoad = dailyRegularLoad + draftSubCount;
+          const effectiveLoad = dailyRegularLoad + draftSubCount + historySubCount;
 
           return {
             ...teacher,
             isFree,
+            isSubbingThisPeriod,
+            isTeachingRegular,
             alreadyAssignedToday,
             score,
             reasons,
@@ -1237,6 +1284,7 @@
             isLunchConflict,
             dailyRegularLoad,
             draftSubCount,
+            historySubCount,
             dailyTotalLoad,
             effectiveLoad,
             adjacentRegular,
@@ -1283,23 +1331,41 @@
       };
 
       // Helper to calculate daily workload and consecutive periods for a teacher
-      const getTeacherDayStatus = (teacherId, day, periodBeingScheduled, currentSelections) => {
+      const getTeacherDayStatus = (teacherId, day, periodBeingScheduled, currentSelections, date) => {
         const teacher = TEACHERS_DB.find(t => t.id === teacherId);
         if (!teacher) return null;
 
         // Find regular classes for this day using plannerSemesterId
         const regularClasses = getPlannerSchedule(teacher, day, plannerSemesterId);
 
-        // Find other substitutions assigned to this teacher today (excluding swapped)
-        const otherSubs = Object.entries(currentSelections)
+        const effectiveDate = date || selectedDate;
+
+        // คาบสอนแทนจาก draft ปัจจุบัน (ไม่รวมคาบที่กำลังจัด)
+        const draftSubs = Object.entries(currentSelections || {})
           .filter(([p, id]) => parseInt(p) !== periodBeingScheduled && id === teacherId && id !== "__SWAPPED__")
-          .map(([p]) => parseInt(p));
+          .map(([p]) => ({
+            period: parseInt(p),
+            absentTeacherName: TEACHERS_DB.find(t => t.id === absentTeacherId)?.name || "ไม่ระบุ"
+          }));
+
+        // คาบสอนแทนที่ถูกบันทึกใน history ของวันนั้นแล้ว
+        const historySubs = getHistorySubsForDate(effectiveDate)
+          .filter(s => s.subTeacherId === teacherId && s.period !== periodBeingScheduled)
+          .map(s => ({ period: s.period, absentTeacherName: s.absentTeacherName }));
+
+        // รวมเข้าด้วยกัน (ให้ draft ชนะในกรณีคาบซ้ำกัน เพื่อแสดงชื่อครูที่ลาตรงตามการจัดปัจจุบัน)
+        const subByPeriod = {};
+        [...historySubs, ...draftSubs].forEach(s => {
+          if (!subByPeriod[s.period]) subByPeriod[s.period] = s;
+        });
+        const otherSubs = Object.values(subByPeriod);
 
         // Determine status for each period 0 to 10 (WO#33 Rich Timeline)
         const periodsStatus = Array.from({ length: 11 }, (_, p) => {
           const regular = regularClasses.find(slot => slot.period === p);
           const isThisSub = p === periodBeingScheduled;
-          const isOtherSub = otherSubs.includes(p);
+          const subInfo = otherSubs.find(s => s.period === p);
+          const isOtherSub = !!subInfo;
 
           let status = "free"; // free, regular, otherSub, thisSub
           let label = "ว่าง";
@@ -1322,7 +1388,7 @@
           } else if (isOtherSub) {
             status = "otherSub";
             label = "แทน";
-            detail = `สอนแทนคาบอื่นวันนี้ (${PERIOD_TIMES[p] || ''})`;
+            detail = `ติดสอนแทนครู${subInfo.absentTeacherName || ""} คาบนี้`;
           } else {
             detail = `ว่าง (${PERIOD_TIMES[p] || ''})`;
           }
@@ -1918,7 +1984,7 @@
                                   {recommendations.map(candidate => (
                                     /* UNLOCKED: Completely removed disabled blocking tag */
                                     <option key={candidate.id} value={candidate.id}>
-                                      ครู{candidate.name} (วันนี้ {candidate.dailyTotalLoad} คาบ | แทนสะสม {candidate.prevSubsCount}) {!candidate.isFree ? " [⚠️ ติดสอนคาบนี้]" : " [ว่าง]"}
+                                      ครู{candidate.name} (วันนี้ {candidate.dailyTotalLoad} คาบ | แทนสะสม {candidate.prevSubsCount}) {candidate.isSubbingThisPeriod ? " [⚠️ ติดสอนแทนคาบนี้]" : (!candidate.isFree ? " [⚠️ ติดสอนคาบนี้]" : " [ว่าง]")}
                                     </option>
                                   ))}
                                 </select>
@@ -1955,7 +2021,7 @@
                                         </span>
                                       ))}
                                     </div>                                    {(() => {
-                                      const statusInfo = getTeacherDayStatus(selectedSubId, selectedDay, slot.period, currentSelections);
+                                      const statusInfo = getTeacherDayStatus(selectedSubId, selectedDay, slot.period, currentSelections, selectedDate);
                                       if (!statusInfo) return null;
 
                                       const { periodsStatus, maxConsecutive, affectedRange, freeCount } = statusInfo;
@@ -2853,14 +2919,30 @@
                           editSubstituteTarget.absentTeacherId,
                           ...history.filter(h => h.date === editSubstituteTarget.date).map(h => h.absentTeacherId)
                         ]);
+                        const targetPeriod = Number(editSubstituteTarget.period);
+                        const historySubsOnDate = getHistorySubsForDate(editSubstituteTarget.date);
+                        const subbingThisPeriodIds = new Set(
+                          historySubsOnDate.filter(s => s.period === targetPeriod).map(s => s.subTeacherId)
+                        );
                         return TEACHERS_DB
                           .filter(teacher =>
                             !absentOnDate.has(teacher.id) &&
                             teacher.id !== editSubstituteTarget.currentTeacherId
                           )
-                          .map(teacher => (
-                            <option key={teacher.id} value={teacher.id}>{teacher.name}</option>
-                          ));
+                          .map(teacher => {
+                            const teachingRegular = getPlannerSchedule(teacher, editSubstituteTarget.day, plannerSemesterId)
+                              .some(slot => Number(slot.period) === targetPeriod);
+                            const subbingElsewhere = subbingThisPeriodIds.has(teacher.id);
+                            let tag = " [ว่าง]";
+                            if (teachingRegular) {
+                              tag = " [⚠️ ติดสอนปกติ]";
+                            } else if (subbingElsewhere) {
+                              tag = " [⚠️ ติดสอนแทนคนอื่นแล้ว]";
+                            }
+                            return (
+                              <option key={teacher.id} value={teacher.id}>ครู{teacher.name}{tag}</option>
+                            );
+                          });
                       })()}
                     </select>
                   </label>
@@ -2874,7 +2956,7 @@
                   )}
 
                   {replacementTeacherId && replacementTeacherId !== "__ACADEMIC__" && (() => {
-                    const statusInfo = getTeacherDayStatus(replacementTeacherId, editSubstituteTarget.day, Number(editSubstituteTarget.period), {});
+                    const statusInfo = getTeacherDayStatus(replacementTeacherId, editSubstituteTarget.day, Number(editSubstituteTarget.period), {}, editSubstituteTarget.date);
                     if (!statusInfo) return null;
                     const { periodsStatus, maxConsecutive, freeCount } = statusInfo;
                     const teacherName = TEACHERS_DB.find(t => t.id === replacementTeacherId)?.name;
@@ -2900,6 +2982,10 @@
                             } else if (p.status === "thisSub") {
                               bgClass = "bg-emerald-600 text-white font-bold hover:bg-emerald-700";
                               borderClass = "border-2 border-emerald-500 ring-2 ring-emerald-300/30";
+                              statusText = "แทน";
+                            } else if (p.status === "otherSub") {
+                              bgClass = "bg-amber-500 text-slate-900 font-semibold hover:bg-amber-600";
+                              borderClass = "border border-amber-600";
                               statusText = "แทน";
                             }
 
